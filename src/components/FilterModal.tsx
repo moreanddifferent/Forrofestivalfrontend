@@ -24,11 +24,11 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
       {/* Bottom Sheet */}
       <div className="fixed inset-x-0 bottom-0 bg-white z-50 md:hidden rounded-t-xl shadow-2xl animate-slide-up">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b-2 border-black">
-          <h3 className="text-lg font-black">Filter festivals</h3>
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <h3 className="text-lg font-bold">Filter festivals</h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-sm transition-colors"
+            className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -38,7 +38,7 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
         <div className="p-4 space-y-6 max-h-[70vh] overflow-y-auto">
           {/* Location */}
           <div>
-            <label className="block text-sm font-black mb-2 uppercase tracking-wide">
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">
               Location
             </label>
             <input
@@ -46,13 +46,13 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
               placeholder="Country or city"
               value={filters.location}
               onChange={(e) => onFilterChange({ ...filters, location: e.target.value })}
-              className="w-full px-4 py-3 border-2 border-black rounded-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#0057FF]"
+              className="w-full px-4 py-3 border border-border rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-[#2F5BFF]"
             />
           </div>
 
           {/* When */}
           <div>
-            <label className="block text-sm font-black mb-2 uppercase tracking-wide">
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">
               When
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -60,10 +60,10 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
                 <button
                   key={option}
                   onClick={() => onFilterChange({ ...filters, when: option as SearchFilters['when'] })}
-                  className={`px-4 py-3 border-2 border-black rounded-sm font-bold text-sm transition-colors ${
+                  className={`px-4 py-3 border rounded-lg font-bold text-sm transition-colors ${
                     filters.when === option
-                      ? 'bg-[#0057FF] text-white'
-                      : 'bg-white text-black hover:bg-gray-50'
+                      ? 'bg-[#2F5BFF] text-white border-[#2F5BFF]'
+                      : 'bg-white text-black border-border hover:bg-gray-50'
                   }`}
                 >
                   {option === 'any' && 'Any time'}
@@ -77,7 +77,7 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
 
           {/* Setting */}
           <div>
-            <label className="block text-sm font-black mb-2 uppercase tracking-wide">
+            <label className="block text-sm font-bold mb-2 uppercase tracking-wide">
               Setting
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -90,10 +90,10 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
                 <button
                   key={option.value}
                   onClick={() => onFilterChange({ ...filters, setting: option.value })}
-                  className={`px-4 py-3 border-2 border-black rounded-sm font-bold text-sm transition-colors ${
+                  className={`px-4 py-3 border rounded-lg font-bold text-sm transition-colors ${
                     filters.setting === option.value
-                      ? 'bg-[#0057FF] text-white'
-                      : 'bg-white text-black hover:bg-gray-50'
+                      ? 'bg-[#2F5BFF] text-white border-[#2F5BFF]'
+                      : 'bg-white text-black border-border hover:bg-gray-50'
                   }`}
                 >
                   {option.label}
@@ -104,21 +104,21 @@ export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCo
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t-2 border-black bg-gray-50">
+        <div className="p-4 border-t border-border bg-gray-50">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-bold text-muted-foreground">
+            <span className="text-sm font-medium text-muted-foreground">
               {resultCount} festivals
             </span>
             <button
               onClick={() => onFilterChange({ location: '', when: 'any', setting: '' })}
-              className="text-sm font-bold text-[#0057FF] hover:underline"
+              className="text-sm font-bold text-[#2F5BFF] hover:underline"
             >
               Clear all
             </button>
           </div>
           <Button
             onClick={onClose}
-            className="w-full bg-[#0057FF] hover:bg-[#003FCC] text-white font-black py-6 text-base"
+            className="w-full bg-[#2F5BFF] hover:bg-[#1A44E0] text-white font-bold py-6 text-base"
           >
             Show {resultCount} festivals
           </Button>

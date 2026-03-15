@@ -73,7 +73,7 @@ export function SharePlanModal({ isOpen, onClose, hasAccount }: SharePlanModalPr
                 </div>
 
                 <div className="pt-2 space-y-3">
-                  <Button className="w-full" size="lg">
+                  <Button className="w-full bg-[#2F5BFF] hover:bg-[#1A44E0] text-white" size="lg">
                     Create free account
                   </Button>
                   <Button 

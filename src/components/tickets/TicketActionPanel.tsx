@@ -6,8 +6,8 @@ type ActionPanelVariant = 'buy' | 'follow' | 'not_announced' | 'sold_out';
 interface TicketActionPanelProps {
   variant: ActionPanelVariant;
   purchaseUrl?: string;
-  trustLine?: string; // "Verified by organizers · Last updated 2 days ago"
-  followers?: number; // Number of people following
+  trustLine?: string;
+  followers?: number;
 }
 
 export function TicketActionPanel({ 
@@ -26,23 +26,23 @@ export function TicketActionPanel({
     <div className="space-y-4">
       {/* Primary action */}
       {variant === 'buy' && purchaseUrl && (
-        <Button size="lg" className="w-full gap-2" asChild>
+        <Button size="lg" className="w-full gap-2 bg-[#0E7C66] hover:bg-[#0A6353]" asChild>
           <a href={purchaseUrl} target="_blank" rel="noopener noreferrer">
-            <span>Buy tickets now</span>
+            <span>Buy tickets</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </Button>
       )}
 
       {variant === 'follow' && (
-        <Button size="lg" variant="outline" className="w-full gap-2">
+        <Button size="lg" variant="outline" className="w-full gap-2 border-[#0E7C66] text-[#0E7C66] hover:bg-[#0E7C66] hover:text-white">
           <Bell className="w-4 h-4" />
-          <span>Follow next opening</span>
+          <span>Follow ticket alerts</span>
         </Button>
       )}
 
       {variant === 'not_announced' && (
-        <Button size="lg" variant="outline" className="w-full gap-2">
+        <Button size="lg" variant="outline" className="w-full gap-2 border-[#0E7C66] text-[#0E7C66] hover:bg-[#0E7C66] hover:text-white">
           <Bell className="w-4 h-4" />
           <span>Get notified</span>
         </Button>

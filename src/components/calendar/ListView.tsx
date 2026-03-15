@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Bell, ExternalLink, ChevronRight } from 'lucide-react';
+import { Calendar, MapPin, Bell, ExternalLink, ChevronRight, BarChart3 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { CalendarEvent } from './CalendarEvent';
 
@@ -6,16 +6,16 @@ interface ListViewProps {
   events: CalendarEvent[];
   onEventClick: (festivalId: string) => void;
   onSetAlert?: (festivalId: string) => void;
+  compareSet?: Set<string>;
+  onToggleCompare?: (festivalId: string) => void;
 }
 
-export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
-  // Sort events: ticket openings first, then by date
+export function ListView({ events, onEventClick, onSetAlert, compareSet, onToggleCompare }: ListViewProps) {
+  // Sort events: ticket openings first (soonest first), then by date
   const sortedEvents = [...events].sort((a, b) => {
-    // Ticket openings come first
     if (a.type === 'ticket_opening' && b.type === 'festival') return -1;
     if (a.type === 'festival' && b.type === 'ticket_opening') return 1;
 
-    // Then sort by date
     const dateA = a.type === 'ticket_opening' ? new Date(a.data.opensAt) : new Date(a.data.startDate);
     const dateB = b.type === 'ticket_opening' ? new Date(b.data.opensAt) : new Date(b.data.startDate);
     
@@ -38,21 +38,6 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
     return acc;
   }, {} as Record<string, CalendarEvent[]>);
 
-  const formatDate = (dateStr: string, type: 'ticket_opening' | 'festival') => {
-    const date = new Date(dateStr);
-    if (type === 'ticket_opening') {
-      return date.toLocaleDateString('en-US', { 
-        weekday: 'short',
-        month: 'short', 
-        day: 'numeric' 
-      });
-    }
-    return date.toLocaleDateString('en-US', { 
-      month: 'short', 
-      day: 'numeric' 
-    });
-  };
-
   const formatDateRange = (start: string, end: string) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
@@ -69,18 +54,23 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
     return date >= now;
   };
 
+  const canCompare = !!onToggleCompare;
+
   return (
     <div className="space-y-6 md:space-y-8">
       {Object.entries(groupedEvents).map(([monthYear, monthEvents]) => (
-        <div key={monthYear} className="space-y-2 md:space-y-4">
-          {/* Month header */}
-          <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-2 md:pb-3 border-b border-border">
-            <h3 className="text-base md:text-lg font-bold md:font-semibold">{monthYear}</h3>
+        <div key={monthYear} className="md:bg-muted/20 md:p-4 md:rounded-lg">
+          {/* Month header — stronger spacing */}
+          <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-2 md:pb-3 mb-2 md:mb-3 border-b border-border">
+            <h3 className="text-base md:text-lg font-bold">{monthYear}</h3>
           </div>
 
           {/* Mobile: Compact list */}
           <div className="md:hidden divide-y divide-border">
             {monthEvents.map((event, idx) => {
+              const festivalId = event.data.festivalId;
+              const isInCompare = compareSet?.has(festivalId) ?? false;
+
               if (event.type === 'ticket_opening') {
                 const upcoming = isUpcoming(event.data.opensAt);
                 const date = new Date(event.data.opensAt);
@@ -88,52 +78,62 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                 return (
                   <div
                     key={`ticket-${idx}`}
-                    onClick={() => onEventClick(event.data.festivalId)}
-                    className="py-3 flex items-center gap-3 active:bg-gray-50 transition-colors"
+                    className={`py-2 flex items-center gap-2 active:bg-gray-50 transition-colors ${isInCompare ? 'bg-[#2F5BFF]/5' : ''}`}
                   >
-                    {/* Date left */}
-                    <div className="shrink-0 w-14 text-center">
-                      <div className={`text-[10px] font-bold uppercase tracking-wide ${upcoming ? 'text-[#0057FF]' : 'text-muted-foreground'}`}>
+                    {/* Compare checkbox */}
+                    {canCompare && (
+                      <button
+                        onClick={() => onToggleCompare(festivalId)}
+                        className={`shrink-0 w-4 h-4 rounded flex items-center justify-center transition-colors ${
+                          isInCompare
+                            ? 'bg-[#2F5BFF] text-white'
+                            : 'bg-white border border-border text-transparent hover:border-[#2F5BFF]'
+                        }`}
+                        title="Add to compare"
+                      >
+                        <BarChart3 className="w-2.5 h-2.5" />
+                      </button>
+                    )}
+
+                    {/* Compact date for ticket openings */}
+                    <div className="shrink-0 w-11 text-center relative" onClick={() => onEventClick(festivalId)}>
+                      {upcoming && (
+                        <div className="absolute left-0 top-0.5 bottom-0.5 w-[2px] rounded-full bg-[#FFD600]" />
+                      )}
+                      <div className={`text-[9px] font-bold uppercase tracking-wide leading-none ${upcoming ? 'text-[#2F5BFF]' : 'text-muted-foreground'}`}>
                         {date.toLocaleDateString('en-US', { month: 'short' })}
                       </div>
-                      <div className={`text-xl font-black ${upcoming ? 'text-[#0057FF]' : 'text-foreground'}`}>
+                      <div className={`text-lg font-black leading-none mt-0.5 ${upcoming ? 'text-[#2F5BFF]' : 'text-foreground'}`}>
                         {date.getDate()}
                       </div>
                     </div>
 
-                    {/* Festival info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-0.5">
-                        <span className={`text-[10px] font-bold uppercase tracking-wide ${upcoming ? 'text-[#0057FF]' : 'text-muted-foreground'}`}>
-                          Tickets open
-                        </span>
-                        {event.data.lotName && (
-                          <span className="text-[10px] text-muted-foreground">· {event.data.lotName}</span>
-                        )}
-                      </div>
-                      <h4 className="font-bold text-sm leading-tight line-clamp-1 mb-0.5">
+                    {/* Festival info — 2 lines max */}
+                    <div className="flex-1 min-w-0" onClick={() => onEventClick(festivalId)}>
+                      <h4 className="font-bold text-[13px] leading-tight line-clamp-1">
                         {event.data.festivalName}
                       </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {event.data.location} · {event.data.opensTime}
-                      </p>
+                      <div className="flex items-center gap-1 text-[11px] text-muted-foreground leading-tight mt-0.5">
+                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold uppercase ${upcoming ? 'bg-[#FFD600]/20 text-[#7A6500]' : 'bg-muted text-muted-foreground'}`}>
+                          {event.data.lotName || 'Ticket'}
+                        </span>
+                        <span>·</span>
+                        <span className="truncate">{event.data.location} · {event.data.opensTime}</span>
+                      </div>
                     </div>
 
-                    {/* Alert icon + chevron */}
-                    <div className="shrink-0 flex items-center gap-2">
-                      {upcoming && onSetAlert && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSetAlert(event.data.festivalId);
-                          }}
-                          className="p-2 hover:bg-gray-100 rounded-sm active:bg-gray-200 transition-colors"
-                        >
-                          <Bell className="w-4 h-4 text-[#0057FF]" />
-                        </button>
-                      )}
-                      <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                    </div>
+                    {/* Alert icon */}
+                    {upcoming && onSetAlert && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSetAlert(festivalId);
+                        }}
+                        className="shrink-0 p-1.5 hover:bg-gray-100 rounded-lg active:bg-gray-200 transition-colors"
+                      >
+                        <Bell className="w-3.5 h-3.5 text-[#2F5BFF]" />
+                      </button>
+                    )}
                   </div>
                 );
               } else {
@@ -142,35 +142,45 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                 return (
                   <div
                     key={`festival-${idx}`}
-                    onClick={() => onEventClick(event.data.festivalId)}
-                    className="py-3 flex items-center gap-3 active:bg-gray-50 transition-colors"
+                    className={`py-2 flex items-center gap-2 active:bg-gray-50 transition-colors ${isInCompare ? 'bg-[#2F5BFF]/5' : ''}`}
                   >
-                    {/* Date left */}
-                    <div className="shrink-0 w-14 text-center">
-                      <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                    {/* Compare checkbox */}
+                    {canCompare && (
+                      <button
+                        onClick={() => onToggleCompare(festivalId)}
+                        className={`shrink-0 w-4 h-4 rounded flex items-center justify-center transition-colors ${
+                          isInCompare
+                            ? 'bg-[#2F5BFF] text-white'
+                            : 'bg-white border border-border text-transparent hover:border-[#2F5BFF]'
+                        }`}
+                        title="Add to compare"
+                      >
+                        <BarChart3 className="w-2.5 h-2.5" />
+                      </button>
+                    )}
+
+                    {/* Neutral date for festival dates */}
+                    <div className="shrink-0 w-11 text-center" onClick={() => onEventClick(festivalId)}>
+                      <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground leading-none">
                         {startDate.toLocaleDateString('en-US', { month: 'short' })}
                       </div>
-                      <div className="text-xl font-black text-foreground">
+                      <div className="text-lg font-black text-foreground leading-none mt-0.5">
                         {startDate.getDate()}
                       </div>
                     </div>
 
-                    {/* Festival info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground mb-0.5">
-                        Festival
-                      </div>
-                      <h4 className="font-bold text-sm leading-tight line-clamp-1 mb-0.5">
+                    {/* Festival info — 2 lines max */}
+                    <div className="flex-1 min-w-0" onClick={() => onEventClick(festivalId)}>
+                      <h4 className="font-bold text-[13px] leading-tight line-clamp-1">
                         {event.data.festivalName}
                       </h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1">
-                        {event.data.location} · {formatDateRange(event.data.startDate, event.data.endDate)}
-                      </p>
-                    </div>
-
-                    {/* Chevron */}
-                    <div className="shrink-0">
-                      <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                      <div className="flex items-center gap-1 text-[11px] text-muted-foreground leading-tight mt-0.5">
+                        <span className="px-1.5 py-0.5 bg-muted rounded text-[9px] font-bold uppercase">
+                          Festival
+                        </span>
+                        <span>·</span>
+                        <span className="truncate">{event.data.location} · {formatDateRange(event.data.startDate, event.data.endDate)}</span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -181,35 +191,59 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
           {/* Desktop: Card layout */}
           <div className="hidden md:block md:space-y-3">
             {monthEvents.map((event, idx) => {
+              const festivalId = event.data.festivalId;
+              const isInCompare = compareSet?.has(festivalId) ?? false;
+
               if (event.type === 'ticket_opening') {
                 const upcoming = isUpcoming(event.data.opensAt);
                 
                 return (
                   <div
                     key={`ticket-${idx}`}
-                    className={`group border rounded-xl p-5 transition-all hover:shadow-md ${
-                      upcoming 
-                        ? 'border-primary/30 bg-primary/5 hover:border-primary/50' 
-                        : 'border-border bg-background hover:border-border'
+                    className={`group border rounded-xl p-5 transition-all hover:shadow-md relative overflow-hidden ${
+                      isInCompare
+                        ? 'border-[#2F5BFF] ring-1 ring-[#2F5BFF]/20 bg-white'
+                        : upcoming 
+                          ? 'border-border bg-white hover:border-[#2F5BFF]/30' 
+                          : 'border-border bg-background hover:border-border'
                     }`}
                   >
+                    {/* Yellow left bar for ticket openings */}
+                    {upcoming && (
+                      <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#FFD600] rounded-l-xl" />
+                    )}
+
                     <div className="flex items-start gap-4">
-                      {/* Icon indicator - MORE PROMINENT */}
+                      {/* Compare toggle */}
+                      {canCompare && (
+                        <button
+                          onClick={() => onToggleCompare(festivalId)}
+                          className={`shrink-0 w-8 h-8 mt-2 rounded-lg flex items-center justify-center transition-colors ${
+                            isInCompare
+                              ? 'bg-[#2F5BFF] text-white'
+                              : 'bg-white border border-border text-muted-foreground hover:border-[#2F5BFF] hover:text-[#2F5BFF]'
+                          }`}
+                          title={isInCompare ? 'Remove from compare' : 'Add to compare'}
+                        >
+                          <BarChart3 className="w-4 h-4" />
+                        </button>
+                      )}
+
+                      {/* Icon indicator — subtle, not heavy blue bg */}
                       <div className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${
-                        upcoming ? 'bg-primary/20' : 'bg-muted'
+                        upcoming ? 'bg-[#FFD600]/15 border border-[#FFD600]/30' : 'bg-muted'
                       }`}>
                         <div className={`w-2.5 h-2.5 rounded-full ${
-                          upcoming ? 'bg-primary animate-pulse' : 'bg-muted-foreground/50'
+                          upcoming ? 'bg-[#2F5BFF] animate-pulse' : 'bg-muted-foreground/50'
                         }`} />
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 min-w-0 space-y-2">
-                        {/* Type badge */}
                         <div className="flex items-center gap-2">
                           <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium ${
                             upcoming 
-                              ? 'bg-primary/20 text-primary' 
+                              ? 'bg-[#2F5BFF]/10 text-[#2F5BFF]' 
                               : 'bg-muted text-muted-foreground'
                           }`}>
                             Ticket Opening
@@ -221,22 +255,20 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                           )}
                         </div>
 
-                        {/* Festival name */}
                         <button
-                          onClick={() => onEventClick(event.data.festivalId)}
-                          className="block text-left group-hover:text-primary transition-colors"
+                          onClick={() => onEventClick(festivalId)}
+                          className="block text-left group-hover:text-[#2F5BFF] transition-colors"
                         >
-                          <h4 className="font-semibold text-base">
+                          <h4 className="font-bold text-base">
                             {event.data.festivalName}
                           </h4>
                         </button>
 
-                        {/* Meta info */}
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Calendar className="w-3.5 h-3.5" />
                             <span>
-                              {formatDate(event.data.opensAt, 'ticket_opening')} · {event.data.opensTime}
+                              {new Date(event.data.opensAt).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} · {event.data.opensTime}
                             </span>
                           </div>
                           <div className="flex items-center gap-1.5">
@@ -257,7 +289,7 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => onSetAlert(event.data.festivalId)}
+                            onClick={() => onSetAlert(festivalId)}
                             className="gap-2"
                           >
                             <Bell className="w-3.5 h-3.5" />
@@ -267,7 +299,7 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => onEventClick(event.data.festivalId)}
+                          onClick={() => onEventClick(festivalId)}
                           className="gap-2"
                         >
                           <span>View</span>
@@ -278,36 +310,49 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                   </div>
                 );
               } else {
-                // Festival event - LESS PROMINENT
                 return (
                   <div
                     key={`festival-${idx}`}
-                    className="group border border-border rounded-xl p-5 bg-background hover:shadow-md transition-all"
+                    className={`group border rounded-xl p-5 bg-background hover:shadow-md transition-all ${
+                      isInCompare
+                        ? 'border-[#2F5BFF] ring-1 ring-[#2F5BFF]/20 bg-[#2F5BFF]/5'
+                        : 'border-border'
+                    }`}
                   >
                     <div className="flex items-start gap-4">
-                      {/* Icon indicator - subtle */}
+                      {/* Compare toggle */}
+                      {canCompare && (
+                        <button
+                          onClick={() => onToggleCompare(festivalId)}
+                          className={`shrink-0 w-8 h-8 mt-2 rounded-lg flex items-center justify-center transition-colors ${
+                            isInCompare
+                              ? 'bg-[#2F5BFF] text-white'
+                              : 'bg-white border border-border text-muted-foreground hover:border-[#2F5BFF] hover:text-[#2F5BFF]'
+                          }`}
+                          title={isInCompare ? 'Remove from compare' : 'Add to compare'}
+                        >
+                          <BarChart3 className="w-4 h-4" />
+                        </button>
+                      )}
+
                       <div className="shrink-0 w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
                         <Calendar className="w-5 h-5 text-muted-foreground" />
                       </div>
 
-                      {/* Content */}
                       <div className="flex-1 min-w-0 space-y-2">
-                        {/* Type badge */}
                         <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-muted text-muted-foreground">
                           Festival Dates
                         </span>
 
-                        {/* Festival name */}
                         <button
-                          onClick={() => onEventClick(event.data.festivalId)}
-                          className="block text-left group-hover:text-primary transition-colors"
+                          onClick={() => onEventClick(festivalId)}
+                          className="block text-left group-hover:text-[#2F5BFF] transition-colors"
                         >
-                          <h4 className="font-semibold text-base">
+                          <h4 className="font-bold text-base">
                             {event.data.festivalName}
                           </h4>
                         </button>
 
-                        {/* Meta info */}
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1.5">
                             <Calendar className="w-3.5 h-3.5" />
@@ -320,12 +365,11 @@ export function ListView({ events, onEventClick, onSetAlert }: ListViewProps) {
                         </div>
                       </div>
 
-                      {/* Action */}
                       <div className="shrink-0">
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => onEventClick(event.data.festivalId)}
+                          onClick={() => onEventClick(festivalId)}
                           className="gap-2"
                         >
                           <span>View</span>

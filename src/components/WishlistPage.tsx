@@ -41,21 +41,21 @@ export function WishlistPage({
   if (savedFestivals.length === 0) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-          <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-3">Saved Festivals</h1>
-            <p className="text-lg text-muted-foreground">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-16">
+          <div className="mb-8 md:mb-12">
+            <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3">Saved Festivals</h1>
+            <p className="text-sm md:text-lg text-muted-foreground">
               Your personal planning space for festival trips
             </p>
           </div>
 
           {/* Empty state */}
-          <div className="max-w-xl mx-auto text-center py-16">
-            <div className="w-16 h-16 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-6">
-              <Bookmark className="w-8 h-8 text-muted-foreground" />
+          <div className="max-w-xl mx-auto text-center py-12 md:py-16">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4 md:mb-6">
+              <Bookmark className="w-7 h-7 md:w-8 md:h-8 text-muted-foreground" />
             </div>
-            <h2 className="text-2xl font-semibold mb-3">No saved festivals yet</h2>
-            <p className="text-muted-foreground leading-relaxed mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold mb-2 md:mb-3">No saved festivals yet</h2>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8">
               Browse festivals and click the save button to build your personal wishlist. Use it to compare dates, track ticket openings, and plan your trips.
             </p>
             <Button size="lg" onClick={() => window.history.back()}>
@@ -70,12 +70,12 @@ export function WishlistPage({
   // Wishlist with saved festivals
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-16">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 md:gap-6 mb-8 md:mb-12">
           <div>
-            <h1 className="text-4xl font-bold mb-3">Saved Festivals</h1>
-            <p className="text-lg text-muted-foreground">
+            <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3">Saved Festivals</h1>
+            <p className="text-sm md:text-lg text-muted-foreground">
               {savedFestivals.length} {savedFestivals.length === 1 ? 'festival' : 'festivals'} saved
             </p>
           </div>

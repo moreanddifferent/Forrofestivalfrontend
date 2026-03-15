@@ -65,7 +65,7 @@ export function FestivalDetail({ festival, onClose }: FestivalDetailProps) {
       </div>
 
       {/* Hero Image */}
-      <div className="max-w-4xl mx-auto px-6 py-6">
+      <div className="max-w-4xl mx-auto px-6 py-4 md:py-6">
         <div className="relative aspect-[21/9] rounded-xl overflow-hidden bg-muted">
           <img
             src={festival.image}
@@ -77,9 +77,9 @@ export function FestivalDetail({ festival, onClose }: FestivalDetailProps) {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-6 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Main content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 md:space-y-8">
             {/* Quick info */}
             <div className="space-y-3">
               <div className="flex items-start gap-2 text-muted-foreground">

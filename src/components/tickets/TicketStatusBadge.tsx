@@ -4,9 +4,9 @@ type BadgeVariant = 'open_now' | 'opening_soon' | 'not_announced' | 'sold_out';
 
 interface TicketStatusBadgeProps {
   variant: BadgeVariant;
-  opensAt?: string; // ISO date string
-  opensTime?: string; // "12:00 CET"
-  price?: string; // "€120" or "From €120"
+  opensAt?: string;
+  opensTime?: string;
+  price?: string;
   compact?: boolean;
 }
 
@@ -27,8 +27,8 @@ export function TicketStatusBadge({
   switch (variant) {
     case 'open_now':
       return (
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-foreground border border-primary/20 rounded-md text-sm">
-          <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0E7C66]/10 text-[#0E7C66] border border-[#0E7C66]/20 rounded-md text-sm">
+          <span className="w-1.5 h-1.5 bg-[#0E7C66] rounded-full animate-pulse" />
           <span className="font-medium">Tickets open</span>
           {price && !compact && (
             <span className="text-muted-foreground">· {price}</span>
@@ -39,7 +39,7 @@ export function TicketStatusBadge({
     case 'opening_soon':
       if (!opensAt) return null;
       return (
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-950/30 text-foreground border border-blue-200 dark:border-blue-900 rounded-md text-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#2F5BFF]/10 text-[#2F5BFF] border border-[#2F5BFF]/20 rounded-md text-sm">
           <Clock className="w-3.5 h-3.5" />
           <span>Opens {formatDate(opensAt)}</span>
           {opensTime && !compact && (

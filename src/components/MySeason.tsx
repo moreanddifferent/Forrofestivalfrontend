@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { MapPin, Calendar, X, Share2, Lock, ChevronDown } from 'lucide-react';
+import { MapPin, Calendar, X, Share2, ChevronDown, Bookmark, BarChart3 } from 'lucide-react';
 import { Button } from './ui/button';
+import { YellowUnderlineTitle } from './YellowUnderlineTitle';
 
 type FestivalStatus = 'considering' | 'going';
 
@@ -15,6 +16,8 @@ interface SavedFestival {
   image: string;
   locationType: 'sea' | 'countryside' | 'urban' | 'mountain';
   status: FestivalStatus;
+  ticketStatus?: 'open_now' | 'opening_soon' | 'not_announced' | 'sold_out';
+  nextOpeningDate?: string;
 }
 
 interface MySeasonProps {
@@ -23,6 +26,8 @@ interface MySeasonProps {
   onRemove: (festivalId: string) => void;
   onShareClick: () => void;
   onExploreFestivals?: () => void;
+  compareSet?: Set<string>;
+  onToggleCompare?: (festivalId: string) => void;
 }
 
 const LOCATION_TYPE_LABELS = {
@@ -37,70 +42,75 @@ export function MySeason({
   onStatusChange, 
   onRemove,
   onShareClick, 
-  onExploreFestivals 
+  onExploreFestivals,
+  compareSet = new Set(),
+  onToggleCompare
 }: MySeasonProps) {
   const [showPast, setShowPast] = useState(false);
 
-  // Separate upcoming and past festivals (using June 2026 as current date for demo)
-  const currentDate = new Date(2026, 5, 1); // June 1, 2026
+  const currentDate = new Date(2026, 5, 1);
   const upcomingFestivals = savedFestivals.filter(f => f.endDate >= currentDate);
   const pastFestivals = savedFestivals.filter(f => f.endDate < currentDate);
 
-  // Detect conflicts
-  const conflicts = detectConflicts(upcomingFestivals);
+  // Sort by next ticket opening (if known), then festival start date
+  const sortedUpcoming = [...upcomingFestivals].sort((a, b) => {
+    // Prioritize festivals with known ticket openings
+    if (a.nextOpeningDate && !b.nextOpeningDate) return -1;
+    if (!a.nextOpeningDate && b.nextOpeningDate) return 1;
+    if (a.nextOpeningDate && b.nextOpeningDate) {
+      return new Date(a.nextOpeningDate).getTime() - new Date(b.nextOpeningDate).getTime();
+    }
+    return a.startDate.getTime() - b.startDate.getTime();
+  });
 
-  // Group upcoming by month
-  const festivalsByMonth = groupByMonth(upcomingFestivals);
+  const conflicts = detectConflicts(upcomingFestivals);
+  const festivalsByMonth = groupByMonth(sortedUpcoming);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       {/* Header */}
       <section className="border-b border-border">
-        <div className="max-w-4xl mx-auto px-6 py-10">
-          <div className="flex items-start justify-between gap-4 mb-3">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-2 md:py-10">
+          <div className="flex items-start justify-between gap-3 md:gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <h1 className="text-3xl font-bold">My Festival Plan</h1>
-                <span className="px-2 py-0.5 text-xs bg-muted text-muted-foreground rounded">
-                  <Lock className="w-3 h-3 inline mr-1" />
-                  Private
-                </span>
-              </div>
-              <p className="text-muted-foreground">
-                {upcomingFestivals.length} upcoming {upcomingFestivals.length === 1 ? 'festival' : 'festivals'}
-                {conflicts.size > 0 && (
-                  <> · <span className="text-warning">{conflicts.size} date {conflicts.size === 1 ? 'conflict' : 'conflicts'}</span></>
+              <h1 className="text-lg md:text-3xl font-bold mb-0.5 md:mb-1 leading-tight">Saved</h1>
+              <p className="text-[11px] md:text-sm text-muted-foreground leading-tight">
+                {upcomingFestivals.length} upcoming{conflicts.size > 0 && (
+                  <> · <span className="text-amber-600">{conflicts.size} {conflicts.size === 1 ? 'conflict' : 'conflicts'}</span></>
                 )}
               </p>
             </div>
-            <Button onClick={onShareClick} variant="outline" size="sm" className="gap-2">
-              <Share2 className="w-4 h-4" />
-              Share
+            <Button onClick={onShareClick} variant="outline" size="sm" className="gap-1.5 md:gap-2 shrink-0 h-8 md:h-9 px-2.5 md:px-4">
+              <Share2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
+              <span className="hidden sm:inline text-xs md:text-sm">Share</span>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-8">
-        <div className="max-w-4xl mx-auto px-6">
-          {upcomingFestivals.length === 0 ? (
-            <div className="text-center py-16">
-              <h2 className="text-2xl font-bold mb-2">No festivals in your season</h2>
-              <p className="text-muted-foreground mb-6">
-                Add festivals to track dates and plan your schedule.
+      <section className="py-4 md:py-8">
+        <div className="max-w-4xl mx-auto px-4 md:px-6">
+          {/* Empty state */}
+          {upcomingFestivals.length === 0 && (
+            <div className="max-w-md mx-auto text-center py-12 md:py-16 px-4">
+              <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 md:mb-6 bg-muted rounded-full flex items-center justify-center">
+                <Bookmark className="w-8 h-8 md:w-10 md:h-10 text-muted-foreground" />
+              </div>
+              <h2 className="text-lg md:text-xl font-bold mb-2">No saved festivals yet</h2>
+              <p className="text-sm md:text-base text-muted-foreground mb-6 md:mb-8 leading-relaxed">
+                Start building your season by saving festivals you're interested in
               </p>
-              {onExploreFestivals && (
-                <Button onClick={onExploreFestivals}>
-                  Explore festivals
-                </Button>
-              )}
+              <Button onClick={onExploreFestivals} className="bg-[#2F5BFF] hover:bg-[#1A44E0] text-white font-bold">
+                Browse festivals
+              </Button>
             </div>
-          ) : (
-            <div className="space-y-8">
+          )}
+          {sortedUpcoming.length > 0 && (
+            <div className="space-y-6">
               {festivalsByMonth.map(({ month, festivals }) => (
                 <div key={month}>
-                  <h2 className="text-lg font-semibold mb-3">{month}</h2>
+                  <h2 className="text-base font-bold mb-3">{month}</h2>
                   <div className="space-y-2">
                     {festivals.map(festival => {
                       const conflictingFestival = getConflictingFestival(
@@ -114,9 +124,11 @@ export function MySeason({
                             festival={festival}
                             onStatusChange={onStatusChange}
                             onRemove={onRemove}
+                            compareSet={compareSet}
+                            onToggleCompare={onToggleCompare}
                           />
                           {conflictingFestival && (
-                            <div className="text-sm text-warning mt-1.5 ml-28">
+                            <div className="text-xs text-amber-600 mt-1.5 ml-[104px] md:ml-28">
                               Conflicts with {conflictingFestival.name} ({conflictingFestival.dates})
                             </div>
                           )}
@@ -131,10 +143,10 @@ export function MySeason({
         </div>
       </section>
 
-      {/* Past Festivals Section */}
+      {/* Past Festivals */}
       {pastFestivals.length > 0 && (
-        <section className="border-t border-border py-8">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="border-t border-border py-6 md:py-8">
+          <div className="max-w-4xl mx-auto px-4 md:px-6">
             <button
               onClick={() => setShowPast(!showPast)}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -170,26 +182,46 @@ interface FestivalSeasonCardProps {
   onStatusChange: (festivalId: string, status: FestivalStatus) => void;
   onRemove: (festivalId: string) => void;
   isPast?: boolean;
+  compareSet?: Set<string>;
+  onToggleCompare?: (festivalId: string) => void;
 }
 
-function FestivalSeasonCard({ festival, onStatusChange, onRemove, isPast = false }: FestivalSeasonCardProps) {
+function FestivalSeasonCard({ festival, onStatusChange, onRemove, isPast = false, compareSet, onToggleCompare }: FestivalSeasonCardProps) {
+  const isInCompare = compareSet?.has(festival.id) ?? false;
+  const canCompare = !isPast && onToggleCompare;
+
   return (
-    <div className={`bg-card border border-border rounded-lg overflow-hidden hover:shadow-sm transition-shadow ${isPast ? 'opacity-60' : ''}`}>
+    <div className={`bg-card border rounded-lg overflow-hidden hover:shadow-sm transition-shadow ${isPast ? 'opacity-60' : ''} ${isInCompare ? 'border-[#2F5BFF] ring-1 ring-[#2F5BFF]/20' : 'border-border'}`}>
       <div className="flex gap-3">
-        {/* Thumbnail */}
-        <div className="w-24 h-20 shrink-0 overflow-hidden bg-muted">
-          <img
-            src={festival.image}
-            alt={festival.name}
-            className="w-full h-full object-cover"
-          />
+        {/* Compare checkbox + Thumbnail */}
+        <div className="relative w-20 md:w-24 shrink-0 overflow-hidden bg-muted">
+          <div className="w-full aspect-[4/3]">
+            <img
+              src={festival.image}
+              alt={festival.name}
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          {canCompare && (
+            <button
+              onClick={() => onToggleCompare(festival.id)}
+              className={`absolute bottom-1 left-1 w-5 h-5 rounded flex items-center justify-center transition-colors ${
+                isInCompare
+                  ? 'bg-[#2F5BFF] text-white'
+                  : 'bg-white/90 border border-border text-transparent hover:border-[#2F5BFF]'
+              }`}
+              title="Add to compare"
+            >
+              <BarChart3 className="w-3 h-3" />
+            </button>
+          )}
         </div>
 
         {/* Content */}
-        <div className="flex-1 py-2.5 pr-3 flex items-center justify-between gap-3 min-w-0">
+        <div className="flex-1 py-2 md:py-2.5 pr-2 md:pr-3 flex items-center justify-between gap-2 md:gap-3 min-w-0">
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold mb-1.5 truncate">{festival.name}</h3>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+            <h3 className="font-bold text-sm mb-1 truncate">{festival.name}</h3>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
               <div className="flex items-center gap-1">
                 <MapPin className="w-3 h-3 shrink-0" />
                 <span className="truncate">{festival.location}, {festival.country}</span>
@@ -198,7 +230,7 @@ function FestivalSeasonCard({ festival, onStatusChange, onRemove, isPast = false
                 <Calendar className="w-3 h-3 shrink-0" />
                 <span>{festival.dates}</span>
               </div>
-              <span className="px-1.5 py-0.5 bg-muted text-foreground rounded text-xs">
+              <span className="px-1.5 py-0.5 bg-muted text-foreground rounded text-[10px] font-medium">
                 {LOCATION_TYPE_LABELS[festival.locationType]}
               </span>
             </div>
@@ -258,7 +290,7 @@ function StatusToggle({ status, onChange }: StatusToggleProps) {
         onClick={() => onChange('going')}
         className={`px-3 py-1 text-xs font-medium rounded transition-colors ${
           status === 'going'
-            ? 'bg-primary text-primary-foreground'
+            ? 'bg-[#0E7C66] text-white'
             : 'text-muted-foreground hover:text-foreground'
         }`}
       >
@@ -271,12 +303,10 @@ function StatusToggle({ status, onChange }: StatusToggleProps) {
 // Helper functions
 function detectConflicts(festivals: SavedFestival[]): Set<string> {
   const conflicts = new Set<string>();
-
   for (let i = 0; i < festivals.length; i++) {
     for (let j = i + 1; j < festivals.length; j++) {
       const festA = festivals[i];
       const festB = festivals[j];
-
       if (
         (festA.startDate <= festB.endDate && festA.endDate >= festB.startDate) ||
         (festB.startDate <= festA.endDate && festB.endDate >= festA.startDate)
@@ -286,7 +316,6 @@ function detectConflicts(festivals: SavedFestival[]): Set<string> {
       }
     }
   }
-
   return conflicts;
 }
 
@@ -306,15 +335,12 @@ function getConflictingFestival(
 }
 
 function groupByMonth(festivals: SavedFestival[]) {
-  const sorted = [...festivals].sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
   const groups: { month: string; festivals: SavedFestival[] }[] = [];
-
-  sorted.forEach(festival => {
+  festivals.forEach(festival => {
     const monthKey = festival.startDate.toLocaleDateString('en-US', {
       month: 'long',
       year: 'numeric'
     });
-
     const existingGroup = groups.find(g => g.month === monthKey);
     if (existingGroup) {
       existingGroup.festivals.push(festival);
@@ -322,6 +348,5 @@ function groupByMonth(festivals: SavedFestival[]) {
       groups.push({ month: monthKey, festivals: [festival] });
     }
   });
-
   return groups;
 }

@@ -1,11 +1,9 @@
-import { Calendar, Bell, ArrowRight, CheckCircle2, Map, SlidersHorizontal } from 'lucide-react';
+import { Bell, ArrowRight, CheckCircle2, Bookmark, Share2, MapPin, Layers, ChevronLeft, ChevronRight, Search, Calendar, SlidersHorizontal } from 'lucide-react';
 import { Button } from './ui/button';
-import { FestivalCard } from './FestivalCard';
-import { IntegratedSearchBar, SearchFilters } from './IntegratedSearchBar';
-import { FilterModal } from './FilterModal';
-import { SectionHeader } from './SectionHeader';
 import { HorizontalScrollSection } from './HorizontalScrollSection';
-import { useState } from 'react';
+import { FilterModal } from './FilterModal';
+import { IntegratedSearchBar, SearchFilters } from './IntegratedSearchBar';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
 interface FestivalCardData {
   id: string;
@@ -23,6 +21,7 @@ interface FestivalCardData {
   experienceType?: 'intimate' | 'sea' | 'immersive' | 'urban' | 'mountain';
   duration?: 'weekend' | 'week';
   editorNote?: string;
+  locationType?: string;
 }
 
 interface HomePageProps {
@@ -30,9 +29,23 @@ interface HomePageProps {
   onFestivalClick: (festivalId: string) => void;
   onNavigateToCalendar: () => void;
   onNavigateToMap: () => void;
+  onSetAlert?: (festivalId: string) => void;
+  alertSet?: Set<string>;
 }
 
-export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onNavigateToMap }: HomePageProps) {
+const LOCATION_TYPE_LABELS: Record<string, string> = {
+  sea: 'Sea',
+  countryside: 'Countryside',
+  urban: 'Urban',
+  mountain: 'Mountain',
+};
+
+const EXPERIENCE_LABELS: Record<string, string> = {
+  intimate: 'Intimate',
+  immersive: 'Immersive',
+};
+
+export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onNavigateToMap, onSetAlert, alertSet = new Set() }: HomePageProps) {
   const [filters, setFilters] = useState<SearchFilters>({
     location: '',
     when: 'any',
@@ -40,39 +53,59 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
   });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
+  // Carousel state
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
+
+  const updateScrollButtons = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    updateScrollButtons();
+    el.addEventListener('scroll', updateScrollButtons, { passive: true });
+    window.addEventListener('resize', updateScrollButtons);
+    return () => {
+      el.removeEventListener('scroll', updateScrollButtons);
+      window.removeEventListener('resize', updateScrollButtons);
+    };
+  }, [updateScrollButtons]);
+
+  const scrollCarousel = useCallback((direction: 'left' | 'right') => {
+    const el = carouselRef.current;
+    if (!el) return;
+    // Scroll by roughly one card width + gap
+    const cardWidth = el.querySelector('[data-ticket-card]')?.clientWidth || 340;
+    const scrollAmount = direction === 'left' ? -(cardWidth + 12) : (cardWidth + 12);
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }, []);
+
   // Editorial curation
-  const smallFestivals = festivals.filter(f => f.experienceType === 'intimate');
+  const intimateFestivals = festivals.filter(f => f.experienceType === 'intimate');
+  const immersiveFestivals = festivals.filter(f => f.experienceType === 'immersive' || f.duration === 'week');
   const coastalFestivals = festivals.filter(f => f.experienceType === 'sea');
   const cityFestivals = festivals.filter(f => f.experienceType === 'urban');
   const mountainFestivals = festivals.filter(f => f.experienceType === 'mountain');
-  const weekLongFestivals = festivals.filter(f => f.duration === 'week');
 
-  // Upcoming - upcoming festivals and those with opening_soon status
-  const getUpcomingFestivals = () => {
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    
-    return festivals
-      .filter(f => {
-        // Include festivals with opening_soon status OR happening soon
-        if (f.ticketStatus === 'opening_soon') return true;
-        
-        const dateMatch = f.dates.match(/(\w+)\s+(\d+)-(\d+),\s+(\d+)/);
-        if (!dateMatch) return false;
-        
-        const [, month] = dateMatch;
-        const monthIndex = new Date(`${month} 1, 2000`).getMonth();
-        
-        // Show festivals happening in next 3 months
-        return monthIndex >= 4 && monthIndex <= 7; // May-August
-      })
-      .slice(0, 4);
-  };
-
-  const upcomingFestivals = getUpcomingFestivals();
+  // Tickets opening soon — up to 8
+  const ticketsOpeningSoon = festivals
+    .filter(f => f.ticketStatus === 'opening_soon' && f.nextOpeningDate)
+    .sort((a, b) => {
+      const dateA = new Date(a.nextOpeningDate!);
+      const dateB = new Date(b.nextOpeningDate!);
+      return dateA.getTime() - dateB.getTime();
+    })
+    .slice(0, 8);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20 md:pb-0">
       {/* Filter Modal */}
       <FilterModal
         isOpen={isFilterModalOpen}
@@ -82,250 +115,250 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         resultCount={festivals.length}
       />
 
-      {/* Hero Section - MOBILE OPTIMIZED */}
-      <section className="border-b border-border">
-        <div className="max-w-[900px] mx-auto px-4 md:px-6 py-4 md:py-12">
-          <div className="mb-4 md:mb-6">
-            <h1 className="text-[28px] md:text-[52px] font-bold mb-1 md:mb-2 leading-[1.1] tracking-tight">
+      {/* Hero Section */}
+      <section>
+        <div className="max-w-6xl mx-auto px-4 md:px-6 pt-1.5 md:pt-10 pb-0.5 md:pb-4">
+          <div className="max-w-[860px] mb-1 md:mb-4">
+            <h1 className="text-[18px] md:text-[48px] font-bold leading-[1.1] tracking-tight text-foreground">
               Forró festivals in Europe
             </h1>
-            <p className="text-sm md:text-lg text-muted-foreground">
-              Track the season. Plan where to dance.
+            <p className="text-[12px] md:text-lg text-muted-foreground mt-0.5 md:mt-1.5 leading-tight">
+              Plan where to dance.
             </p>
           </div>
 
-          {/* Desktop: Search Bar */}
-          <div className="hidden md:block">
+          {/* Travel Search Bar — desktop */}
+          <div className="hidden md:block max-w-[860px]">
             <IntegratedSearchBar
               filters={filters}
               onFilterChange={setFilters}
               resultCount={festivals.length}
+              onSearch={onNavigateToCalendar}
             />
+          </div>
+
+          {/* Mobile: simplified search bar */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsFilterModalOpen(true)}
+              className="w-full flex items-center gap-2 px-3 py-2.5 border border-border rounded-full bg-card hover:shadow-md transition-shadow h-11"
+            >
+              <Search className="w-4 h-4 text-muted-foreground shrink-0" />
+              <span className="text-[13px] text-muted-foreground flex-1 text-left">
+                Where • When • Setting
+              </span>
+              <div className="w-6 h-6 bg-[#2F5BFF] rounded-full flex items-center justify-center shrink-0">
+                <SlidersHorizontal className="w-3 h-3 text-white" />
+              </div>
+            </button>
           </div>
         </div>
       </section>
 
-      {/* UPCOMING - COMPACT BLUE STRIP */}
-      {upcomingFestivals.length > 0 && (
-        <section className="bg-[#0048FF]">
-          <div className="px-4 md:px-6 md:max-w-6xl md:mx-auto py-3 md:py-5">
-            <h2 className="text-[10px] font-black tracking-[0.25em] text-white mb-2 md:mb-3 uppercase">
-              Upcoming
-            </h2>
-            
-            {/* Mobile: Horizontal scroll with snap */}
-            <div className="md:hidden overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4">
-              <div className="flex gap-2 pb-1">
-                {upcomingFestivals.slice(0, 4).map(festival => (
-                  <div
-                    key={festival.id}
-                    onClick={() => onFestivalClick(festival.id)}
-                    className="flex-shrink-0 w-[85vw] snap-start bg-white rounded-sm shadow-lg active:shadow-xl transition-shadow cursor-pointer overflow-hidden"
-                  >
-                    {/* Compact image - max 200px */}
-                    <div className="relative h-[200px] overflow-hidden">
-                      <img
-                        src={festival.image}
-                        alt={festival.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    
-                    {/* Compact content */}
-                    <div className="p-2.5">
-                      <h3 className="font-black text-xs leading-tight line-clamp-1 text-foreground mb-1">
-                        {festival.name}
-                      </h3>
-                      <p className="text-[10px] font-medium text-muted-foreground line-clamp-1 mb-1.5">
-                        {festival.location} · {festival.dates}
-                      </p>
-                      {festival.ticketStatus === 'opening_soon' && festival.nextOpeningDate ? (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0048FF] text-white rounded-sm text-[10px] font-bold">
-                          Opens {new Date(festival.nextOpeningDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                        </div>
-                      ) : festival.ticketStatus === 'open_now' ? (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0048FF] text-white rounded-sm text-[10px] font-bold">
-                          <span className="w-1 h-1 bg-white rounded-full" />
-                          <span>Open</span>
-                        </div>
-                      ) : (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-muted-foreground rounded-sm text-[10px] font-medium">
-                          {festival.ticketStatus === 'sold_out' ? 'Sold out' : 'TBA'}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+      {/* Tickets opening soon — Electric blue full-width band */}
+      {ticketsOpeningSoon.length > 0 && (
+        <section className="mt-1 md:mt-4 bg-[#2F5BFF]">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 py-0.5 md:py-3.5">
+            {/* Header — white on blue */}
+            <div className="flex items-center justify-between mb-0.5 md:mb-1">
+              <div>
+                <h2 className="text-[13px] md:text-lg font-black tracking-tight text-white leading-tight">
+                  Tickets opening soon
+                </h2>
+                <p className="text-[9px] md:text-[11px] text-white/50 mt-0 md:mt-0.5 leading-tight">
+                  Next releases
+                </p>
               </div>
+              <button
+                onClick={onNavigateToCalendar}
+                className="hidden md:flex items-center gap-1 text-xs font-bold text-white/80 hover:text-white hover:underline shrink-0"
+              >
+                <span>See all in calendar</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
             </div>
 
-            {/* Desktop: Horizontal cards */}
-            <div className="hidden md:grid md:grid-cols-3 gap-3">
-              {upcomingFestivals.slice(0, 3).map(festival => (
-                <div
-                  key={festival.id}
-                  onClick={() => onFestivalClick(festival.id)}
-                  className="group bg-white rounded-sm shadow-xl hover:shadow-2xl transition-all duration-200 hover:-translate-y-1 cursor-pointer overflow-hidden flex"
+            {/* Carousel container */}
+            <div
+              className="relative group/carousel"
+              onMouseEnter={() => setIsCarouselHovered(true)}
+              onMouseLeave={() => setIsCarouselHovered(false)}
+            >
+              {/* Desktop arrow — left (subtle, hover-reveal) */}
+              {canScrollLeft && (
+                <button
+                  onClick={() => scrollCarousel('left')}
+                  className={`hidden md:flex absolute -left-2 top-1/2 -translate-y-1/2 z-10 w-7 h-7 bg-white/90 backdrop-blur rounded-full shadow items-center justify-center hover:bg-white transition-all ${
+                    isCarouselHovered ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  aria-label="Scroll left"
                 >
-                  {/* Image - 40% */}
-                  <div className="relative w-[40%] overflow-hidden">
-                    <div className="aspect-[3/4] overflow-hidden">
-                      <img
-                        src={festival.image}
-                        alt={festival.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Content - 60% */}
-                  <div className="w-[60%] p-2 flex flex-col justify-between">
-                    <div className="space-y-0.5">
-                      <h3 className="font-black text-xs leading-tight line-clamp-2 text-foreground">
-                        {festival.name}
-                      </h3>
-                      <p className="text-[10px] font-medium text-muted-foreground line-clamp-1">
-                        {festival.location}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground line-clamp-1">
-                        {festival.dates}
-                      </p>
-                    </div>
-                    <div className="pt-1">
-                      {festival.ticketStatus === 'opening_soon' && festival.nextOpeningDate ? (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0048FF] text-white rounded-sm text-[10px] font-bold group-hover:bg-[#F5FF00] group-hover:text-black transition-colors duration-200">
-                          Opens {new Date(festival.nextOpeningDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  <ChevronLeft className="w-3.5 h-3.5 text-[#2F5BFF]" />
+                </button>
+              )}
+
+              {/* Desktop arrow — right (subtle, hover-reveal) */}
+              {canScrollRight && (
+                <button
+                  onClick={() => scrollCarousel('right')}
+                  className={`hidden md:flex absolute -right-2 top-1/2 -translate-y-1/2 z-10 w-7 h-7 bg-white/90 backdrop-blur rounded-full shadow items-center justify-center hover:bg-white transition-all ${
+                    isCarouselHovered ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-[#2F5BFF]" />
+                </button>
+              )}
+
+              {/* Scrollable track */}
+              <div
+                ref={carouselRef}
+                className="flex gap-2 overflow-x-auto scrollbar-hide snap-x snap-mandatory -mx-4 px-4 md:mx-0 md:px-0"
+                style={{ WebkitOverflowScrolling: 'touch' }}
+              >
+                {ticketsOpeningSoon.map((festival, index) => {
+                  const openingDate = new Date(festival.nextOpeningDate!);
+                  const hasAlert = alertSet.has(festival.id);
+
+                  return (
+                    <div
+                      key={festival.id}
+                      data-ticket-card
+                      className="flex-shrink-0 snap-start
+                        w-[calc(100vw-56px)]
+                        md:w-[calc((100%-8px)/2.2)]
+                        bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                      onClick={() => onFestivalClick(festival.id)}
+                    >
+                      <div className="flex items-center gap-2 px-2 py-1">
+                        {/* Date chip — compact */}
+                        <div className="shrink-0 w-8 h-8 md:w-9 md:h-9 bg-[#FFD600]/18 border border-[#FFD600]/40 rounded-md flex flex-col items-center justify-center">
+                          <span className="text-[8px] font-bold text-[#7A6500] uppercase leading-none">
+                            {openingDate.toLocaleDateString('en-US', { month: 'short' })}
+                          </span>
+                          <span className="text-[13px] font-black text-[#7A6500] leading-none">
+                            {openingDate.getDate()}
+                          </span>
                         </div>
-                      ) : festival.ticketStatus === 'open_now' ? (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0048FF] text-white rounded-sm text-[10px] font-bold group-hover:bg-[#F5FF00] group-hover:text-black transition-colors duration-200">
-                          <span className="w-1 h-1 bg-white group-hover:bg-black rounded-full" />
-                          <span>Open</span>
+
+                        {/* Festival info — max 2 lines */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-[12px] md:text-[13px] leading-tight line-clamp-1 mb-px">
+                            {festival.name}
+                          </h3>
+                          <p className="text-[10px] md:text-[11px] text-muted-foreground line-clamp-1">
+                            {festival.location} · {festival.nextOpeningTime || '10:00'}
+                          </p>
                         </div>
-                      ) : (
-                        <div className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-muted-foreground rounded-sm text-[10px] font-medium">
-                          {festival.ticketStatus === 'sold_out' ? 'Sold out' : 'TBA'}
-                        </div>
-                      )}
+
+                        {/* Bell icon only */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSetAlert?.(festival.id);
+                          }}
+                          className={`shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-colors ${
+                            hasAlert
+                              ? 'bg-[#2F5BFF] text-white'
+                              : 'bg-[#2F5BFF]/10 text-[#2F5BFF] hover:bg-[#2F5BFF]/20'
+                          }`}
+                          title={hasAlert ? 'Alert set' : 'Set alert'}
+                        >
+                          <Bell className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* Small Festivals */}
-      {smallFestivals.length > 0 && (
-        <HorizontalScrollSection
-          title="Small festivals"
-          description="Lower capacity events. Community-focused."
-          festivals={smallFestivals}
-          onFestivalClick={onFestivalClick}
-        />
-      )}
+      {/* EDITORIAL SECTIONS */}
+      <div id="editorial-sections">
+        {intimateFestivals.length > 0 && (
+          <HorizontalScrollSection
+            title="Intimate gatherings"
+            description="Lower capacity events. Community-focused."
+            festivals={intimateFestivals}
+            onFestivalClick={onFestivalClick}
+            isAnchor={true}
+            maxItems={6}
+          />
+        )}
 
-      {/* Coastal Festivals */}
-      {coastalFestivals.length > 0 && (
-        <HorizontalScrollSection
-          title="Coastal festivals"
-          description="Festivals hosted near seaside towns."
-          festivals={coastalFestivals}
-          onFestivalClick={onFestivalClick}
-        />
-      )}
+        {immersiveFestivals.length > 0 && (
+          <HorizontalScrollSection
+            title="Immersive weeks"
+            description="Extended formats designed for deeper immersion in Forró."
+            festivals={immersiveFestivals}
+            onFestivalClick={onFestivalClick}
+            isAnchor={true}
+            maxItems={6}
+          />
+        )}
 
-      {/* Week-long Festivals */}
-      {weekLongFestivals.length > 0 && (
-        <HorizontalScrollSection
-          title="Week-long festivals"
-          description="Extended formats designed for immersion."
-          festivals={weekLongFestivals}
-          onFestivalClick={onFestivalClick}
-        />
-      )}
+        {coastalFestivals.length > 0 && (
+          <HorizontalScrollSection
+            title="Coastal festivals"
+            description="Festivals hosted near seaside towns."
+            festivals={coastalFestivals}
+            onFestivalClick={onFestivalClick}
+            maxItems={6}
+          />
+        )}
 
-      {/* City Festivals */}
-      {cityFestivals.length > 0 && (
-        <HorizontalScrollSection
-          title="City festivals"
-          description="Urban festivals combined with exploring European capitals."
-          festivals={cityFestivals}
-          onFestivalClick={onFestivalClick}
-        />
-      )}
+        {cityFestivals.length > 0 && (
+          <HorizontalScrollSection
+            title="City festivals"
+            description="Urban festivals combined with exploring European capitals."
+            festivals={cityFestivals}
+            onFestivalClick={onFestivalClick}
+            maxItems={6}
+          />
+        )}
 
-      {/* Mountain Festivals */}
-      {mountainFestivals.length > 0 && (
-        <HorizontalScrollSection
-          title="Mountain festivals"
-          description="Dance surrounded by alpine landscapes."
-          festivals={mountainFestivals}
-          onFestivalClick={onFestivalClick}
-        />
-      )}
+        {mountainFestivals.length > 0 && (
+          <HorizontalScrollSection
+            title="Mountain festivals"
+            description="Dance surrounded by alpine landscapes."
+            festivals={mountainFestivals}
+            onFestivalClick={onFestivalClick}
+            maxItems={6}
+          />
+        )}
+      </div>
 
-      {/* Planning Tools */}
-      <section className="pt-5 md:pt-16">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-12">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-10">
-            {/* Map */}
-            <div className="space-y-2 md:space-y-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#0057FF] flex items-center justify-center">
-                <Map className="w-5 h-5 md:w-6 md:h-6 text-white" />
-              </div>
-              <h3 className="text-base md:text-lg font-black">Explore by location</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                See festivals on a map. Discover what's happening near coastal towns, mountain retreats, or urban centers.
-              </p>
-              <Button 
-                variant="outline" 
-                className="gap-2 mt-3 md:mt-4 border-2 border-black hover:bg-[#0057FF] hover:text-white hover:border-[#0057FF] transition-colors font-bold w-full md:w-auto"
-                onClick={onNavigateToMap}
-              >
-                <span>Open Map</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Calendar */}
-            <div className="space-y-2 md:space-y-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#0057FF] flex items-center justify-center">
-                <Calendar className="w-5 h-5 md:w-6 md:h-6 text-white" />
-              </div>
-              <h3 className="text-base md:text-lg font-black">Plan with the calendar</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                See all ticket openings and festival dates in one timeline. Track what's coming up.
-              </p>
-              <Button 
-                variant="outline" 
-                className="gap-2 mt-3 md:mt-4 border-2 border-black hover:bg-[#0057FF] hover:text-white hover:border-[#0057FF] transition-colors font-bold w-full md:w-auto"
-                onClick={onNavigateToCalendar}
-              >
-                <span>Open Calendar</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Alerts */}
-            <div className="space-y-2 md:space-y-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#0057FF] flex items-center justify-center">
-                <Bell className="w-5 h-5 md:w-6 md:h-6 text-white" />
-              </div>
-              <h3 className="text-base md:text-lg font-black">Never miss a ticket</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Save festivals to get notified when tickets open. Track specific lots.
-              </p>
-              <Button 
-                variant="outline" 
-                className="gap-2 mt-3 md:mt-4 border-2 border-black hover:bg-[#0057FF] hover:text-white hover:border-[#0057FF] transition-colors font-bold w-full md:w-auto"
+      {/* PLAN WITH FRIENDS */}
+      <section className="py-8 md:py-12">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <div className="bg-[#2F5BFF]/[0.04] border border-[#2F5BFF]/10 rounded-xl p-6 md:p-8 max-w-2xl">
+            <h3 className="text-lg md:text-xl font-black tracking-tight text-foreground mb-2">
+              Plan with friends
+            </h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              Save the festivals you're interested in, compare dates, and share a read-only list with your dance friends to plan the season together.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Button
+                variant="outline"
+                className="gap-2 font-bold border-[#2F5BFF]/20 text-[#2F5BFF] hover:bg-[#2F5BFF] hover:text-white transition-colors"
                 onClick={() => {
-                  const element = document.getElementById('festivals');
-                  element?.scrollIntoView({ behavior: 'smooth' });
+                  const el = document.getElementById('editorial-sections');
+                  el?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                <span>Browse Festivals</span>
-                <ArrowRight className="w-4 h-4" />
+                <Bookmark className="w-4 h-4" />
+                Save festivals
+              </Button>
+              <Button
+                variant="outline"
+                className="gap-2 font-bold border-[#2F5BFF]/20 text-[#2F5BFF] hover:bg-[#2F5BFF] hover:text-white transition-colors"
+              >
+                <Share2 className="w-4 h-4" />
+                Share a list
               </Button>
             </div>
           </div>
@@ -333,15 +366,15 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
       </section>
 
       {/* Footer */}
-      <section className="border-t-2 border-black bg-background">
+      <section className="border-t border-border bg-background pb-4 md:pb-0">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10">
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 text-sm mb-6 md:mb-8">
             <div className="space-y-1.5 md:space-y-2">
               <div className="flex items-center gap-2 mb-1 md:mb-2">
-                <div className="w-5 h-5 bg-[#0057FF] flex items-center justify-center">
+                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
-                <span className="font-black text-sm">Verified information</span>
+                <span className="font-bold text-sm">Verified information</span>
               </div>
               <p className="text-muted-foreground text-xs md:text-sm">
                 Festival details confirmed with organizers.
@@ -350,10 +383,10 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
 
             <div className="space-y-1.5 md:space-y-2">
               <div className="flex items-center gap-2 mb-1 md:mb-2">
-                <div className="w-5 h-5 bg-[#0057FF] flex items-center justify-center">
+                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
-                <span className="font-black text-sm">No commercial interest</span>
+                <span className="font-bold text-sm">No commercial interest</span>
               </div>
               <p className="text-muted-foreground text-xs md:text-sm">
                 No ticket sales, no commissions.
@@ -362,10 +395,10 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
 
             <div className="space-y-1.5 md:space-y-2">
               <div className="flex items-center gap-2 mb-1 md:mb-2">
-                <div className="w-5 h-5 bg-[#0057FF] flex items-center justify-center">
+                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
-                <span className="font-black text-sm">Built by dancers</span>
+                <span className="font-bold text-sm">Built by dancers</span>
               </div>
               <p className="text-muted-foreground text-xs md:text-sm">
                 For the European Forró community.
@@ -373,11 +406,11 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
             </div>
           </div>
 
-          <div className="pt-4 md:pt-6 border-t-2 border-black flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-xs">
-            <p className="font-bold">© 2026 Forró Europe · Independent guide</p>
+          <div className="pt-4 md:pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-xs">
+            <p className="font-medium">© 2026 Forró Europe · Independent guide</p>
             <a 
               href="#about" 
-              className="hover:text-[#0057FF] hover:underline transition-colors font-bold"
+              className="hover:text-[#2F5BFF] hover:underline transition-colors font-medium"
             >
               About this guide
             </a>

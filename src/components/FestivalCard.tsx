@@ -1,5 +1,5 @@
-import { MapPin, Calendar, ChevronRight, Bookmark } from 'lucide-react';
-import { TicketStatusBadge } from './TicketStatusBadge';
+import { MapPin, Calendar, Bookmark, BarChart3, Check } from 'lucide-react';
+import { UnifiedTicketChip } from './UnifiedTicketChip';
 
 interface FestivalCardProps {
   festival: {
@@ -17,16 +17,22 @@ interface FestivalCardProps {
   onClick: () => void;
   isSaved?: boolean;
   onSave?: () => void;
+  isInCompare?: boolean;
+  onToggleCompare?: () => void;
 }
 
-export function FestivalCard({ festival, onClick, isSaved = false, onSave }: FestivalCardProps) {
+export function FestivalCard({ festival, onClick, isSaved = false, onSave, isInCompare = false, onToggleCompare }: FestivalCardProps) {
+  const showCompareToggle = !!onToggleCompare;
+
   return (
     <div
-      className="group cursor-pointer bg-card border border-gray-200 md:border-2 md:border-black rounded-sm overflow-hidden shadow-md hover:shadow-2xl md:hover:-translate-y-1 active:shadow-lg transition-all duration-200 ease-out"
+      className={`group cursor-pointer bg-card border rounded-lg overflow-hidden shadow-sm hover:shadow-lg md:hover:-translate-y-1 active:shadow-md transition-all duration-200 ease-out ${
+        isInCompare ? 'border-[#2F5BFF] ring-1 ring-[#2F5BFF]/20' : 'border-gray-200'
+      }`}
     >
-      {/* Image with overlay badge - 3:2 ratio, max 200px on mobile */}
+      {/* Image — reduced height for desktop */}
       <div 
-        className="relative aspect-[3/2] max-h-[200px] md:max-h-none overflow-hidden bg-muted"
+        className="relative aspect-[3/2] max-h-[200px] md:max-h-[160px] overflow-hidden bg-muted"
         onClick={onClick}
       >
         <img
@@ -35,52 +41,76 @@ export function FestivalCard({ festival, onClick, isSaved = false, onSave }: Fes
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
         
-        {/* Ticket status badge overlay - mobile optimized */}
+        {/* Unified ticket status chip overlay */}
         <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2">
-          {festival.ticketStatus === 'opening_soon' && festival.nextOpeningDate ? (
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0057FF] text-white rounded-sm text-[10px] font-bold shadow-sm">
-              Opens {new Date(festival.nextOpeningDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-            </div>
-          ) : festival.ticketStatus === 'open_now' ? (
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#0057FF] text-white rounded-sm text-[10px] font-bold shadow-sm">
-              <span className="w-1 h-1 bg-white rounded-full animate-pulse" />
-              <span>Open</span>
-            </div>
-          ) : festival.ticketStatus === 'sold_out' ? (
-            <div className="inline-flex items-center gap-1 px-2 py-1 bg-gray-900 text-white rounded-sm text-[10px] font-bold shadow-sm">
-              Sold out
-            </div>
-          ) : null}
+          <UnifiedTicketChip
+            status={festival.ticketStatus}
+            currentPrice={festival.currentPrice}
+            nextOpeningDate={festival.nextOpeningDate}
+          />
         </div>
 
-        {/* Bookmark button overlay */}
-        {onSave && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onSave();
-            }}
-            className="absolute top-1.5 right-1.5 md:top-2 md:right-2 p-1.5 bg-white/95 hover:bg-[#F5FF00] active:bg-[#F5FF00] transition-all duration-150 shadow-sm"
-            aria-label={isSaved ? "Remove from plan" : "Add to plan"}
-          >
-            <Bookmark 
-              className={`w-3.5 h-3.5 md:w-4 md:h-4 transition-colors duration-150 ${
-                isSaved ? 'fill-[#0057FF] text-[#0057FF]' : 'text-foreground'
+        {/* Top-right overlays: Compare toggle + Bookmark */}
+        <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2 flex items-center gap-1.5">
+          {/* Compare toggle — visible on mobile, on hover on desktop */}
+          {showCompareToggle && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleCompare();
+              }}
+              className={`md:opacity-0 md:group-hover:opacity-100 transition-all duration-150 p-1.5 rounded-full shadow-sm ${
+                isInCompare
+                  ? 'bg-[#2F5BFF] text-white'
+                  : 'bg-white/95 hover:bg-[#2F5BFF]/10 text-foreground'
               }`}
-            />
-          </button>
+              title={isInCompare ? 'Remove from compare' : 'Add to compare'}
+            >
+              {isInCompare ? (
+                <Check className="w-3.5 h-3.5 md:w-4 md:h-4" />
+              ) : (
+                <BarChart3 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+              )}
+            </button>
+          )}
+
+          {/* Bookmark button overlay */}
+          {onSave && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onSave();
+              }}
+              className="p-1.5 bg-white/95 hover:bg-[#FFD600]/40 active:bg-[#FFD600]/40 rounded-full transition-all duration-150 shadow-sm"
+              aria-label={isSaved ? "Remove from saved" : "Save festival"}
+            >
+              <Bookmark 
+                className={`w-3.5 h-3.5 md:w-4 md:h-4 transition-colors duration-150 ${
+                  isSaved ? 'fill-[#2F5BFF] text-[#2F5BFF]' : 'text-foreground'
+                }`}
+              />
+            </button>
+          )}
+        </div>
+
+        {/* Selected indicator badge — bottom-left on mobile when selected */}
+        {isInCompare && (
+          <div className="md:hidden absolute bottom-2 left-2">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#2F5BFF] text-white rounded-full text-[10px] font-bold">
+              <Check className="w-2.5 h-2.5" />
+              Selected
+            </span>
+          </div>
         )}
       </div>
 
-      {/* Content - reduced padding on mobile */}
-      <div className="p-1.5 md:p-3 space-y-0.5 md:space-y-1" onClick={onClick}>
-        {/* Festival name */}
-        <h3 className="font-black text-xs md:text-sm leading-tight line-clamp-1 group-hover:text-[#0057FF] transition-colors duration-200">
+      {/* Content — tighter spacing */}
+      <div className="p-2 md:p-2.5 space-y-0.5 md:space-y-0.5" onClick={onClick}>
+        <h3 className="font-bold text-xs md:text-sm leading-tight line-clamp-1 group-hover:text-[#2F5BFF] transition-colors duration-200">
           {festival.name}
         </h3>
         
-        {/* Location and dates - compact */}
-        <div className="space-y-0 text-[10px] md:text-xs text-muted-foreground">
+        <div className="space-y-0 text-[10px] md:text-xs text-muted-foreground leading-snug">
           <div className="flex items-center gap-1">
             <MapPin className="w-2.5 h-2.5 md:w-3 md:h-3 shrink-0" />
             <span className="line-clamp-1 font-medium">{festival.location}, {festival.country}</span>

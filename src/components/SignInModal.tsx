@@ -48,7 +48,7 @@ export function SignInModal({ isOpen, onClose, onSignIn, action }: SignInModalPr
           <div className="space-y-3">
             <Button 
               size="lg" 
-              className="w-full"
+              className="w-full bg-[#2F5BFF] hover:bg-[#1A44E0] text-white"
               onClick={onSignIn}
             >
               Continue with Email

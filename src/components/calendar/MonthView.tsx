@@ -98,10 +98,10 @@ export function MonthView({ events, currentDate, onDateChange, onEventClick }: M
                   onClick={() => onEventClick(event.data.festivalId)}
                   className="w-full text-left"
                 >
-                  <div className="flex items-center gap-1.5 px-2 py-1.5 bg-primary/10 hover:bg-primary/20 rounded-md transition-colors group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 animate-pulse" />
+                  <div className="flex items-center gap-1.5 px-2 py-1.5 bg-[#2F5BFF]/10 hover:bg-[#2F5BFF]/20 rounded-md transition-colors group">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2F5BFF] shrink-0 animate-pulse" />
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs font-medium text-primary truncate">
+                      <div className="text-xs font-medium text-[#2F5BFF] truncate">
                         {event.data.opensTime}
                       </div>
                       <div className="text-[10px] text-muted-foreground truncate">
@@ -162,7 +162,7 @@ export function MonthView({ events, currentDate, onDateChange, onEventClick }: M
       {/* Legend */}
       <div className="flex items-center gap-6 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[#2F5BFF] animate-pulse" />
           <span>Ticket opening</span>
         </div>
         <div className="flex items-center gap-2">

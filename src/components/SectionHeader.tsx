@@ -1,49 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
-
 interface SectionHeaderProps {
   title: string;
   description?: string;
+  isAnchor?: boolean;
 }
 
-export function SectionHeader({ title, description }: SectionHeaderProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const headerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      {
-        threshold: 0.5,
-        rootMargin: '-100px 0px -100px 0px',
-      }
-    );
-
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
-    }
-
-    return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current);
-      }
-    };
-  }, []);
-
+export function SectionHeader({ title, description, isAnchor = false }: SectionHeaderProps) {
   return (
-    <div ref={headerRef} className="mb-3 md:mb-6 relative">
-      <div className="relative inline-block">
-        {/* Animated yellow highlight bar - thicker on mobile */}
-        <div
-          className={`absolute -left-2 -right-2 top-1/2 -translate-y-1/2 h-4 md:h-3 bg-[#F5FF00] transition-all duration-250 ease-out ${
-            isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-          }`}
-          style={{ transformOrigin: 'left' }}
-        />
-        <h2 className="text-xl md:text-3xl font-black text-foreground relative z-10 tracking-tight">
+    <div className="mb-3 md:mb-6 relative">
+      <div className="relative inline-block group cursor-default">
+        {/* Yellow underline ONLY for anchor section titles */}
+        {isAnchor && (
+          <div
+            className="absolute -left-0.5 -right-0.5 bottom-0 h-[2px] md:h-2 bg-[#FFD600] opacity-30 group-hover:opacity-50 transition-opacity duration-150 ease-out rounded-full"
+          />
+        )}
+        <h2 className={`${isAnchor ? 'text-xl md:text-4xl' : 'text-lg md:text-3xl'} font-black text-foreground relative z-10 tracking-tight`}>
           {title}
         </h2>
       </div>

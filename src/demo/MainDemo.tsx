@@ -5,11 +5,14 @@ import { HomePage } from '../components/HomePage';
 import { FestivalPage } from '../components/FestivalPage';
 import { CalendarView, CalendarEvent } from '../components/calendar';
 import { SignInModal } from '../components/SignInModal';
+import { AlertModal, AlertOptions } from '../components/AlertModal';
 import { MapView } from '../components/MapView';
 import { MySeason } from '../components/MySeason';
 import { SharePlanModal } from '../components/SharePlanModal';
+import { CompareDrawer } from '../components/CompareDrawer';
+import { CompareStickyBar } from '../components/CompareStickyBar';
 
-type View = 'home' | 'calendar' | 'festival' | 'map' | 'plan';
+type View = 'home' | 'calendar' | 'festival' | 'map' | 'saved';
 type SignInAction = 'save' | 'share' | 'alert';
 
 export function MainDemo() {
@@ -17,11 +20,18 @@ export function MainDemo() {
   const [selectedFestival, setSelectedFestival] = useState<string | null>(null);
   const [alertSet, setAlertSet] = useState<Set<string>>(new Set());
   const [savedFestivals, setSavedFestivals] = useState<Set<string>>(new Set());
-  const [festivalStatuses, setFestivalStatuses] = useState<Record<string, 'considering' | 'probably' | 'booked'>>({});
+  const [festivalStatuses, setFestivalStatuses] = useState<Record<string, 'considering' | 'going'>>({});
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showAlertModal, setShowAlertModal] = useState(false);
+  const [alertTargetFestival, setAlertTargetFestival] = useState<string | null>(null);
   const [signInAction, setSignInAction] = useState<SignInAction>('save');
+  const [pendingAlertFestival, setPendingAlertFestival] = useState<string | null>(null);
+  
+  // Compare state
+  const [compareSet, setCompareSet] = useState<Set<string>>(new Set());
+  const [showCompareDrawer, setShowCompareDrawer] = useState(false);
 
   // Festival data
   const festivals = [
@@ -58,39 +68,10 @@ export function MainDemo() {
           name: 'Full Pass',
           description: 'All workshops, parties, and meals included',
           lots: [
-            {
-              id: 'lot-1',
-              lotName: '1st Lot',
-              price: '€95',
-              opensAt: '2026-01-15',
-              opensTime: '10:00 CET',
-              state: 'past' as const,
-            },
-            {
-              id: 'lot-2',
-              lotName: '2nd Lot',
-              price: '€120',
-              opensAt: '2026-03-01',
-              opensTime: '12:00 CET',
-              state: 'current' as const,
-              quota: '45 remaining',
-            },
-            {
-              id: 'lot-3',
-              lotName: '3rd Lot',
-              price: '€145',
-              opensAt: '2026-04-20',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-            },
-            {
-              id: 'lot-4',
-              lotName: '4th Lot',
-              price: '€165',
-              opensAt: '2026-05-15',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-            },
+            { id: 'lot-1', lotName: '1st Lot', price: '€95', opensAt: '2026-01-15', opensTime: '10:00 CET', state: 'past' as const },
+            { id: 'lot-2', lotName: '2nd Lot', price: '€120', opensAt: '2026-03-01', opensTime: '12:00 CET', state: 'current' as const, quota: '45 remaining' },
+            { id: 'lot-3', lotName: '3rd Lot', price: '€145', opensAt: '2026-04-20', opensTime: '10:00 CET', state: 'upcoming' as const },
+            { id: 'lot-4', lotName: '4th Lot', price: '€165', opensAt: '2026-05-15', opensTime: '10:00 CET', state: 'upcoming' as const },
           ],
         },
         {
@@ -98,31 +79,9 @@ export function MainDemo() {
           name: 'Party Pass',
           description: 'Evening parties only',
           lots: [
-            {
-              id: 'party-1',
-              lotName: '1st Lot',
-              price: '€40',
-              opensAt: '2026-03-01',
-              opensTime: '12:00 CET',
-              state: 'past' as const,
-            },
-            {
-              id: 'party-2',
-              lotName: '2nd Lot',
-              price: '€50',
-              opensAt: '2026-03-20',
-              opensTime: '14:00 CET',
-              state: 'current' as const,
-              quota: '78 remaining',
-            },
-            {
-              id: 'party-3',
-              lotName: '3rd Lot',
-              price: '€60',
-              opensAt: '2026-05-15',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-            },
+            { id: 'party-1', lotName: '1st Lot', price: '€40', opensAt: '2026-03-01', opensTime: '12:00 CET', state: 'past' as const },
+            { id: 'party-2', lotName: '2nd Lot', price: '€50', opensAt: '2026-03-20', opensTime: '14:00 CET', state: 'current' as const, quota: '78 remaining' },
+            { id: 'party-3', lotName: '3rd Lot', price: '€60', opensAt: '2026-05-15', opensTime: '10:00 CET', state: 'upcoming' as const },
           ],
         },
       ],
@@ -159,34 +118,9 @@ export function MainDemo() {
           id: 'full-pass',
           name: 'Full Pass',
           lots: [
-            {
-              id: 'tier-1',
-              lotName: 'Standard',
-              price: '€165',
-              opensAt: '2026-03-15',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-              tierDescription: 'Workshops and parties',
-            },
-            {
-              id: 'tier-2',
-              lotName: 'Premium',
-              price: '€215',
-              opensAt: '2026-03-15',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-              tierDescription: 'Includes accommodation package',
-            },
-            {
-              id: 'tier-3',
-              lotName: 'VIP',
-              price: '€280',
-              opensAt: '2026-03-15',
-              opensTime: '10:00 CET',
-              state: 'upcoming' as const,
-              tierDescription: 'All-inclusive with private masterclasses',
-              quota: 'Limited to 30 spots',
-            },
+            { id: 'tier-1', lotName: 'Standard', price: '€165', opensAt: '2026-03-15', opensTime: '10:00 CET', state: 'upcoming' as const, tierDescription: 'Workshops and parties' },
+            { id: 'tier-2', lotName: 'Premium', price: '€215', opensAt: '2026-03-15', opensTime: '10:00 CET', state: 'upcoming' as const, tierDescription: 'Includes accommodation package' },
+            { id: 'tier-3', lotName: 'VIP', price: '€280', opensAt: '2026-03-15', opensTime: '10:00 CET', state: 'upcoming' as const, tierDescription: 'All-inclusive with private masterclasses', quota: 'Limited to 30 spots' },
           ],
         },
       ],
@@ -219,19 +153,8 @@ export function MainDemo() {
           id: 'full-pass',
           name: 'Full Pass',
           lots: [
-            {
-              id: 'tbd-1',
-              lotName: 'Early Bird',
-              price: '€150-€180',
-              state: 'unknown' as const,
-              tierDescription: 'Estimated pricing',
-            },
-            {
-              id: 'tbd-2',
-              lotName: 'Regular',
-              price: 'TBA',
-              state: 'unknown' as const,
-            },
+            { id: 'tbd-1', lotName: 'Early Bird', price: '€150-€180', state: 'unknown' as const, tierDescription: 'Estimated pricing' },
+            { id: 'tbd-2', lotName: 'Regular', price: 'TBA', state: 'unknown' as const },
           ],
         },
       ],
@@ -265,33 +188,9 @@ export function MainDemo() {
           name: 'Contribution',
           description: 'Pay what feels right for this community event',
           lots: [
-            {
-              id: 'solidarity',
-              lotName: 'Solidarity rate',
-              price: '€80',
-              opensAt: '2026-02-01',
-              opensTime: '10:00 CET',
-              state: 'past' as const,
-              tierDescription: 'Reduced rate for those with limited means',
-            },
-            {
-              id: 'standard',
-              lotName: 'Standard contribution',
-              price: '€120',
-              opensAt: '2026-02-01',
-              opensTime: '10:00 CET',
-              state: 'past' as const,
-              tierDescription: 'Covers event costs',
-            },
-            {
-              id: 'supporter',
-              lotName: 'Supporter rate',
-              price: '€160',
-              opensAt: '2026-02-01',
-              opensTime: '10:00 CET',
-              state: 'past' as const,
-              tierDescription: 'Help us support future events',
-            },
+            { id: 'solidarity', lotName: 'Solidarity rate', price: '€80', opensAt: '2026-02-01', opensTime: '10:00 CET', state: 'past' as const, tierDescription: 'Reduced rate for those with limited means' },
+            { id: 'standard', lotName: 'Standard contribution', price: '€120', opensAt: '2026-02-01', opensTime: '10:00 CET', state: 'past' as const, tierDescription: 'Covers event costs' },
+            { id: 'supporter', lotName: 'Supporter rate', price: '€160', opensAt: '2026-02-01', opensTime: '10:00 CET', state: 'past' as const, tierDescription: 'Help us support future events' },
           ],
         },
       ],
@@ -325,15 +224,7 @@ export function MainDemo() {
           id: 'full-pass',
           name: 'Full Pass',
           lots: [
-            {
-              id: 'lot-1',
-              lotName: '1st Lot',
-              price: '€95',
-              opensAt: '2026-02-20',
-              opensTime: '14:00 CET',
-              state: 'current' as const,
-              quota: '120 remaining',
-            },
+            { id: 'lot-1', lotName: '1st Lot', price: '€95', opensAt: '2026-02-20', opensTime: '14:00 CET', state: 'current' as const, quota: '120 remaining' },
           ],
         },
       ],
@@ -369,23 +260,240 @@ export function MainDemo() {
           id: 'full-pass',
           name: 'Full Pass',
           lots: [
-            {
-              id: 'early',
-              lotName: 'Early Bird',
-              price: '€110',
-              opensAt: '2026-04-10',
-              opensTime: '18:00 CET',
-              state: 'upcoming' as const,
-            },
+            { id: 'early', lotName: 'Early Bird', price: '€110', opensAt: '2026-04-10', opensTime: '18:00 CET', state: 'upcoming' as const },
           ],
         },
       ],
+    },
+    // === Additional festivals for category variety ===
+    {
+      id: '7',
+      name: 'Forró de Porto',
+      location: 'Porto',
+      country: 'Portugal',
+      dates: 'May 22-25, 2026',
+      image: 'https://images.unsplash.com/photo-1725126141215-63fa9fd8c837?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3J0byUyMHBvcnR1Z2FsJTIwcml2ZXJzaWRlJTIwb2xkJTIwdG93bnxlbnwxfHx8fDE3NzMxNzY4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '250-350 dancers',
+      venue: 'Palácio da Bolsa',
+      description: 'Dance along the Douro river in Porto\'s historic Ribeira district. A weekend combining Forró with port wine and Portuguese culture.',
+      highlights: ['River-side outdoor milonga', 'Port wine tasting included', 'Walking tours of Ribeira'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '4 days ago',
+      followers: 712,
+      ticketStatus: 'opening_soon' as const,
+      nextOpeningDate: '2026-03-20',
+      nextOpeningTime: '12:00 CET',
+      experienceType: 'intimate' as const,
+      locationType: 'urban' as const,
+      coordinates: { lat: 41.1, lng: -8.6 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'eb', lotName: 'Early Bird', price: '€95', opensAt: '2026-03-20', opensTime: '12:00 CET', state: 'upcoming' as const }] }],
+    },
+    {
+      id: '8',
+      name: 'Provence Forró Retreat',
+      location: 'Aix-en-Provence',
+      country: 'France',
+      dates: 'June 8-14, 2026',
+      image: 'https://images.unsplash.com/photo-1623631896463-276ef87749a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm92ZW5jZSUyMGxhdmVuZGVyJTIwdmlsbGFnZSUyMGZyYW5jZXxlbnwxfHx8fDE3NzMxNzY4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '100-150 dancers',
+      venue: 'Domaine de Fontblanche',
+      description: 'A week-long immersion in lavender fields. Small group, deep learning focus with master teachers from Brazil.',
+      highlights: ['Lavender field setting', 'Max 120 participants', 'Farm-to-table French cuisine', 'Daily musicality workshops'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '2 days ago',
+      followers: 389,
+      ticketStatus: 'open_now' as const,
+      currentPrice: 'From €280',
+      ticketUrl: 'https://example.com',
+      experienceType: 'intimate' as const,
+      locationType: 'countryside' as const,
+      coordinates: { lat: 43.5, lng: 5.4 },
+      duration: 'week' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'reg', lotName: 'Regular', price: '€280', state: 'current' as const, quota: '32 remaining' }] }],
+    },
+    {
+      id: '9',
+      name: 'Sardinia Forró Beach Festival',
+      location: 'Alghero',
+      country: 'Italy',
+      dates: 'July 3-6, 2026',
+      image: 'https://images.unsplash.com/photo-1727786616190-62a1e83ef91f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzYXJkaW5pYSUyMGl0YWx5JTIwY29hc3QlMjB0dXJxdW9pc2V8ZW58MXx8fHwxNzczMTc2ODkxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '350-450 dancers',
+      venue: 'Spiaggia del Lido',
+      description: 'Dance on the beach with turquoise Mediterranean waters. Four days of Forró on Sardinia\'s stunning Coral Riviera.',
+      highlights: ['Beach parties at sunset', 'Crystal-clear water swimming', 'Italian aperitivo sessions'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '1 week ago',
+      followers: 945,
+      ticketStatus: 'opening_soon' as const,
+      nextOpeningDate: '2026-03-25',
+      nextOpeningTime: '10:00 CET',
+      experienceType: 'sea' as const,
+      locationType: 'sea' as const,
+      coordinates: { lat: 40.6, lng: 8.3 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'eb', lotName: 'Early Bird', price: '€135', opensAt: '2026-03-25', opensTime: '10:00 CET', state: 'upcoming' as const }] }],
+    },
+    {
+      id: '10',
+      name: 'Swiss Alpine Forró',
+      location: 'Grindelwald',
+      country: 'Switzerland',
+      dates: 'August 21-24, 2026',
+      image: 'https://images.unsplash.com/photo-1559554498-045a606986f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2lzcyUyMGFscHMlMjBjaGFsZXQlMjBzdW1tZXJ8ZW58MXx8fHwxNzczMTc2ODkxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '180-220 dancers',
+      venue: 'Chalet Berghaus',
+      description: 'Forró at altitude. Dance in a traditional Swiss chalet with the Eiger as your backdrop.',
+      highlights: ['Alpine panorama venue', 'Fondue and raclette evenings', 'Mountain hiking options'],
+      verificationStatus: 'likely' as const,
+      lastUpdate: '3 days ago',
+      followers: 312,
+      ticketStatus: 'not_announced' as const,
+      experienceType: 'mountain' as const,
+      locationType: 'mountain' as const,
+      coordinates: { lat: 46.6, lng: 8.0 },
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'tbd', lotName: 'TBA', price: 'TBA', state: 'unknown' as const }] }],
+    },
+    {
+      id: '11',
+      name: 'Paris Forró Congress',
+      location: 'Paris',
+      country: 'France',
+      dates: 'November 6-9, 2026',
+      image: 'https://images.unsplash.com/photo-1650320285532-d91be772c8ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJpcyUyMGRhbmNlJTIwaGFsbCUyMHZlbnVlfGVufDF8fHx8MTc3MzE3Njg5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '500-700 dancers',
+      venue: 'Le Carreau du Temple',
+      description: 'Four days of Forró in one of Paris\'s most iconic venues. The largest gathering in France.',
+      highlights: ['Historic Marais venue', '50+ workshops', 'Live bands from Brazil', 'Closing gala dinner'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '1 day ago',
+      followers: 2156,
+      ticketStatus: 'opening_soon' as const,
+      nextOpeningDate: '2026-04-01',
+      nextOpeningTime: '10:00 CET',
+      experienceType: 'urban' as const,
+      locationType: 'urban' as const,
+      coordinates: { lat: 48.9, lng: 2.4 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'eb', lotName: 'Super Early Bird', price: '€145', opensAt: '2026-04-01', opensTime: '10:00 CET', state: 'upcoming' as const, quota: 'Limited to 80' }] }],
+    },
+    {
+      id: '12',
+      name: 'Algarve Forró Sun',
+      location: 'Lagos',
+      country: 'Portugal',
+      dates: 'September 18-21, 2026',
+      image: 'https://images.unsplash.com/photo-1665759118208-7f5b9955d9ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbGdhcnZlJTIwcG9ydHVnYWwlMjBiZWFjaCUyMHN1bnNldHxlbnwxfHx8fDE3NzMxNzY4OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '300-400 dancers',
+      venue: 'Centro Cultural de Lagos',
+      description: 'End-of-summer Forró on the Algarve coast. Golden cliffs, warm water, and non-stop dancing.',
+      highlights: ['Cliff-top sunset parties', 'Warm Atlantic beaches', 'Boat trip to grottoes'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '5 days ago',
+      followers: 876,
+      ticketStatus: 'open_now' as const,
+      currentPrice: 'From €105',
+      ticketUrl: 'https://example.com',
+      experienceType: 'sea' as const,
+      locationType: 'sea' as const,
+      coordinates: { lat: 37.1, lng: -8.7 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'reg', lotName: '2nd Lot', price: '€105', state: 'current' as const, quota: '65 remaining' }] }],
+    },
+    {
+      id: '13',
+      name: 'Vienna Forró Nights',
+      location: 'Vienna',
+      country: 'Austria',
+      dates: 'October 16-19, 2026',
+      image: 'https://images.unsplash.com/photo-1585425422155-b669d249a518?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWVubmElMjBhdXN0cmlhJTIwYXJjaGl0ZWN0dXJlJTIwZXZlbmluZ3xlbnwxfHx8fDE3NzMxNzY4OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '400-500 dancers',
+      venue: 'Palais Kabelwerk',
+      description: 'Forró meets Viennese elegance. Dance in repurposed industrial spaces with imperial architecture nearby.',
+      highlights: ['Stunning industrial-chic venue', 'Coffee house culture', 'Optional city tours'],
+      verificationStatus: 'likely' as const,
+      lastUpdate: '1 week ago',
+      followers: 534,
+      ticketStatus: 'not_announced' as const,
+      experienceType: 'urban' as const,
+      locationType: 'urban' as const,
+      coordinates: { lat: 48.2, lng: 16.4 },
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'tbd', lotName: 'TBA', price: 'TBA', state: 'unknown' as const }] }],
+    },
+    {
+      id: '14',
+      name: 'Black Forest Forró Retreat',
+      location: 'Freiburg',
+      country: 'Germany',
+      dates: 'July 24-27, 2026',
+      image: 'https://images.unsplash.com/photo-1735518319654-8f1285e50a87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMGZvcmVzdCUyMGdlcm1hbnklMjBjb3R0YWdlJTIwbmF0dXJlfGVufDF8fHx8MTc3MzE3Njg5M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '120-160 dancers',
+      venue: 'Waldhotel am Notschreipass',
+      description: 'A deeply intimate retreat in Germany\'s Black Forest. Small groups, deep focus, surrounded by nature.',
+      highlights: ['Forest setting', 'Max 140 participants', 'Sauna and wellness access', 'Nature walks between classes'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '3 days ago',
+      followers: 267,
+      ticketStatus: 'open_now' as const,
+      currentPrice: 'From €160',
+      ticketUrl: 'https://example.com',
+      experienceType: 'intimate' as const,
+      locationType: 'countryside' as const,
+      coordinates: { lat: 47.9, lng: 7.8 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'reg', lotName: 'Regular', price: '€160', state: 'current' as const, quota: '28 remaining' }] }],
+    },
+    {
+      id: '15',
+      name: 'Lake Como Forró Week',
+      location: 'Bellagio',
+      country: 'Italy',
+      dates: 'August 28-September 4, 2026',
+      image: 'https://images.unsplash.com/photo-1661804266944-ce272a0dcdad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsYWtlJTIwY29tbyUyMGl0YWx5JTIwdmlsbGElMjBzdW1tZXJ8ZW58MXx8fHwxNzczMTc2ODkzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '200-280 dancers',
+      venue: 'Villa Serbelloni',
+      description: 'A full week of Forró on the shores of Lake Como. Italian lakeside luxury meets Brazilian rhythm.',
+      highlights: ['Lakeside villa venue', 'Boat excursions between sessions', 'Italian gastronomy program', 'Sunset aperitivo dancing'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '2 days ago',
+      followers: 1124,
+      ticketStatus: 'opening_soon' as const,
+      nextOpeningDate: '2026-04-15',
+      nextOpeningTime: '09:00 CET',
+      experienceType: 'immersive' as const,
+      locationType: 'countryside' as const,
+      coordinates: { lat: 46.0, lng: 9.3 },
+      duration: 'week' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Week', lots: [{ id: 'eb', lotName: 'Early Bird', price: '€350', opensAt: '2026-04-15', opensTime: '09:00 CET', state: 'upcoming' as const, quota: 'Limited to 60' }] }],
+    },
+    {
+      id: '16',
+      name: 'Seville Forró Fiesta',
+      location: 'Seville',
+      country: 'Spain',
+      dates: 'May 29-June 1, 2026',
+      image: 'https://images.unsplash.com/photo-1764218400592-c74357b740c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZXZpbGxlJTIwc3BhaW4lMjBwbGF6YSUyMGV2ZW5pbmd8ZW58MXx8fHwxNzczMTc2ODk4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '350-500 dancers',
+      venue: 'Real Alcázar Gardens',
+      description: 'Forró meets Andalusian passion. Dance in the shadow of Moorish palaces and historic plazas.',
+      highlights: ['Historic palace venue', 'Tapas crawl included', 'Flamenco-Forró fusion show'],
+      verificationStatus: 'confirmed' as const,
+      lastUpdate: '4 days ago',
+      followers: 1432,
+      ticketStatus: 'open_now' as const,
+      currentPrice: 'From €110',
+      ticketUrl: 'https://example.com',
+      experienceType: 'immersive' as const,
+      locationType: 'urban' as const,
+      coordinates: { lat: 37.4, lng: -6.0 },
+      duration: 'weekend' as const,
+      passTypes: [{ id: 'full-pass', name: 'Full Pass', lots: [{ id: 'reg', lotName: '2nd Lot', price: '€110', state: 'current' as const, quota: '90 remaining' }] }],
     },
   ];
 
   // Calendar events
   const calendarEvents: CalendarEvent[] = [
-    // Ticket openings
     {
       type: 'ticket_opening',
       data: {
@@ -451,7 +559,6 @@ export function MainDemo() {
         lotName: '4th Lot',
       },
     },
-    // Festival dates
     {
       type: 'festival',
       data: {
@@ -526,7 +633,7 @@ export function MainDemo() {
     },
   ];
 
-  const handleNavigate = (view: 'home' | 'calendar' | 'map' | 'plan') => {
+  const handleNavigate = (view: 'home' | 'calendar' | 'map' | 'saved') => {
     setCurrentView(view);
     setSelectedFestival(null);
   };
@@ -542,15 +649,27 @@ export function MainDemo() {
   };
 
   const handleSetAlert = (festivalId: string) => {
-    setAlertSet(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(festivalId)) {
-        newSet.delete(festivalId);
-      } else {
-        newSet.add(festivalId);
-      }
-      return newSet;
-    });
+    if (!isSignedIn) {
+      setPendingAlertFestival(festivalId);
+      setSignInAction('alert');
+      setShowSignInModal(true);
+      return;
+    }
+
+    setAlertTargetFestival(festivalId);
+    setShowAlertModal(true);
+  };
+
+  const handleAlertConfirm = (options: AlertOptions) => {
+    if (alertTargetFestival) {
+      setAlertSet(prev => {
+        const newSet = new Set(prev);
+        newSet.add(alertTargetFestival);
+        return newSet;
+      });
+    }
+    setShowAlertModal(false);
+    setAlertTargetFestival(null);
   };
 
   const handleSaveFestival = (festivalId: string) => {
@@ -577,12 +696,18 @@ export function MainDemo() {
       setShowSignInModal(true);
       return;
     }
-
-    // Show share modal
     setShowShareModal(true);
   };
 
-  const handleStatusChange = (festivalId: string, status: 'considering' | 'probably' | 'booked') => {
+  const handleSubscribeAlerts = () => {
+    if (!isSignedIn) {
+      setSignInAction('alert');
+      setShowSignInModal(true);
+      return;
+    }
+  };
+
+  const handleStatusChange = (festivalId: string, status: 'considering' | 'going') => {
     setFestivalStatuses(prev => ({
       ...prev,
       [festivalId]: status
@@ -590,20 +715,59 @@ export function MainDemo() {
   };
 
   const handleSignIn = () => {
-    // Demo: simulate sign-in
     setIsSignedIn(true);
     setShowSignInModal(false);
+
+    if (pendingAlertFestival) {
+      setAlertTargetFestival(pendingAlertFestival);
+      setShowAlertModal(true);
+      setPendingAlertFestival(null);
+    }
+  };
+
+  // Compare handlers
+  const handleToggleCompare = (festivalId: string) => {
+    setCompareSet(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(festivalId)) {
+        newSet.delete(festivalId);
+      } else if (newSet.size < 3) {
+        newSet.add(festivalId);
+      }
+      return newSet;
+    });
+  };
+
+  const handleClearCompare = () => {
+    setCompareSet(new Set());
+  };
+
+  const handleOpenCompare = () => {
+    setShowCompareDrawer(true);
+  };
+
+  const handleRemoveFromCompare = (festivalId: string) => {
+    setCompareSet(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(festivalId);
+      return newSet;
+    });
+    if (compareSet.size <= 1) {
+      setShowCompareDrawer(false);
+    }
   };
 
   const selectedFestivalData = selectedFestival
     ? festivals.find(f => f.id === selectedFestival)
     : null;
 
+  const alertTargetFestivalData = alertTargetFestival
+    ? festivals.find(f => f.id === alertTargetFestival)
+    : null;
+
   const savedFestivalData = festivals.filter(f => savedFestivals.has(f.id));
   
-  // Convert saved festivals to My Plan format with dates
   const planFestivals = savedFestivalData.map(festival => {
-    // Parse dates from festival.dates string (e.g., "June 20-23, 2026")
     const dateMatch = festival.dates.match(/(\w+)\s+(\d+)-(\d+),\s+(\d+)/);
     let startDate = new Date(2026, 0, 1);
     let endDate = new Date(2026, 0, 1);
@@ -623,14 +787,19 @@ export function MainDemo() {
     };
   });
 
+  const compareFestivals = festivals.filter(f => compareSet.has(f.id));
+
+  // Show compare bar on calendar, saved, and festival views
+  const showCompareBar = (currentView === 'calendar' || currentView === 'saved' || currentView === 'festival') && compareSet.size >= 2;
+
   return (
     <div className="min-h-screen bg-background pb-16 md:pb-0">
-      {/* Navigation - shown on all views except festival detail */}
+      {/* Navigation */}
       {currentView !== 'festival' && (
         <Navigation
-          currentView={currentView}
+          currentView={currentView as 'home' | 'calendar' | 'saved' | 'map'}
           onNavigate={handleNavigate}
-          planCount={savedFestivals.size}
+          savedCount={savedFestivals.size}
         />
       )}
 
@@ -645,6 +814,8 @@ export function MainDemo() {
           onFestivalClick={handleFestivalClick}
           onNavigateToCalendar={() => handleNavigate('calendar')}
           onNavigateToMap={() => handleNavigate('map')}
+          onSetAlert={handleSetAlert}
+          alertSet={alertSet}
         />
       )}
 
@@ -654,6 +825,10 @@ export function MainDemo() {
             events={calendarEvents}
             onEventClick={handleFestivalClick}
             onSetAlert={handleSetAlert}
+            onSubscribeAlerts={handleSubscribeAlerts}
+            isSignedIn={isSignedIn}
+            compareSet={compareSet}
+            onToggleCompare={handleToggleCompare}
           />
         </div>
       )}
@@ -662,15 +837,18 @@ export function MainDemo() {
         <FestivalPage
           festival={selectedFestivalData}
           onBack={handleBackFromFestival}
+          onFollow={() => handleSetAlert(selectedFestivalData.id)}
+          isInCompare={compareSet.has(selectedFestivalData.id)}
+          onToggleCompare={handleToggleCompare}
         />
       )}
 
       {currentView === 'map' && (
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12">
           <div className="mb-6 md:mb-8">
-            <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3">Festival Map</h1>
-            <p className="text-sm md:text-lg text-muted-foreground">
-              Explore festivals by location. Click on pins to learn more.
+            <h1 className="text-2xl md:text-4xl font-bold text-foreground">Festival Map</h1>
+            <p className="text-sm md:text-base text-muted-foreground mt-2">
+              Explore festivals by location type. Tap pins to learn more.
             </p>
           </div>
           <MapView
@@ -680,7 +858,7 @@ export function MainDemo() {
         </div>
       )}
 
-      {currentView === 'plan' && (
+      {currentView === 'saved' && (
         <MySeason
           savedFestivals={planFestivals}
           onStatusChange={handleStatusChange}
@@ -693,27 +871,64 @@ export function MainDemo() {
           }}
           onShareClick={handleShareWishlist}
           onExploreFestivals={() => handleNavigate('home')}
+          compareSet={compareSet}
+          onToggleCompare={handleToggleCompare}
         />
       )}
 
       {/* Bottom Tab Navigation - Mobile only */}
       {currentView !== 'festival' && (
         <BottomTabNavigation
-          currentView={currentView}
+          currentView={currentView as 'home' | 'calendar' | 'saved' | 'map'}
           onNavigate={handleNavigate}
-          planCount={savedFestivals.size}
+          savedCount={savedFestivals.size}
         />
       )}
+
+      {/* Compare Sticky Bar */}
+      {showCompareBar && (
+        <CompareStickyBar
+          count={compareSet.size}
+          onCompare={handleOpenCompare}
+          onClear={handleClearCompare}
+        />
+      )}
+
+      {/* Compare Drawer */}
+      <CompareDrawer
+        isOpen={showCompareDrawer}
+        onClose={() => setShowCompareDrawer(false)}
+        festivals={compareFestivals}
+        onRemove={handleRemoveFromCompare}
+        onFestivalClick={handleFestivalClick}
+      />
 
       {/* Sign-in modal */}
       <SignInModal
         isOpen={showSignInModal}
-        onClose={() => setShowSignInModal(false)}
+        onClose={() => {
+          setShowSignInModal(false);
+          setPendingAlertFestival(null);
+        }}
         onSignIn={handleSignIn}
         action={signInAction}
       />
 
-      {/* Share plan modal */}
+      {/* Alert modal */}
+      <AlertModal
+        isOpen={showAlertModal}
+        onClose={() => {
+          setShowAlertModal(false);
+          setAlertTargetFestival(null);
+        }}
+        festivalName={alertTargetFestivalData?.name || ''}
+        nextOpeningDate={alertTargetFestivalData?.nextOpeningDate}
+        nextOpeningTime={alertTargetFestivalData?.nextOpeningTime}
+        onConfirm={handleAlertConfirm}
+        isAlreadySet={alertTargetFestival ? alertSet.has(alertTargetFestival) : false}
+      />
+
+      {/* Share modal */}
       <SharePlanModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
