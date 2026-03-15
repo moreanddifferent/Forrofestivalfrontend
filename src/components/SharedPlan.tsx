@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { MapPin, Calendar, X, Share2, Bookmark, Map, List, Pencil, Check } from 'lucide-react';
-import { Button } from './ui/button';
+import { MapPin, Calendar, Map, List, User } from 'lucide-react';
 import { UnifiedTicketChip } from './UnifiedTicketChip';
+import { useState } from 'react';
 
-interface SavedFestival {
+export interface SharedFestival {
   id: string;
   name: string;
   location: string;
@@ -12,56 +11,24 @@ interface SavedFestival {
   startDate: Date;
   endDate: Date;
   image: string;
-  locationType: 'sea' | 'countryside' | 'urban' | 'mountain';
-  savedAt: Date;
   ticketStatus?: 'open_now' | 'opening_soon' | 'not_announced' | 'sold_out';
   nextOpeningDate?: string;
   currentPrice?: string;
 }
 
-interface MySeasonProps {
-  savedFestivals: SavedFestival[];
-  onRemove: (festivalId: string) => void;
-  onShareClick: () => void;
-  onExploreFestivals?: () => void;
-  listName?: string;
-  onListNameChange?: (name: string) => void;
+interface SharedPlanProps {
+  ownerName: string;
+  ownerAvatar?: string;
+  festivals: SharedFestival[];
 }
 
 type ViewMode = 'list' | 'map';
 
-export function MySeason({ 
-  savedFestivals, 
-  onRemove,
-  onShareClick, 
-  onExploreFestivals,
-  listName = 'My Summer 2026',
-  onListNameChange
-}: MySeasonProps) {
+export function SharedPlan({ ownerName, ownerAvatar, festivals }: SharedPlanProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [editedName, setEditedName] = useState(listName);
-  
-  const currentDate = new Date(2026, 2, 15); // March 15, 2026
-  const upcomingFestivals = savedFestivals.filter(f => f.endDate >= currentDate);
 
   // Sort by festival date (earlier first)
-  const sortedFestivals = [...upcomingFestivals].sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
-
-  // Calculate stats for header
-  const totalSaved = upcomingFestivals.length;
-
-  const handleSaveName = () => {
-    if (onListNameChange && editedName.trim()) {
-      onListNameChange(editedName.trim());
-    }
-    setIsEditingName(false);
-  };
-
-  const handleCancelEdit = () => {
-    setEditedName(listName);
-    setIsEditingName(false);
-  };
+  const sortedFestivals = [...festivals].sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 
   // Prepare festivals for map
   const mapFestivals = sortedFestivals.map(festival => {
@@ -91,99 +58,59 @@ export function MySeason({
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
-      {/* Page Header - Utility focused */}
+      {/* Page Header - Read-only shared view */}
       <section className="border-b border-border bg-background">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              {isEditingName ? (
-                <div className="flex items-center gap-2 mb-1">
-                  <input
-                    type="text"
-                    value={editedName}
-                    onChange={(e) => setEditedName(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleSaveName();
-                      if (e.key === 'Escape') handleCancelEdit();
-                    }}
-                    className="bg-card border border-[#3D63FF] rounded px-2 py-1 text-lg md:text-2xl font-bold focus:outline-none"
-                    autoFocus
+              <h1 className="text-lg md:text-2xl font-bold leading-tight mb-2">
+                {ownerName}'s saved festivals
+              </h1>
+              <div className="flex items-center gap-2">
+                {ownerAvatar ? (
+                  <img 
+                    src={ownerAvatar} 
+                    alt={ownerName}
+                    className="w-6 h-6 rounded-full border-2 border-background"
                   />
-                  <button
-                    onClick={handleSaveName}
-                    className="p-1.5 text-[#22C55E] hover:bg-[#22C55E]/10 rounded transition-colors"
-                    title="Save"
-                  >
-                    <Check className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleCancelEdit}
-                    className="p-1.5 text-muted-foreground hover:bg-muted rounded transition-colors"
-                    title="Cancel"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 mb-1">
-                  <h1 className="text-lg md:text-2xl font-bold leading-tight">
-                    {listName}
-                  </h1>
-                  <button
-                    onClick={() => setIsEditingName(true)}
-                    className="p-1 text-muted-foreground hover:text-foreground transition-colors"
-                    title="Rename list"
-                  >
-                    <Pencil className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
-              <p className="text-sm text-muted-foreground">
-                {totalSaved} {totalSaved === 1 ? 'festival' : 'festivals'} saved
-              </p>
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-[#3D63FF] flex items-center justify-center">
+                    <User className="w-3 h-3 text-white" />
+                  </div>
+                )}
+                <p className="text-sm text-muted-foreground">
+                  {sortedFestivals.length} {sortedFestivals.length === 1 ? 'festival' : 'festivals'}
+                </p>
+              </div>
             </div>
 
-            {/* Actions */}
-            {upcomingFestivals.length > 0 && (
-              <div className="flex items-center gap-2">
-                {/* View mode toggle */}
-                <div className="inline-flex rounded-lg border border-border bg-background p-0.5">
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`px-2.5 py-1.5 text-xs font-medium rounded transition-colors flex items-center gap-1.5 ${
-                      viewMode === 'list'
-                        ? 'bg-muted text-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                    title="List view"
-                  >
-                    <List className="w-3.5 h-3.5" />
-                    <span className="hidden md:inline">List</span>
-                  </button>
-                  <button
-                    onClick={() => setViewMode('map')}
-                    className={`px-2.5 py-1.5 text-xs font-medium rounded transition-colors flex items-center gap-1.5 ${
-                      viewMode === 'map'
-                        ? 'bg-muted text-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                    title="Map view"
-                  >
-                    <Map className="w-3.5 h-3.5" />
-                    <span className="hidden md:inline">Map</span>
-                  </button>
-                </div>
-
-                {/* Share */}
-                <Button 
-                  onClick={onShareClick} 
-                  variant="outline" 
-                  size="sm" 
-                  className="gap-2"
+            {/* View mode toggle */}
+            {sortedFestivals.length > 0 && (
+              <div className="inline-flex rounded-lg border border-border bg-background p-0.5">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-2.5 py-1.5 text-xs font-medium rounded transition-colors flex items-center gap-1.5 ${
+                    viewMode === 'list'
+                      ? 'bg-muted text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  title="List view"
                 >
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">Share</span>
-                </Button>
+                  <List className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">List</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('map')}
+                  className={`px-2.5 py-1.5 text-xs font-medium rounded transition-colors flex items-center gap-1.5 ${
+                    viewMode === 'map'
+                      ? 'bg-muted text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  title="Map view"
+                >
+                  <Map className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Map</span>
+                </button>
               </div>
             )}
           </div>
@@ -191,49 +118,35 @@ export function MySeason({
       </section>
 
       {/* Empty state */}
-      {upcomingFestivals.length === 0 && (
+      {sortedFestivals.length === 0 && (
         <section className="py-12 md:py-20">
           <div className="max-w-md mx-auto text-center px-4">
             <div className="w-20 h-20 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
-              <Bookmark className="w-10 h-10 text-muted-foreground" />
+              <Map className="w-10 h-10 text-muted-foreground" />
             </div>
             <h2 className="text-xl font-bold mb-2">No saved festivals yet</h2>
-            <p className="text-base text-muted-foreground mb-8 leading-relaxed">
-              Start building your season by saving festivals you're interested in
+            <p className="text-base text-muted-foreground leading-relaxed">
+              {ownerName} hasn't saved any festivals yet
             </p>
-            <Button onClick={onExploreFestivals} className="bg-[#3D63FF] hover:bg-[#2952E5] text-white font-bold">
-              Browse festivals
-            </Button>
           </div>
         </section>
       )}
 
-      {/* List View - Compact shortlist style */}
-      {upcomingFestivals.length > 0 && viewMode === 'list' && (
+      {/* List View - Compact read-only cards */}
+      {sortedFestivals.length > 0 && viewMode === 'list' && (
         <section className="py-4 md:py-6">
           <div className="max-w-6xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-              {sortedFestivals.map(festival => {
-                const isUrgent = festival.ticketStatus === 'opening_soon' && 
-                  festival.nextOpeningDate && 
-                  new Date(festival.nextOpeningDate) <= new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000);
-
-                return (
-                  <FestivalCard
-                    key={festival.id}
-                    festival={festival}
-                    onRemove={onRemove}
-                    isUrgent={isUrgent}
-                  />
-                );
-              })}
+              {sortedFestivals.map(festival => (
+                <FestivalCard key={festival.id} festival={festival} />
+              ))}
             </div>
           </div>
         </section>
       )}
 
       {/* Map View */}
-      {upcomingFestivals.length > 0 && viewMode === 'map' && (
+      {sortedFestivals.length > 0 && viewMode === 'map' && (
         <section className="py-4 md:py-6">
           <div className="max-w-6xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -260,12 +173,6 @@ export function MySeason({
                         alt={selectedFestival.name}
                         className="w-full h-full object-cover"
                       />
-                      <button
-                        onClick={() => setSelectedFestivalId(null)}
-                        className="absolute top-2 right-2 p-1.5 bg-white/90 hover:bg-white rounded-full transition-colors"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
                     </div>
                     <div className="p-3 space-y-2.5">
                       <h3 className="font-bold text-base leading-tight">{selectedFestival.name}</h3>
@@ -291,16 +198,6 @@ export function MySeason({
                           />
                         </div>
                       )}
-
-                      <Button
-                        onClick={() => onRemove(selectedFestival.id)}
-                        variant="outline"
-                        size="sm"
-                        className="w-full gap-2 text-destructive hover:text-destructive mt-2"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                        Remove
-                      </Button>
                     </div>
                   </div>
                 ) : (
@@ -321,31 +218,20 @@ export function MySeason({
 }
 
 interface FestivalCardProps {
-  festival: SavedFestival;
-  onRemove: (festivalId: string) => void;
-  isUrgent?: boolean;
+  festival: SharedFestival;
 }
 
-// Compact card - smaller than homepage cards
-function FestivalCard({ festival, onRemove, isUrgent = false }: FestivalCardProps) {
+// Compact read-only card
+function FestivalCard({ festival }: FestivalCardProps) {
   return (
-    <div className={`bg-card border rounded-lg overflow-hidden hover:shadow-md transition-all group ${
-      isUrgent ? 'border-[#3D63FF] ring-2 ring-[#3D63FF]/20' : 'border-border'
-    }`}>
-      {/* Reduced image height for compactness */}
+    <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-all">
+      {/* Reduced image height */}
       <div className="relative h-28 bg-muted">
         <img
           src={festival.image}
           alt={festival.name}
           className="w-full h-full object-cover"
         />
-        <button
-          onClick={() => onRemove(festival.id)}
-          className="absolute top-2 right-2 p-1 bg-white/90 hover:bg-white rounded-full transition-colors opacity-0 group-hover:opacity-100"
-          aria-label="Remove"
-        >
-          <X className="w-3.5 h-3.5 text-[#FF6B57]" />
-        </button>
       </div>
 
       {/* Compact content */}

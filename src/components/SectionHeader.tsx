@@ -8,12 +8,11 @@ export function SectionHeader({ title, description, isAnchor = false }: SectionH
   return (
     <div className="mb-3 md:mb-6 relative">
       <div className="relative inline-block group cursor-default">
-        {/* Yellow underline ONLY for anchor section titles */}
-        {isAnchor && (
-          <div
-            className="absolute -left-0.5 -right-0.5 bottom-0 h-[2px] md:h-2 bg-[#FFD600] opacity-30 group-hover:opacity-50 transition-opacity duration-150 ease-out rounded-full"
-          />
-        )}
+        {/* Yellow underline for all section titles */}
+        <div
+          className="absolute -left-1 -right-1 bottom-0.5 h-[3px] md:h-2.5 bg-[#FFD600] opacity-35 rounded-sm"
+          style={{ transform: 'rotate(-0.3deg)' }}
+        />
         <h2 className={`${isAnchor ? 'text-xl md:text-4xl' : 'text-lg md:text-3xl'} font-black text-foreground relative z-10 tracking-tight`}>
           {title}
         </h2>

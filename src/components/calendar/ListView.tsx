@@ -1,6 +1,7 @@
 import { Calendar, MapPin, Bell, ExternalLink, ChevronRight, BarChart3 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { CalendarEvent } from './CalendarEvent';
+import { UnifiedTicketChip } from '../UnifiedTicketChip';
 
 interface ListViewProps {
   events: CalendarEvent[];
@@ -59,10 +60,10 @@ export function ListView({ events, onEventClick, onSetAlert, compareSet, onToggl
   return (
     <div className="space-y-6 md:space-y-8">
       {Object.entries(groupedEvents).map(([monthYear, monthEvents]) => (
-        <div key={monthYear} className="md:bg-muted/20 md:p-4 md:rounded-lg">
+        <div key={monthYear} className="md:bg-muted/30 md:p-5 md:rounded-xl">
           {/* Month header — stronger spacing */}
-          <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-2 md:pb-3 mb-2 md:mb-3 border-b border-border">
-            <h3 className="text-base md:text-lg font-bold">{monthYear}</h3>
+          <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-2 md:pb-3 mb-3 md:mb-4 border-b-2 border-border md:relative md:bg-transparent md:backdrop-blur-none">
+            <h3 className="text-base md:text-xl font-black tracking-tight">{monthYear}</h3>
           </div>
 
           {/* Mobile: Compact list */}

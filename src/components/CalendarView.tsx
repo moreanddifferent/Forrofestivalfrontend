@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, List, Ticket } from 'lucide-react';
 import { Button } from './ui/button';
 import { Festival } from '../types/festival';
+import { UnifiedTicketChip } from './UnifiedTicketChip';
 
 interface CalendarViewProps {
   festivals: Festival[];
@@ -276,23 +277,57 @@ function ListEventItem({ event, onClick }: { event: CalendarEvent; onClick: () =
     return date.toLocaleDateString('en-US', { ...options, year: 'numeric' });
   };
 
+  // Helper to get status color for left border
+  const getStatusBorderColor = (status: string) => {
+    switch (status) {
+      case 'open_now': return 'border-l-[#0E7C66]';
+      case 'opening_soon': return 'border-l-[#2F5BFF]';
+      case 'sold_out': return 'border-l-gray-400';
+      case 'not_announced': return 'border-l-[#B8960A]';
+      default: return 'border-l-border';
+    }
+  };
+
+  const getStatusIconBg = (status: string) => {
+    switch (status) {
+      case 'open_now': return 'bg-[#E8F5F1]';
+      case 'opening_soon': return 'bg-[#EBF1FF]';
+      case 'sold_out': return 'bg-gray-100';
+      case 'not_announced': return 'bg-[#FFF9E6]';
+      default: return 'bg-muted';
+    }
+  };
+
+  const getStatusIconColor = (status: string) => {
+    switch (status) {
+      case 'open_now': return 'text-[#0E7C66]';
+      case 'opening_soon': return 'text-[#2F5BFF]';
+      case 'sold_out': return 'text-gray-600';
+      case 'not_announced': return 'text-[#8B7208]';
+      default: return 'text-muted-foreground';
+    }
+  };
+
   if (event.type === 'ticket-opening') {
     return (
       <button
         onClick={onClick}
-        className="w-full flex items-start gap-4 p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-950/30 transition-colors text-left"
+        className="w-full flex items-start gap-4 p-4 bg-[#EBF1FF] border border-[#2F5BFF]/20 border-l-4 border-l-[#2F5BFF] rounded-lg hover:bg-[#DBE6FF] transition-colors text-left"
       >
-        <div className="flex items-center justify-center w-12 h-12 bg-blue-100 dark:bg-blue-950/50 rounded-lg shrink-0">
-          <Ticket className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <div className="flex items-center justify-center w-12 h-12 bg-white rounded-lg shrink-0">
+          <Ticket className="w-6 h-6 text-[#2F5BFF]" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-medium text-blue-700 dark:text-blue-300">TICKETS OPENING</span>
+          <div className="flex items-center gap-2 mb-2">
+            <UnifiedTicketChip
+              status="opening_soon"
+              nextOpeningDate={event.date.toISOString()}
+            />
             {event.lotName && (
-              <span className="text-xs text-blue-600 dark:text-blue-400">· {event.lotName}</span>
+              <span className="text-xs text-muted-foreground">· {event.lotName}</span>
             )}
           </div>
-          <h4 className="mb-1 truncate font-medium">{event.festival.name}</h4>
+          <h4 className="mb-1 truncate font-bold text-[15px]">{event.festival.name}</h4>
           <p className="text-sm text-muted-foreground">
             {formatDate(event.date)}
             {event.openingTime && ` · ${event.openingTime}`}
@@ -302,16 +337,29 @@ function ListEventItem({ event, onClick }: { event: CalendarEvent; onClick: () =
     );
   }
 
+  // Festival event row
+  const ticketStatus = event.festival.ticketStatus || 'not_announced';
+  const borderColor = getStatusBorderColor(ticketStatus);
+  const iconBg = getStatusIconBg(ticketStatus);
+  const iconColor = getStatusIconColor(ticketStatus);
+
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-start gap-4 p-4 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-md transition-all text-left"
+      className={`w-full flex items-start gap-4 p-4 bg-card border border-border ${borderColor} border-l-4 rounded-lg hover:shadow-md transition-all text-left`}
     >
-      <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg shrink-0">
-        <CalendarIcon className="w-6 h-6 text-primary" />
+      <div className={`flex items-center justify-center w-12 h-12 ${iconBg} rounded-lg shrink-0`}>
+        <CalendarIcon className={`w-6 h-6 ${iconColor}`} />
       </div>
       <div className="flex-1 min-w-0">
-        <h4 className="mb-1 truncate font-medium">{event.festival.name}</h4>
+        <div className="flex items-center gap-2 mb-2 flex-wrap">
+          <UnifiedTicketChip
+            status={ticketStatus as any}
+            currentPrice={event.festival.currentPrice}
+            nextOpeningDate={event.festival.nextOpeningDate}
+          />
+        </div>
+        <h4 className="mb-1 truncate font-bold text-[15px]">{event.festival.name}</h4>
         <p className="text-sm text-muted-foreground mb-1">
           {event.festival.location}, {event.festival.country}
         </p>

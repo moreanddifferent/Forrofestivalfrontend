@@ -673,16 +673,23 @@ export function MainDemo() {
   };
 
   const handleSaveFestival = (festivalId: string) => {
-    if (!isSignedIn) {
-      setSignInAction('save');
-      setShowSignInModal(true);
-      return;
-    }
+    // Removed sign-in requirement for demo purposes
+    // if (!isSignedIn) {
+    //   setSignInAction('save');
+    //   setShowSignInModal(true);
+    //   return;
+    // }
 
     setSavedFestivals(prev => {
       const newSet = new Set(prev);
       if (newSet.has(festivalId)) {
         newSet.delete(festivalId);
+        // Remove from compare set if unsaved
+        setCompareSet(prevCompare => {
+          const newCompare = new Set(prevCompare);
+          newCompare.delete(festivalId);
+          return newCompare;
+        });
       } else {
         newSet.add(festivalId);
       }
@@ -846,7 +853,13 @@ export function MainDemo() {
       {currentView === 'map' && (
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12">
           <div className="mb-6 md:mb-8">
-            <h1 className="text-2xl md:text-4xl font-bold text-foreground">Festival Map</h1>
+            <div className="relative inline-block">
+              <div
+                className="absolute -left-1 -right-1 bottom-0.5 h-[3px] md:h-2.5 bg-[#FFD600] opacity-35 rounded-sm"
+                style={{ transform: 'rotate(-0.3deg)' }}
+              />
+              <h1 className="text-2xl md:text-4xl font-bold text-foreground relative z-10">Festival Map</h1>
+            </div>
             <p className="text-sm md:text-base text-muted-foreground mt-2">
               Explore festivals by location type. Tap pins to learn more.
             </p>

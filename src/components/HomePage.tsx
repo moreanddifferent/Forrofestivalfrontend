@@ -116,14 +116,15 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
       />
 
       {/* Hero Section */}
-      <section>
-        <div className="max-w-6xl mx-auto px-4 md:px-6 pt-1.5 md:pt-10 pb-0.5 md:pb-4">
-          <div className="max-w-[860px] mb-1 md:mb-4">
+      <section className="bg-background">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 pt-1.5 md:pt-6 pb-0.5 md:pb-8">
+          {/* Hero header */}
+          <div className="space-y-1 md:space-y-2 mb-5 md:mb-8">
             <h1 className="text-[18px] md:text-[48px] font-bold leading-[1.1] tracking-tight text-foreground">
               Forró festivals in Europe
             </h1>
             <p className="text-[12px] md:text-lg text-muted-foreground mt-0.5 md:mt-1.5 leading-tight">
-              Plan where to dance.
+              Track the seasons. Plan where to dance.
             </p>
           </div>
 
@@ -147,7 +148,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
               <span className="text-[13px] text-muted-foreground flex-1 text-left">
                 Where • When • Setting
               </span>
-              <div className="w-6 h-6 bg-[#2F5BFF] rounded-full flex items-center justify-center shrink-0">
+              <div className="w-6 h-6 bg-[#3D63FF] rounded-full flex items-center justify-center shrink-0">
                 <SlidersHorizontal className="w-3 h-3 text-white" />
               </div>
             </button>
@@ -165,8 +166,8 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
                 <h2 className="text-[13px] md:text-lg font-black tracking-tight text-white leading-tight">
                   Tickets opening soon
                 </h2>
-                <p className="text-[9px] md:text-[11px] text-white/50 mt-0 md:mt-0.5 leading-tight">
-                  Next releases
+                <p className="text-[9px] md:text-[11px] text-white/60 mt-0 md:mt-0.5 leading-tight">
+                  Don't miss early bird prices
                 </p>
               </div>
               <button
@@ -226,7 +227,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
                       data-ticket-card
                       className="flex-shrink-0 snap-start
                         w-[calc(100vw-56px)]
-                        md:w-[calc((100%-8px)/2.2)]
+                        md:w-[calc((100%-8px)/3.5)]
                         bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
                       onClick={() => onFestivalClick(festival.id)}
                     >
@@ -367,46 +368,46 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
 
       {/* Footer */}
       <section className="border-t border-border bg-background pb-4 md:pb-0">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-10">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8 text-sm mb-6 md:mb-8">
-            <div className="space-y-1.5 md:space-y-2">
-              <div className="flex items-center gap-2 mb-1 md:mb-2">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10 text-sm mb-8 md:mb-10">
+            <div className="space-y-2 md:space-y-3">
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
                 <span className="font-bold text-sm">Verified information</span>
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Festival details confirmed with organizers.
               </p>
             </div>
 
-            <div className="space-y-1.5 md:space-y-2">
-              <div className="flex items-center gap-2 mb-1 md:mb-2">
+            <div className="space-y-2 md:space-y-3">
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
                 <span className="font-bold text-sm">No commercial interest</span>
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 No ticket sales, no commissions.
               </p>
             </div>
 
-            <div className="space-y-1.5 md:space-y-2">
-              <div className="flex items-center gap-2 mb-1 md:mb-2">
+            <div className="space-y-2 md:space-y-3">
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
                 <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                 </div>
                 <span className="font-bold text-sm">Built by dancers</span>
               </div>
-              <p className="text-muted-foreground text-xs md:text-sm">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 For the European Forró community.
               </p>
             </div>
           </div>
 
-          <div className="pt-4 md:pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-xs">
+          <div className="pt-6 md:pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-sm">
             <p className="font-medium">© 2026 Forró Europe · Independent guide</p>
             <a 
               href="#about" 

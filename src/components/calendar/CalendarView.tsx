@@ -56,7 +56,13 @@ export function CalendarView({ events, onEventClick, onSetAlert, onSubscribeAler
       {/* View mode toggle + subscribe entry */}
       <div className="flex items-center justify-between border-b border-border pb-2 md:pb-4 flex-wrap gap-2 md:gap-4 bg-background">
         <div>
-          <h1 className="text-lg md:text-3xl font-bold text-foreground leading-tight">Calendar</h1>
+          <div className="relative inline-block">
+            <div
+              className="absolute -left-1 -right-1 bottom-0.5 h-[3px] md:h-2.5 bg-[#FFD600] opacity-35 rounded-sm"
+              style={{ transform: 'rotate(-0.3deg)' }}
+            />
+            <h1 className="text-lg md:text-3xl font-bold text-foreground leading-tight relative z-10">Calendar</h1>
+          </div>
           <p className="text-[11px] md:text-sm text-muted-foreground mt-0.5 md:mt-1 leading-tight">
             Ticket openings & dates · <span className="md:hidden">Times in CET</span><span className="hidden md:inline">Track ticket openings and festival dates</span>
           </p>

@@ -62,7 +62,7 @@ export function HorizontalScrollSection({
             {displayFestivals.map((festival) => (
               <div
                 key={festival.id}
-                className="flex-shrink-0 w-[220px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow"
+                className="flex-shrink-0 w-[180px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow"
               >
                 {/* Image with overlays */}
                 <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted" onClick={() => onFestivalClick(festival.id)}>
@@ -74,7 +74,7 @@ export function HorizontalScrollSection({
                   
                   {/* Ticket chip overlay */}
                   {festival.ticketStatus && (
-                    <div className="absolute bottom-2 left-2">
+                    <div className="absolute bottom-1.5 left-1.5">
                       <UnifiedTicketChip
                         status={festival.ticketStatus}
                         currentPrice={festival.currentPrice}
@@ -90,10 +90,10 @@ export function HorizontalScrollSection({
                         e.stopPropagation();
                         festival.onSave!();
                       }}
-                      className="absolute top-2 right-2 p-1.5 bg-white/95 rounded-full shadow-sm active:bg-[#FFD600]/40 transition-colors"
+                      className="absolute top-1.5 right-1.5 p-1 bg-white/95 rounded-full shadow-sm active:bg-[#FFD600]/40 transition-colors"
                     >
                       <svg
-                        className={`w-3.5 h-3.5 ${
+                        className={`w-3 h-3 ${
                           festival.isSaved ? 'fill-[#2F5BFF] text-[#2F5BFF]' : 'fill-none text-black'
                         }`}
                         strokeWidth="2"
@@ -107,14 +107,14 @@ export function HorizontalScrollSection({
                 </div>
 
                 {/* Content */}
-                <div className="p-3 space-y-1" onClick={() => onFestivalClick(festival.id)}>
-                  <h3 className="font-bold text-sm leading-tight line-clamp-1 text-foreground">
+                <div className="p-2 space-y-0.5" onClick={() => onFestivalClick(festival.id)}>
+                  <h3 className="font-bold text-[12px] leading-tight line-clamp-1 text-foreground">
                     {festival.name}
                   </h3>
-                  <p className="text-xs text-muted-foreground line-clamp-1">
+                  <p className="text-[10px] text-muted-foreground line-clamp-1">
                     {festival.location}, {festival.country}
                   </p>
-                  <p className="text-xs text-muted-foreground line-clamp-1">
+                  <p className="text-[10px] text-muted-foreground line-clamp-1">
                     {festival.dates}
                   </p>
                 </div>
@@ -124,7 +124,7 @@ export function HorizontalScrollSection({
         </div>
 
         {/* Desktop: 2-column grid (calmer, more comparable) */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 px-0">
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-5 px-0">
           {displayFestivals.map((festival) => (
             <div
               key={festival.id}
@@ -138,7 +138,7 @@ export function HorizontalScrollSection({
                 />
                 {/* Ticket chip overlay */}
                 {festival.ticketStatus && (
-                  <div className="absolute bottom-2 left-2">
+                  <div className="absolute bottom-1.5 left-1.5">
                     <UnifiedTicketChip
                       status={festival.ticketStatus}
                       currentPrice={festival.currentPrice}
@@ -152,10 +152,10 @@ export function HorizontalScrollSection({
                       e.stopPropagation();
                       festival.onSave!();
                     }}
-                    className="absolute top-2 right-2 p-2 bg-white/95 hover:bg-[#FFD600]/40 rounded-full shadow-sm transition-colors"
+                    className="absolute top-1.5 right-1.5 p-1.5 bg-white/95 hover:bg-[#FFD600]/40 rounded-full shadow-sm transition-colors"
                   >
                     <svg
-                      className={`w-4 h-4 ${
+                      className={`w-3.5 h-3.5 ${
                         festival.isSaved ? 'fill-[#2F5BFF] text-[#2F5BFF]' : 'fill-none text-black'
                       }`}
                       strokeWidth="2"
@@ -167,12 +167,12 @@ export function HorizontalScrollSection({
                   </button>
                 )}
               </div>
-              <div className="p-3 space-y-1" onClick={() => onFestivalClick(festival.id)}>
-                <h3 className="font-bold text-sm leading-tight line-clamp-1 text-foreground group-hover:text-[#2F5BFF] transition-colors">
+              <div className="p-2.5 space-y-0.5" onClick={() => onFestivalClick(festival.id)}>
+                <h3 className="font-bold text-[13px] leading-tight line-clamp-1 text-foreground group-hover:text-[#2F5BFF] transition-colors">
                   {festival.name}
                 </h3>
-                <p className="text-xs text-muted-foreground">{festival.location}, {festival.country}</p>
-                <p className="text-xs text-muted-foreground">{festival.dates}</p>
+                <p className="text-[11px] text-muted-foreground">{festival.location}, {festival.country}</p>
+                <p className="text-[11px] text-muted-foreground">{festival.dates}</p>
               </div>
             </div>
           ))}

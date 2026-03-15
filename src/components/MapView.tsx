@@ -35,12 +35,12 @@ const locationTypeLabels: Record<LocationType, string> = {
   mountain: 'Mountain',
 };
 
-// Color coding for location types — restrained palette
+// Color coding for location types — updated warm palette
 const locationTypeColors: Record<LocationType, string> = {
-  sea: '#2F5BFF',        // blue
-  countryside: '#0E7C66', // green
-  urban: '#3F3F46',      // dark gray
-  mountain: '#D97706',   // muted ochre/yellow
+  sea: '#3D63FF',        // bright electric blue
+  countryside: '#22C55E', // fresh green
+  urban: '#1F1F1C',      // deep warm charcoal
+  mountain: '#F6D94C',   // warm yellow
 };
 
 // Icons for location type differentiation inside pins
@@ -152,8 +152,8 @@ export function MapView({ festivals, onFestivalClick }: MapViewProps) {
           const isActive = isHovered || isSelected;
 
           // Neutral grey by default, electric blue when active
-          const pinFill = isActive ? '#2F5BFF' : locationTypeColors[festival.locationType];
-          const pinStroke = isActive ? '#2F5BFF' : '#ffffff';
+          const pinFill = isActive ? '#3D63FF' : locationTypeColors[festival.locationType];
+          const pinStroke = isActive ? '#3D63FF' : '#ffffff';
           const pinRadius = isActive ? 12 : 9;
 
           return (
@@ -289,7 +289,7 @@ export function MapView({ festivals, onFestivalClick }: MapViewProps) {
               {/* CTA */}
               <Button
                 size="lg"
-                className="w-full bg-[#2F5BFF] hover:bg-[#1A44E0] text-white font-bold"
+                className="w-full bg-[#3D63FF] hover:bg-[#2952E5] text-white font-bold"
                 onClick={() => {
                   onFestivalClick(selectedFestival.id);
                   handleClosePopup();
