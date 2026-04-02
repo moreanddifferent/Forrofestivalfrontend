@@ -1,487 +1,1371 @@
 [
   {
     "id": "1",
-    "name": "Forró do Sol",
-    "location": "Cascais",
-    "country": "Portugal",
-    "dates": "June 20-23, 2026",
-    "startDate": "2026-06-20",
-    "endDate": "2026-06-23",
-    "image": "https://images.unsplash.com/photo-1764377847860-9005502a4888?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2FzdGFsJTIwc3Vuc2V0JTIwYmVhY2glMjBldXJvcGV8ZW58MXx8fHwxNzcwNTczMzI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "400-500 dancers",
-    "ticketStatus": "open",
-    "passTypes": [
-      {
-        "id": "full-pass",
-        "name": "Full Pass",
-        "description": "All workshops, parties, and meals included",
-        "ticketEntries": [
-          {
-            "id": "lot-1",
-            "lotName": "1st Lot",
-            "priceAmount": 95,
-            "currency": "€",
-            "status": "sold_out",
-            "opensAt": "2026-01-15",
-            "opensTime": "10:00 CET"
-          },
-          {
-            "id": "lot-2",
-            "lotName": "2nd Lot",
-            "priceAmount": 120,
-            "currency": "€",
-            "status": "open_now",
-            "opensAt": "2026-03-01",
-            "opensTime": "12:00 CET",
-            "purchaseLink": "https://example.com",
-            "quota": "45 remaining"
-          },
-          {
-            "id": "lot-3",
-            "lotName": "3rd Lot",
-            "priceAmount": 145,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-04-20",
-            "opensTime": "10:00 CET"
-          },
-          {
-            "id": "lot-4",
-            "lotName": "4th Lot",
-            "priceAmount": 165,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-05-15",
-            "opensTime": "10:00 CET"
-          }
-        ]
-      },
-      {
-        "id": "party-pass",
-        "name": "Party Pass",
-        "description": "Evening parties only",
-        "ticketEntries": [
-          {
-            "id": "party-1",
-            "lotName": "1st Lot",
-            "priceAmount": 40,
-            "currency": "€",
-            "status": "sold_out",
-            "opensAt": "2026-03-01",
-            "opensTime": "12:00 CET"
-          },
-          {
-            "id": "party-2",
-            "lotName": "2nd Lot",
-            "priceAmount": 50,
-            "currency": "€",
-            "status": "open_now",
-            "opensAt": "2026-03-20",
-            "opensTime": "14:00 CET",
-            "purchaseLink": "https://example.com"
-          },
-          {
-            "id": "party-3",
-            "lotName": "3rd Lot",
-            "priceAmount": 60,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-05-15",
-            "opensTime": "10:00 CET"
-          }
-        ]
-      }
-    ],
-    "description": "Experience the magic of Forró by the Atlantic coast. Three days of intensive workshops with international maestros, social dancing under the stars, and the warm Portuguese hospitality that makes every moment unforgettable.",
-    "venue": "Casa da Guia Cultural Center",
-    "followers": 1247,
-    "lastUpdate": "2 days ago",
-    "verificationStatus": "confirmed",
-    "highlights": [
-      "Beachfront location with ocean views",
-      "International teaching faculty",
-      "Traditional Portuguese dinner included",
-      "Late-night sessions until sunrise"
-    ],
-    "category": "coastal",
-    "festivalLength": "weekend"
-  },
-  {
-    "id": "2",
-    "name": "Barcelona Forró Festival",
-    "location": "Barcelona",
-    "country": "Spain",
-    "dates": "July 11-14, 2026",
-    "startDate": "2026-07-11",
-    "endDate": "2026-07-14",
-    "image": "https://images.unsplash.com/photo-1630509695722-5ccf54e2fc7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXJjZWxvbmElMjBhcmNoaXRlY3R1cmUlMjBuaWdodHxlbnwxfHx8fDE3NzA1NzMzMjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "800-1000 dancers",
-    "ticketStatus": "opening-soon",
-    "passTypes": [
-      {
-        "id": "full-pass",
-        "name": "Full Pass",
-        "ticketEntries": [
-          {
-            "id": "tier-1",
-            "lotName": "Standard",
-            "priceAmount": 165,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-03-15",
-            "opensTime": "10:00 CET",
-            "tierDescription": "Workshops and parties"
-          },
-          {
-            "id": "tier-2",
-            "lotName": "Premium",
-            "priceAmount": 215,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-03-15",
-            "opensTime": "10:00 CET",
-            "tierDescription": "Includes accommodation package"
-          },
-          {
-            "id": "tier-3",
-            "lotName": "VIP",
-            "priceAmount": 280,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-03-15",
-            "opensTime": "10:00 CET",
-            "tierDescription": "All-inclusive with private masterclasses",
-            "quota": "Limited to 30 spots"
-          }
-        ]
-      },
-      {
-        "id": "party-pass",
-        "name": "Party Pass",
-        "ticketEntries": [
-          {
-            "id": "party-tier",
-            "lotName": "Party Only",
-            "priceAmount": 85,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-03-15",
-            "opensTime": "10:00 CET"
-          }
-        ]
-      }
-    ],
-    "description": "The largest Forró gathering in Catalonia returns for its 8th edition. Four days of world-class instruction, spectacular shows, and the vibrant energy of Barcelona's dance community.",
-    "venue": "Fàbrica Moritz",
-    "followers": 2891,
-    "lastUpdate": "1 day ago",
-    "verificationStatus": "confirmed",
-    "highlights": [
-      "Over 40 workshops across all levels",
-      "Live Brazilian band every night",
-      "City center location near beach",
-      "Special guest: Mestre João do Pife"
-    ],
-    "category": "city",
-    "festivalLength": "weekend"
-  },
-  {
-    "id": "3",
-    "name": "Forró in the Garden",
-    "location": "Amsterdam",
-    "country": "Netherlands",
-    "dates": "May 16-18, 2026",
-    "startDate": "2026-05-16",
-    "endDate": "2026-05-18",
-    "image": "https://images.unsplash.com/photo-1661264047307-4d692250a7ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3RhbmljYWwlMjBnYXJkZW4lMjBncmVlbmhvdXNlfGVufDF8fHx8MTc3MDQ4OTQ4OXww&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "150-200 dancers",
-    "ticketStatus": "sold-out",
-    "passTypes": [
-      {
-        "id": "contribution",
-        "name": "Contribution",
-        "description": "Pay what feels right for this community event",
-        "ticketEntries": [
-          {
-            "id": "solidarity",
-            "lotName": "Solidarity rate",
-            "priceAmount": 80,
-            "currency": "€",
-            "status": "sold_out",
-            "tierDescription": "Reduced rate for those with limited means"
-          },
-          {
-            "id": "standard",
-            "lotName": "Standard contribution",
-            "priceAmount": 120,
-            "currency": "€",
-            "status": "sold_out",
-            "tierDescription": "Covers event costs"
-          },
-          {
-            "id": "supporter",
-            "lotName": "Supporter rate",
-            "priceAmount": 160,
-            "currency": "€",
-            "status": "sold_out",
-            "tierDescription": "Help us support future events"
-          }
-        ]
-      }
-    ],
-    "description": "An intimate weekend retreat in a historic Amsterdam garden house. Limited capacity ensures personal attention from teachers and a close-knit community atmosphere.",
-    "venue": "De Hortus Botanicus",
-    "followers": 543,
-    "lastUpdate": "1 week ago",
-    "verificationStatus": "confirmed",
-    "highlights": [
-      "Small group workshops (max 30 people)",
-      "Organic farm-to-table meals",
-      "Acoustic sessions in the greenhouse",
-      "Focus on musicality and connection"
-    ],
-    "category": "intimate",
-    "festivalLength": "weekend"
-  },
-  {
-    "id": "4",
-    "name": "Mediterranean Forró Week",
-    "location": "Nice",
-    "country": "France",
-    "dates": "August 3-10, 2026",
-    "startDate": "2026-08-03",
-    "endDate": "2026-08-10",
-    "image": "https://images.unsplash.com/photo-1729710429542-ef3b7e2ebde1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVuY2glMjByaXZpZXJhJTIwbWVkaXRlcnJhbmVhbnxlbnwxfHx8fDE3NzA1NzMzMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "300-400 dancers",
-    "ticketStatus": "open",
-    "passTypes": [
-      {
-        "id": "full-week",
-        "name": "Full Week",
-        "ticketEntries": [
-          {
-            "id": "super-early",
-            "lotName": "Super Early Bird",
-            "priceAmount": 320,
-            "currency": "€",
-            "status": "sold_out",
-            "opensAt": "2025-12-01",
-            "opensTime": "09:00 CET"
-          },
-          {
-            "id": "early",
-            "lotName": "Early Bird",
-            "priceAmount": 380,
-            "currency": "€",
-            "status": "open_now",
-            "opensAt": "2026-02-01",
-            "opensTime": "12:00 CET",
-            "purchaseLink": "https://example.com"
-          },
-          {
-            "id": "regular",
-            "lotName": "Regular",
-            "priceAmount": 450,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-04-01",
-            "opensTime": "10:00 CET"
-          }
-        ]
-      },
-      {
-        "id": "weekend-1",
-        "name": "Weekend 1",
-        "description": "Aug 3-6",
-        "ticketEntries": [
-          {
-            "id": "w1-early",
-            "lotName": "Early Bird",
-            "priceAmount": 180,
-            "currency": "€",
-            "status": "open_now",
-            "purchaseLink": "https://example.com"
-          }
-        ]
-      },
-      {
-        "id": "weekend-2",
-        "name": "Weekend 2",
-        "description": "Aug 7-10",
-        "ticketEntries": [
-          {
-            "id": "w2-early",
-            "lotName": "Early Bird",
-            "priceAmount": 180,
-            "currency": "€",
-            "status": "open_now",
-            "purchaseLink": "https://example.com"
-          }
-        ]
-      }
-    ],
-    "description": "A full week of Forró immersion on the French Riviera. Combine intensive training with Mediterranean leisure, beach days, and unforgettable sunset sessions.",
-    "venue": "Villa Masséna & Promenade des Anglais",
-    "followers": 892,
-    "lastUpdate": "3 days ago",
-    "verificationStatus": "confirmed",
-    "highlights": [
-      "Full week program with rest days",
-      "Beach parties and boat excursions",
-      "Professional show production",
-      "Optional accommodation packages"
-    ],
-    "category": "coastal",
-    "festivalLength": "long"
-  },
-  {
-    "id": "5",
-    "name": "Forró in the Alps",
-    "location": "Chamonix",
-    "country": "France",
-    "dates": "September 5-8, 2026",
-    "startDate": "2026-09-05",
-    "endDate": "2026-09-08",
-    "image": "https://images.unsplash.com/photo-1763743882687-dde4488507df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3VudHJ5c2lkZSUyMHZpbGxhZ2UlMjBldXJvcGV8ZW58MXx8fHwxNzcwNTczMzI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "200-250 dancers",
+    "name": "Forrozin Festiv-all-3",
+    "url": "https://www.facebook.com/forrozin.festivall/",
+    "location": "Freiburg",
+    "country": "Germany",
+    "dates": "February 5-8, 2026",
+    "startDate": "2026-02-05",
+    "endDate": "2026-02-08",
+    "image": "https://images.unsplash.com/photo-1581444170318-6148b769f249?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGcmVpYnVyZyUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMjkxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
     "ticketStatus": "not-announced",
     "passTypes": [
       {
         "id": "full-pass",
         "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
         "ticketEntries": [
           {
             "id": "tbd-1",
-            "lotName": "Early Bird",
-            "priceRange": { "min": 150, "max": 180 },
-            "currency": "€",
-            "status": "not_announced",
-            "tierDescription": "Estimated pricing"
-          },
-          {
-            "id": "tbd-2",
-            "lotName": "Regular",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
             "currency": "€",
             "status": "not_announced"
           }
         ]
       }
     ],
-    "description": "Dance surrounded by mountain peaks and fresh alpine air. A unique retreat combining Forró with optional hiking and outdoor activities in one of Europe's most stunning locations.",
-    "venue": "Majestic Conference Center",
-    "followers": 421,
-    "lastUpdate": "5 days ago",
+    "description": "A vibrant forró festival in Freiburg, Germany.",
+    "venue": "Various venues in Freiburg",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
     "verificationStatus": "likely",
-    "highlights": [
-      "Mountain setting with panoramic views",
-      "Optional guided hiking tours",
-      "Cozy evening sessions by the fireplace",
-      "Sustainable local cuisine"
-    ],
-    "category": "intimate",
+    "highlights": [],
+    "category": "city",
     "festivalLength": "short"
   },
   {
-    "id": "6",
-    "name": "Berlin Forró Congress",
-    "location": "Berlin",
-    "country": "Germany",
-    "dates": "October 23-27, 2026",
-    "startDate": "2026-10-23",
-    "endDate": "2026-10-27",
-    "image": "https://images.unsplash.com/photo-1766019463317-1cc801c15e61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwaGFsbCUyMGNyb3dkJTIwY2VsZWJyYXRpb258ZW58MXx8fHwxNzcwNTczMzMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-    "attendees": "1200-1500 dancers",
-    "ticketStatus": "opening-soon",
+    "id": "2",
+    "name": "Festival Sereia Barcelona",
+    "url": "https://www.facebook.com/events/2588775364699870/",
+    "location": "Barcelona",
+    "country": "Spain",
+    "dates": "February 6-8, 2026",
+    "startDate": "2026-02-06",
+    "endDate": "2026-02-08",
+    "image": "https://images.unsplash.com/photo-1572116138079-452c62f26d6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBjaXR5fGVufDF8fHx8fDE3MDc2MTI5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
     "passTypes": [
       {
         "id": "full-pass",
         "name": "Full Pass",
-        "description": "All workshops and parties",
+        "description": "Access to all workshops and parties.",
         "ticketEntries": [
           {
-            "id": "super-early",
-            "lotName": "Super Early Bird",
-            "priceAmount": 185,
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
             "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-04-01",
-            "opensTime": "10:00 CET",
-            "quota": "Limited to 100 spots"
-          },
-          {
-            "id": "early",
-            "lotName": "Early Bird",
-            "priceAmount": 220,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-06-01",
-            "opensTime": "12:00 CET"
-          },
-          {
-            "id": "regular",
-            "lotName": "Regular",
-            "priceAmount": 260,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-08-01",
-            "opensTime": "12:00 CET"
-          }
-        ]
-      },
-      {
-        "id": "party-pass",
-        "name": "Party Pass",
-        "description": "Evening parties only",
-        "ticketEntries": [
-          {
-            "id": "party-early",
-            "lotName": "Early Bird",
-            "priceAmount": 110,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-06-01",
-            "opensTime": "12:00 CET"
-          },
-          {
-            "id": "party-regular",
-            "lotName": "Regular",
-            "priceAmount": 135,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-08-01",
-            "opensTime": "12:00 CET"
-          }
-        ]
-      },
-      {
-        "id": "workshop-pass",
-        "name": "Workshop Pass",
-        "description": "Workshops only",
-        "ticketEntries": [
-          {
-            "id": "workshop",
-            "lotName": "Workshop Access",
-            "priceAmount": 140,
-            "currency": "€",
-            "status": "opening_soon",
-            "opensAt": "2026-06-01",
-            "opensTime": "12:00 CET"
+            "status": "not_announced"
           }
         ]
       }
     ],
-    "description": "The largest Forró event in Central Europe. Five days of non-stop dancing, renowned international teachers, live bands, and Berlin's legendary nightlife atmosphere.",
-    "venue": "Columbiahalle",
-    "followers": 3542,
-    "lastUpdate": "6 hours ago",
-    "verificationStatus": "confirmed",
-    "highlights": [
-      "Largest festival in Central Europe",
-      "Multiple dance floors simultaneously",
-      "60+ workshops and masterclasses",
-      "After-party locations across the city"
+    "description": "A forró festival in the vibrant city of Barcelona.",
+    "venue": "Various venues in Barcelona",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "3",
+    "name": "Baiãothon Paname, Saint-Valentin vol.",
+    "url": "https://www.facebook.com/events/s/bai%C3%A3othon-paname-saint-valentin-v2/819599433439750/",
+    "location": "Paris",
+    "country": "France",
+    "dates": "February 13-15, 2026",
+    "startDate": "2026-02-13",
+    "endDate": "2026-02-15",
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760c0341?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQYXJpcyUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzA0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
     ],
-    "category": "big-gathering",
+    "description": "A Valentine's edition forró festival in Paris.",
+    "venue": "Various venues in Paris",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "4",
+    "name": "Bom Demais Vinil",
+    "url": "https://www.facebook.com/events/1709230332810100/",
+    "location": "Valencia",
+    "country": "Spain",
+    "dates": "February 19-22, 2026",
+    "startDate": "2026-02-19",
+    "endDate": "2026-02-22",
+    "image": "https://images.unsplash.com/photo-1616095204150-468c05f368e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxWYWxlbmNpYSUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzA4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival with a vinyl focus in Valencia.",
+    "venue": "Various venues in Valencia",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "5",
+    "name": "Maria Bonita Festival",
+    "url": "https://www.facebook.com/events/1149036138793664/",
+    "location": "Lisbon",
+    "country": "Portugal",
+    "dates": "March 6-8, 2026",
+    "startDate": "2026-03-06",
+    "endDate": "2026-03-08",
+    "image": "https://images.unsplash.com/photo-1544322479-052e008104d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaXNib24lMjByb29mdG9wJTIwY2l0eXNjYXBlfGVufDF8fHx8MTcwNzYxMjg1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival celebrating Maria Bonita in Lisbon.",
+    "venue": "Various venues in Lisbon",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "6",
+    "name": "Mini Forró Festival Oslo",
+    "url": "https://www.facebook.com/events/1572472663315413/",
+    "location": "Oslo",
+    "country": "Norway",
+    "dates": "March 13-15, 2026",
+    "startDate": "2026-03-13",
+    "endDate": "2026-03-15",
+    "image": "https://images.unsplash.com/photo-1597904748070-5b84538f0710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxPcyUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzE3NHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A mini forró festival in Oslo, Norway.",
+    "venue": "Various venues in Oslo",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "7",
+    "name": "Forró Primavera Festival",
+    "url": "https://www.facebook.com/events/471501565181018/",
+    "location": "Dresden",
+    "country": "Germany",
+    "dates": "March 13-15, 2026",
+    "startDate": "2026-03-13",
+    "endDate": "2026-03-15",
+    "image": "https://images.unsplash.com/photo-1607944789434-4544b191a950?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxEcmVzZGVuJTIwY2l0eXNjYXBlfGVufDF8fHx8fDE3MDc2MTMyNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A spring forró festival in Dresden, Germany.",
+    "venue": "Various venues in Dresden",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "8",
+    "name": "Forró da Utopia",
+    "url": "https://www.facebook.com/events/3468816913330174/",
+    "location": "Faro",
+    "country": "Portugal",
+    "dates": "March 13-15, 2026",
+    "startDate": "2026-03-13",
+    "endDate": "2026-03-15",
+    "image": "https://images.unsplash.com/photo-1620203073473-d5f5859356f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGYXJvJTIwcG9ydHVnYWx8ZW58MXx8fHx8MTcwNzYxMzI4NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Faro, Portugal.",
+    "venue": "Various venues in Faro",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "9",
+    "name": "Forró London Festival",
+    "url": "https://www.facebook.com/events/1011267539215303/",
+    "location": "London",
+    "country": "UK",
+    "dates": "March 19-22, 2026",
+    "startDate": "2026-03-19",
+    "endDate": "2026-03-22",
+    "image": "https://images.unsplash.com/photo-1533929738005-cc43e3203e60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMb25kb24lMjBjaXR5fGVufDF8fHx8fDE3MDc2MTMzMjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "The biggest forró festival in London.",
+    "venue": "Various venues in London",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "10",
+    "name": "Forró Vinyl Festival",
+    "url": "https://www.facebook.com/events/1660827617538756/",
+    "location": "Zürich",
+    "country": "Switzerland",
+    "dates": "April 3-5, 2026",
+    "startDate": "2026-04-03",
+    "endDate": "2026-04-05",
+    "image": "https://images.unsplash.com/photo-1547626740-02cb67010481?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxadXJpY2glMjBjaXR5fGVufDF8fHx8fDE3MDc2MTMzNzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival with a vinyl focus in Zürich, Switzerland.",
+    "venue": "Various venues in Zürich",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "11",
+    "name": "Sertão Bonn",
+    "url": "https://www.facebook.com/events/1007657023241279/",
+    "location": "Bonn",
+    "country": "Germany",
+    "dates": "April 10-12, 2026",
+    "startDate": "2026-04-10",
+    "endDate": "2026-04-12",
+    "image": "https://images.unsplash.com/photo-1608479668426-2d9457150c32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib25uJTIwZ2VybWFueSUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzQxNXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Bonn, Germany.",
+    "venue": "Various venues in Bonn",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "12",
+    "name": "Forró Weekend Poznan",
+    "url": "https://www.facebook.com/events/1046772655801099/",
+    "location": "Poznan",
+    "country": "Poland",
+    "dates": "April 10-12, 2026",
+    "startDate": "2026-04-10",
+    "endDate": "2026-04-12",
+    "image": "https://images.unsplash.com/photo-1611036070026-228b5497a4f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQb3puYW4lMjBwb2xhbmQlMjBjaXR5fGVufDF8fHx8fDE3MDc2MTM0NjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró weekend in Poznan, Poland.",
+    "venue": "Various venues in Poznan",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "13",
+    "name": "Gira Girassol Forró Weekend",
+    "url": "https://www.facebook.com/events/467524211434194/",
+    "location": "Lisbon",
+    "country": "Portugal",
+    "dates": "April 10-12, 2026",
+    "startDate": "2026-04-10",
+    "endDate": "2026-04-12",
+    "image": "https://images.unsplash.com/photo-1544322479-052e008104d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaXNib24lMjByb29mdG9wJTIwY2l0eXNjYXBlfGVufDF8fHx8MTcwNzYxMjg1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró weekend in Lisbon, Portugal.",
+    "venue": "Various venues in Lisbon",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "14",
+    "name": "Petit Forro Weekend",
+    "url": "https://www.facebook.com/events/2258932997767930/",
+    "location": "Lyon",
+    "country": "France",
+    "dates": "April 24-26, 2026",
+    "startDate": "2026-04-24",
+    "endDate": "2026-04-26",
+    "image": "https://images.unsplash.com/photo-1598873379804-95e06d86f867?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMeb24lMjBjaXR5fGVufDF8fHx8fDE3MDc2MTM1Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A small forró weekend in Lyon, France.",
+    "venue": "Various venues in Lyon",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "15",
+    "name": "Forró Atenas Marathon",
+    "url": "https://www.facebook.com/events/1079822412773863/",
+    "location": "Athens",
+    "country": "Greece",
+    "dates": "May 1-3, 2026",
+    "startDate": "2026-05-01",
+    "endDate": "2026-05-03",
+    "image": "https://images.unsplash.com/photo-1571066404161-67f0d14558c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBdGhlbnMlMjBjaXR5fGVufDF8fHx8fDE3MDc2MTM1NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró marathon in Athens, Greece.",
+    "venue": "Various venues in Athens",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "16",
+    "name": "Vinil em Paris",
+    "url": "https://www.facebook.com/events/1180191335917518/",
+    "location": "Paris",
+    "country": "France",
+    "dates": "May 8-10, 2026",
+    "startDate": "2026-05-08",
+    "endDate": "2026-05-10",
+    "image": "https://images.unsplash.com/photo-1502602898657-3e91760c0341?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQYXJpcyUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzA0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A vinyl-focused forró event in Paris, France.",
+    "venue": "Various venues in Paris",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "17",
+    "name": "Hamburger Forró-Tage",
+    "url": "https://www.facebook.com/events/475637844427467/",
+    "location": "Hamburg",
+    "country": "Germany",
+    "dates": "May 15-16, 2026",
+    "startDate": "2026-05-15",
+    "endDate": "2026-05-16",
+    "image": "https://images.unsplash.com/photo-1569239000572-b05f467d5733?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIYW1idXJnJTIwZ2VybWFueSUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMzY1OXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "Forró days in Hamburg, Germany.",
+    "venue": "Various venues in Hamburg",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "18",
+    "name": "Landshut Forró Festival",
+    "url": "https://www.facebook.com/events/1690349514673016/",
+    "location": "Landshut",
+    "country": "Germany",
+    "dates": "May 15-17, 2026",
+    "startDate": "2026-05-15",
+    "endDate": "2026-05-17",
+    "image": "https://images.unsplash.com/photo-1611653934705-8a81f8761282?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMYW5kc3NodCUyMGdlcm1hbnklMjB0b3dufGVufDF8fHx8fDE3MDc2MTM3MjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in the historic city of Landshut, Germany.",
+    "venue": "Various venues in Landshut",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "19",
+    "name": "Community Festival Freiburg",
+    "url": "https://www.facebook.com/events/2391788821113007/",
+    "location": "Freiburg",
+    "country": "Germany",
+    "dates": "May 15-17, 2026",
+    "startDate": "2026-05-15",
+    "endDate": "2026-05-17",
+    "image": "https://images.unsplash.com/photo-1581444170318-6148b769f249?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGcmVpYnVyZyUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxMjkxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A community-focused forró festival in Freiburg, Germany.",
+    "venue": "Various venues in Freiburg",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "20",
+    "name": "Forró com Coração",
+    "url": "https://www.facebook.com/events/1012012142881210/",
+    "location": "Aachen",
+    "country": "Germany",
+    "dates": "May 22-24, 2026",
+    "startDate": "2026-05-22",
+    "endDate": "2026-05-24",
+    "image": "https://images.unsplash.com/photo-1614689798286-9c55e911c19c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBYWNoZW4lMjBnZXJtYW55JTIwY2l0eXNjYXBlfGVufDF8fHx8fDE3MDc2MTM3ODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival with heart in Aachen, Germany.",
+    "venue": "Various venues in Aachen",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "21",
+    "name": "Forró Bordeaux Camp #4",
+    "url": "https://www.facebook.com/events/1400881157111218/",
+    "location": "Lac de Lacanau",
+    "country": "France",
+    "dates": "May 22-25, 2026",
+    "startDate": "2026-05-22",
+    "endDate": "2026-05-25",
+    "image": "https://images.unsplash.com/photo-1517576702514-9f7195248256?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMYWMlMjBkZSUyMExhY2FuYXUlMjBiZWFjaHxlbnwxfHx8fHwxNzA3NjEzODUxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "The fourth edition of a forró camp near Bordeaux, France.",
+    "venue": "Lac de Lacanau",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "coastal",
+    "festivalLength": "short"
+  },
+  {
+    "id": "22",
+    "name": "Turin Turin Forró Fest",
+    "url": "https://www.facebook.com/events/1812106285795851/",
+    "location": "Turin",
+    "country": "Italy",
+    "dates": "June 5-7, 2026",
+    "startDate": "2026-06-05",
+    "endDate": "2026-06-07",
+    "image": "https://images.unsplash.com/photo-1543169077-652c58477261?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUdXJpbiUyMGNpdHklMjBpdGFseXxlbnwxfHx8fHwxNzA3NjEzOTE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Turin, Italy.",
+    "venue": "Various venues in Turin",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "23",
+    "name": "Vinilo no Forró",
+    "url": "https://www.facebook.com/events/1090098837998227/",
+    "location": "Bruxelles",
+    "country": "Belgium",
+    "dates": "June 12-14, 2026",
+    "startDate": "2026-06-12",
+    "endDate": "2026-06-14",
+    "image": "https://images.unsplash.com/photo-1564979727788-4a0483534265?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCcml4ZWxsZXNfMjNfbmV0aGVybGFuZHN8ZW58MXx8fHx8MTcwNzYxNDAxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró event with vinyl music in Brussels, Belgium.",
+    "venue": "Various venues in Bruxelles",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "24",
+    "name": "Forró Sailing Week 2026",
+    "url": "https://www.facebook.com/events/1784055225421800/",
+    "location": "Lycian Coast",
+    "country": "Turkey",
+    "dates": "June 13-20, 2026",
+    "startDate": "2026-06-13",
+    "endDate": "2026-06-20",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxMZWNpYW4lMjBDb2FzdCUyMFR1cmtleXxlbnwxfHx8fHwxNzA3NjE0MTM1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A unique forró festival combined with sailing on the Lycian Coast, Turkey.",
+    "venue": "Lycian Coast",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "coastal",
     "festivalLength": "long"
+  },
+  {
+    "id": "25",
+    "name": "Budapest Forró Festival",
+    "url": "https://www.facebook.com/events/729419182080072/",
+    "location": "Budapest",
+    "country": "Hungary",
+    "dates": "June 19-21, 2026",
+    "startDate": "2026-06-19",
+    "endDate": "2026-06-21",
+    "image": "https://images.unsplash.com/photo-1570595200687-e7f30b947229?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCdWRhcGVzdCUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxNDE3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in the capital of Hungary, Budapest.",
+    "venue": "Various venues in Budapest",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "26",
+    "name": "Forró Douro",
+    "url": "https://www.facebook.com/events/1700907636942690/",
+    "location": "Porto",
+    "country": "Portugal",
+    "dates": "June 26-28, 2026",
+    "startDate": "2026-06-26",
+    "endDate": "2026-06-28",
+    "image": "https://images.unsplash.com/photo-1578341839477-c60e8a7703b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQb3J0byUyMGNpdHklMjBwb3J0dWdhbHxlbnwxfHx8fHwxNzA3NjE0MjQxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival set along the Douro River in Porto, Portugal.",
+    "venue": "Various venues in Porto",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "27",
+    "name": "Forródiois",
+    "url": "https://www.facebook.com/events/526714671850637/",
+    "location": "Châtillon-en-Diois",
+    "country": "France",
+    "dates": "July 2-5, 2026",
+    "startDate": "2026-07-02",
+    "endDate": "2026-07-05",
+    "image": "https://images.unsplash.com/photo-1578706292482-33796f396132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxDaMO idGlsbG9uLWVuLURpb2lzJTIwZnJhbmNlfGVufDF8fHx8fDE3MDc2MTQzNDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in the commune of Châtillon-en-Diois, France.",
+    "venue": "Various venues in Châtillon-en-Diois",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "28",
+    "name": "Alegria do Norte 2026",
+    "url": "https://www.facebook.com/events/1616293208727653/",
+    "location": "Stockholm",
+    "country": "Sweden",
+    "dates": "July 3-5, 2026",
+    "startDate": "2026-07-03",
+    "endDate": "2026-07-05",
+    "image": "https://images.unsplash.com/photo-1504003588429-c705d29e3a91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxTdG9ja2hvbG0lMjBjaXR5JTIwc3dlZGVuJTIwY2l0eXNjYXBlfGVufDF8fHx8fDE3MDc2MTQ0MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Stockholm, Sweden.",
+    "venue": "Various venues in Stockholm",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "29",
+    "name": "Forró Festival Göttingen",
+    "url": "https://www.facebook.com/events/1824899107845545/",
+    "location": "Göttingen",
+    "country": "Germany",
+    "dates": "July 3-5, 2026",
+    "startDate": "2026-07-03",
+    "endDate": "2026-07-05",
+    "image": "https://images.unsplash.com/photo-1607304074212-f285955e8c5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHb3R0aW5nZW4lMjBnZXJtYW55JTIwY2l0eXNjYXBlfGVufDF8fHx8fDE3MDc2MTQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Göttingen, Germany.",
+    "venue": "Various venues in Göttingen",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "30",
+    "name": "Beira Mar Festival",
+    "url": "https://www.facebook.com/events/676733043022465/",
+    "location": "Brighton",
+    "country": "UK",
+    "dates": "July 16-19, 2026",
+    "startDate": "2026-07-16",
+    "endDate": "2026-07-19",
+    "image": "https://images.unsplash.com/photo-1551028178-19370b111660?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCcmlnaHRvbiUyMHVzYSUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxNDUwMXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in the coastal city of Brighton, UK.",
+    "venue": "Various venues in Brighton",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "coastal",
+    "festivalLength": "short"
+  },
+  {
+    "id": "31",
+    "name": "Miudinho Festival",
+    "url": "https://www.facebook.com/events/2757409647903471/",
+    "location": "Berlin",
+    "country": "Germany",
+    "dates": "August 7-9, 2026",
+    "startDate": "2026-08-07",
+    "endDate": "2026-08-09",
+    "image": "https://images.unsplash.com/photo-1532782755447-3d6071578351?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCZXJsaW4lMjBjaXR5fGVufDF8fHx8fDE3MDc2MTQ1NTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Berlin, Germany.",
+    "venue": "Various venues in Berlin",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "32",
+    "name": "Forró Hannover Festival",
+    "url": "https://www.facebook.com/events/757248429737991/",
+    "location": "Hannover",
+    "country": "Germany",
+    "dates": "September 4-6, 2026",
+    "startDate": "2026-09-04",
+    "endDate": "2026-09-06",
+    "image": "https://images.unsplash.com/photo-1602730015910-78a66829e445?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxIYW5ub3ZlciUyMGdlcm1hbnklMjBjaXR5fGVufDF8fHx8fDE3MDc2MTQ2MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Hannover, Germany.",
+    "venue": "Various venues in Hannover",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "33",
+    "name": "Festival Mais Forró Por Favor 2026",
+    "url": "https://www.facebook.com/events/1746071322404966/",
+    "location": "Mèze",
+    "country": "France",
+    "dates": "September 11-13, 2026",
+    "startDate": "2026-09-11",
+    "endDate": "2026-09-13",
+    "image": "https://images.unsplash.com/photo-1578706292482-33796f396132?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxDaMO idGlsbG9uLWVuLURpb2lzJTIwZnJhbmNlfGVufDF8fHx8fDE3MDc2MTQzNDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Mèze, France.",
+    "venue": "Various venues in Mèze",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "34",
+    "name": "Vinyl Forró Festival Berlin",
+    "url": "https://www.facebook.com/events/1824899107845545/",
+    "location": "Berlin",
+    "country": "Germany",
+    "dates": "September 18-20, 2026",
+    "startDate": "2026-09-18",
+    "endDate": "2026-09-20",
+    "image": "https://images.unsplash.com/photo-1532782755447-3d6071578351?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCZXJsaW4lMjBjaXR5fGVufDF8fHx8fDE3MDc2MTQ1NTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A vinyl-focused forró festival in Berlin, Germany.",
+    "venue": "Various venues in Berlin",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "35",
+    "name": "Forró de Colônia",
+    "url": "https://www.facebook.com/events/3062999510676748/",
+    "location": "Cologne",
+    "country": "Germany",
+    "dates": "October 1-4, 2026",
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-04",
+    "image": "https://images.unsplash.com/photo-1552733407-5d5c4a3c3032?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxDb2xvZ25lJTIwZ2VybWFueSUyMGNpdHl8ZW58MXx8fHx8MTcwNzYxNDY3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Cologne, Germany.",
+    "venue": "Various venues in Cologne",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "36",
+    "name": "Forró de Nice Festival",
+    "url": "https://www.facebook.com/events/1064271687506483/",
+    "location": "Nice",
+    "country": "France",
+    "dates": "October 15-18, 2026",
+    "startDate": "2026-10-15",
+    "endDate": "2026-10-18",
+    "image": "https://images.unsplash.com/photo-1595969961242-488168c4e447?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxOaWNlJTIwZnJhbmNlJTIwY2l0eXNjYXBlfGVufDF8fHx8fDE3MDc2MTQ3MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in the French Riviera city of Nice.",
+    "venue": "Various venues in Nice",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
+  },
+  {
+    "id": "37",
+    "name": "Pisa Na Fulô Barcelona Forró Festival",
+    "url": "https://www.facebook.com/events/766498955345617/",
+    "location": "Barcelona",
+    "country": "Spain",
+    "dates": "August 27-30, 2026",
+    "startDate": "2026-08-27",
+    "endDate": "2026-08-30",
+    "image": "https://images.unsplash.com/photo-1572116138079-452c62f26d6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBjaXR5fGVufDF8fHx8fDE3MDc2MTI5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": null,
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "Access to all workshops and parties.",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "To Be Announced",
+            "priceAmount": null,
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "A forró festival in Barcelona, Spain.",
+    "venue": "Various venues in Barcelona",
+    "followers": null,
+    "lastUpdate": "April 2, 2026",
+    "verificationStatus": "likely",
+    "highlights": [],
+    "category": "city",
+    "festivalLength": "short"
   }
 ]

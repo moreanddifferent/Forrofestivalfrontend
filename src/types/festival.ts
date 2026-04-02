@@ -27,6 +27,7 @@ export interface PassType {
 export interface Festival {
   id: string;
   name: string;
+  url?: string; // Official festival website
   location: string;
   country: string;
   dates: string;
