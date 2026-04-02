@@ -1,0 +1,487 @@
+[
+  {
+    "id": "1",
+    "name": "Forró do Sol",
+    "location": "Cascais",
+    "country": "Portugal",
+    "dates": "June 20-23, 2026",
+    "startDate": "2026-06-20",
+    "endDate": "2026-06-23",
+    "image": "https://images.unsplash.com/photo-1764377847860-9005502a4888?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2FzdGFsJTIwc3Vuc2V0JTIwYmVhY2glMjBldXJvcGV8ZW58MXx8fHwxNzcwNTczMzI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "400-500 dancers",
+    "ticketStatus": "open",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "All workshops, parties, and meals included",
+        "ticketEntries": [
+          {
+            "id": "lot-1",
+            "lotName": "1st Lot",
+            "priceAmount": 95,
+            "currency": "€",
+            "status": "sold_out",
+            "opensAt": "2026-01-15",
+            "opensTime": "10:00 CET"
+          },
+          {
+            "id": "lot-2",
+            "lotName": "2nd Lot",
+            "priceAmount": 120,
+            "currency": "€",
+            "status": "open_now",
+            "opensAt": "2026-03-01",
+            "opensTime": "12:00 CET",
+            "purchaseLink": "https://example.com",
+            "quota": "45 remaining"
+          },
+          {
+            "id": "lot-3",
+            "lotName": "3rd Lot",
+            "priceAmount": 145,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-04-20",
+            "opensTime": "10:00 CET"
+          },
+          {
+            "id": "lot-4",
+            "lotName": "4th Lot",
+            "priceAmount": 165,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-05-15",
+            "opensTime": "10:00 CET"
+          }
+        ]
+      },
+      {
+        "id": "party-pass",
+        "name": "Party Pass",
+        "description": "Evening parties only",
+        "ticketEntries": [
+          {
+            "id": "party-1",
+            "lotName": "1st Lot",
+            "priceAmount": 40,
+            "currency": "€",
+            "status": "sold_out",
+            "opensAt": "2026-03-01",
+            "opensTime": "12:00 CET"
+          },
+          {
+            "id": "party-2",
+            "lotName": "2nd Lot",
+            "priceAmount": 50,
+            "currency": "€",
+            "status": "open_now",
+            "opensAt": "2026-03-20",
+            "opensTime": "14:00 CET",
+            "purchaseLink": "https://example.com"
+          },
+          {
+            "id": "party-3",
+            "lotName": "3rd Lot",
+            "priceAmount": 60,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-05-15",
+            "opensTime": "10:00 CET"
+          }
+        ]
+      }
+    ],
+    "description": "Experience the magic of Forró by the Atlantic coast. Three days of intensive workshops with international maestros, social dancing under the stars, and the warm Portuguese hospitality that makes every moment unforgettable.",
+    "venue": "Casa da Guia Cultural Center",
+    "followers": 1247,
+    "lastUpdate": "2 days ago",
+    "verificationStatus": "confirmed",
+    "highlights": [
+      "Beachfront location with ocean views",
+      "International teaching faculty",
+      "Traditional Portuguese dinner included",
+      "Late-night sessions until sunrise"
+    ],
+    "category": "coastal",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "2",
+    "name": "Barcelona Forró Festival",
+    "location": "Barcelona",
+    "country": "Spain",
+    "dates": "July 11-14, 2026",
+    "startDate": "2026-07-11",
+    "endDate": "2026-07-14",
+    "image": "https://images.unsplash.com/photo-1630509695722-5ccf54e2fc7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYXJjZWxvbmElMjBhcmNoaXRlY3R1cmUlMjBuaWdodHxlbnwxfHx8fDE3NzA1NzMzMjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "800-1000 dancers",
+    "ticketStatus": "opening-soon",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "ticketEntries": [
+          {
+            "id": "tier-1",
+            "lotName": "Standard",
+            "priceAmount": 165,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-03-15",
+            "opensTime": "10:00 CET",
+            "tierDescription": "Workshops and parties"
+          },
+          {
+            "id": "tier-2",
+            "lotName": "Premium",
+            "priceAmount": 215,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-03-15",
+            "opensTime": "10:00 CET",
+            "tierDescription": "Includes accommodation package"
+          },
+          {
+            "id": "tier-3",
+            "lotName": "VIP",
+            "priceAmount": 280,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-03-15",
+            "opensTime": "10:00 CET",
+            "tierDescription": "All-inclusive with private masterclasses",
+            "quota": "Limited to 30 spots"
+          }
+        ]
+      },
+      {
+        "id": "party-pass",
+        "name": "Party Pass",
+        "ticketEntries": [
+          {
+            "id": "party-tier",
+            "lotName": "Party Only",
+            "priceAmount": 85,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-03-15",
+            "opensTime": "10:00 CET"
+          }
+        ]
+      }
+    ],
+    "description": "The largest Forró gathering in Catalonia returns for its 8th edition. Four days of world-class instruction, spectacular shows, and the vibrant energy of Barcelona's dance community.",
+    "venue": "Fàbrica Moritz",
+    "followers": 2891,
+    "lastUpdate": "1 day ago",
+    "verificationStatus": "confirmed",
+    "highlights": [
+      "Over 40 workshops across all levels",
+      "Live Brazilian band every night",
+      "City center location near beach",
+      "Special guest: Mestre João do Pife"
+    ],
+    "category": "city",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "3",
+    "name": "Forró in the Garden",
+    "location": "Amsterdam",
+    "country": "Netherlands",
+    "dates": "May 16-18, 2026",
+    "startDate": "2026-05-16",
+    "endDate": "2026-05-18",
+    "image": "https://images.unsplash.com/photo-1661264047307-4d692250a7ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxib3RhbmljYWwlMjBnYXJkZW4lMjBncmVlbmhvdXNlfGVufDF8fHx8MTc3MDQ4OTQ4OXww&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "150-200 dancers",
+    "ticketStatus": "sold-out",
+    "passTypes": [
+      {
+        "id": "contribution",
+        "name": "Contribution",
+        "description": "Pay what feels right for this community event",
+        "ticketEntries": [
+          {
+            "id": "solidarity",
+            "lotName": "Solidarity rate",
+            "priceAmount": 80,
+            "currency": "€",
+            "status": "sold_out",
+            "tierDescription": "Reduced rate for those with limited means"
+          },
+          {
+            "id": "standard",
+            "lotName": "Standard contribution",
+            "priceAmount": 120,
+            "currency": "€",
+            "status": "sold_out",
+            "tierDescription": "Covers event costs"
+          },
+          {
+            "id": "supporter",
+            "lotName": "Supporter rate",
+            "priceAmount": 160,
+            "currency": "€",
+            "status": "sold_out",
+            "tierDescription": "Help us support future events"
+          }
+        ]
+      }
+    ],
+    "description": "An intimate weekend retreat in a historic Amsterdam garden house. Limited capacity ensures personal attention from teachers and a close-knit community atmosphere.",
+    "venue": "De Hortus Botanicus",
+    "followers": 543,
+    "lastUpdate": "1 week ago",
+    "verificationStatus": "confirmed",
+    "highlights": [
+      "Small group workshops (max 30 people)",
+      "Organic farm-to-table meals",
+      "Acoustic sessions in the greenhouse",
+      "Focus on musicality and connection"
+    ],
+    "category": "intimate",
+    "festivalLength": "weekend"
+  },
+  {
+    "id": "4",
+    "name": "Mediterranean Forró Week",
+    "location": "Nice",
+    "country": "France",
+    "dates": "August 3-10, 2026",
+    "startDate": "2026-08-03",
+    "endDate": "2026-08-10",
+    "image": "https://images.unsplash.com/photo-1729710429542-ef3b7e2ebde1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVuY2glMjByaXZpZXJhJTIwbWVkaXRlcnJhbmVhbnxlbnwxfHx8fDE3NzA1NzMzMjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "300-400 dancers",
+    "ticketStatus": "open",
+    "passTypes": [
+      {
+        "id": "full-week",
+        "name": "Full Week",
+        "ticketEntries": [
+          {
+            "id": "super-early",
+            "lotName": "Super Early Bird",
+            "priceAmount": 320,
+            "currency": "€",
+            "status": "sold_out",
+            "opensAt": "2025-12-01",
+            "opensTime": "09:00 CET"
+          },
+          {
+            "id": "early",
+            "lotName": "Early Bird",
+            "priceAmount": 380,
+            "currency": "€",
+            "status": "open_now",
+            "opensAt": "2026-02-01",
+            "opensTime": "12:00 CET",
+            "purchaseLink": "https://example.com"
+          },
+          {
+            "id": "regular",
+            "lotName": "Regular",
+            "priceAmount": 450,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-04-01",
+            "opensTime": "10:00 CET"
+          }
+        ]
+      },
+      {
+        "id": "weekend-1",
+        "name": "Weekend 1",
+        "description": "Aug 3-6",
+        "ticketEntries": [
+          {
+            "id": "w1-early",
+            "lotName": "Early Bird",
+            "priceAmount": 180,
+            "currency": "€",
+            "status": "open_now",
+            "purchaseLink": "https://example.com"
+          }
+        ]
+      },
+      {
+        "id": "weekend-2",
+        "name": "Weekend 2",
+        "description": "Aug 7-10",
+        "ticketEntries": [
+          {
+            "id": "w2-early",
+            "lotName": "Early Bird",
+            "priceAmount": 180,
+            "currency": "€",
+            "status": "open_now",
+            "purchaseLink": "https://example.com"
+          }
+        ]
+      }
+    ],
+    "description": "A full week of Forró immersion on the French Riviera. Combine intensive training with Mediterranean leisure, beach days, and unforgettable sunset sessions.",
+    "venue": "Villa Masséna & Promenade des Anglais",
+    "followers": 892,
+    "lastUpdate": "3 days ago",
+    "verificationStatus": "confirmed",
+    "highlights": [
+      "Full week program with rest days",
+      "Beach parties and boat excursions",
+      "Professional show production",
+      "Optional accommodation packages"
+    ],
+    "category": "coastal",
+    "festivalLength": "long"
+  },
+  {
+    "id": "5",
+    "name": "Forró in the Alps",
+    "location": "Chamonix",
+    "country": "France",
+    "dates": "September 5-8, 2026",
+    "startDate": "2026-09-05",
+    "endDate": "2026-09-08",
+    "image": "https://images.unsplash.com/photo-1763743882687-dde4488507df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3VudHJ5c2lkZSUyMHZpbGxhZ2UlMjBldXJvcGV8ZW58MXx8fHwxNzcwNTczMzI5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "200-250 dancers",
+    "ticketStatus": "not-announced",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "ticketEntries": [
+          {
+            "id": "tbd-1",
+            "lotName": "Early Bird",
+            "priceRange": { "min": 150, "max": 180 },
+            "currency": "€",
+            "status": "not_announced",
+            "tierDescription": "Estimated pricing"
+          },
+          {
+            "id": "tbd-2",
+            "lotName": "Regular",
+            "currency": "€",
+            "status": "not_announced"
+          }
+        ]
+      }
+    ],
+    "description": "Dance surrounded by mountain peaks and fresh alpine air. A unique retreat combining Forró with optional hiking and outdoor activities in one of Europe's most stunning locations.",
+    "venue": "Majestic Conference Center",
+    "followers": 421,
+    "lastUpdate": "5 days ago",
+    "verificationStatus": "likely",
+    "highlights": [
+      "Mountain setting with panoramic views",
+      "Optional guided hiking tours",
+      "Cozy evening sessions by the fireplace",
+      "Sustainable local cuisine"
+    ],
+    "category": "intimate",
+    "festivalLength": "short"
+  },
+  {
+    "id": "6",
+    "name": "Berlin Forró Congress",
+    "location": "Berlin",
+    "country": "Germany",
+    "dates": "October 23-27, 2026",
+    "startDate": "2026-10-23",
+    "endDate": "2026-10-27",
+    "image": "https://images.unsplash.com/photo-1766019463317-1cc801c15e61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwaGFsbCUyMGNyb3dkJTIwY2VsZWJyYXRpb258ZW58MXx8fHwxNzcwNTczMzMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "attendees": "1200-1500 dancers",
+    "ticketStatus": "opening-soon",
+    "passTypes": [
+      {
+        "id": "full-pass",
+        "name": "Full Pass",
+        "description": "All workshops and parties",
+        "ticketEntries": [
+          {
+            "id": "super-early",
+            "lotName": "Super Early Bird",
+            "priceAmount": 185,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-04-01",
+            "opensTime": "10:00 CET",
+            "quota": "Limited to 100 spots"
+          },
+          {
+            "id": "early",
+            "lotName": "Early Bird",
+            "priceAmount": 220,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-06-01",
+            "opensTime": "12:00 CET"
+          },
+          {
+            "id": "regular",
+            "lotName": "Regular",
+            "priceAmount": 260,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-08-01",
+            "opensTime": "12:00 CET"
+          }
+        ]
+      },
+      {
+        "id": "party-pass",
+        "name": "Party Pass",
+        "description": "Evening parties only",
+        "ticketEntries": [
+          {
+            "id": "party-early",
+            "lotName": "Early Bird",
+            "priceAmount": 110,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-06-01",
+            "opensTime": "12:00 CET"
+          },
+          {
+            "id": "party-regular",
+            "lotName": "Regular",
+            "priceAmount": 135,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-08-01",
+            "opensTime": "12:00 CET"
+          }
+        ]
+      },
+      {
+        "id": "workshop-pass",
+        "name": "Workshop Pass",
+        "description": "Workshops only",
+        "ticketEntries": [
+          {
+            "id": "workshop",
+            "lotName": "Workshop Access",
+            "priceAmount": 140,
+            "currency": "€",
+            "status": "opening_soon",
+            "opensAt": "2026-06-01",
+            "opensTime": "12:00 CET"
+          }
+        ]
+      }
+    ],
+    "description": "The largest Forró event in Central Europe. Five days of non-stop dancing, renowned international teachers, live bands, and Berlin's legendary nightlife atmosphere.",
+    "venue": "Columbiahalle",
+    "followers": 3542,
+    "lastUpdate": "6 hours ago",
+    "verificationStatus": "confirmed",
+    "highlights": [
+      "Largest festival in Central Europe",
+      "Multiple dance floors simultaneously",
+      "60+ workshops and masterclasses",
+      "After-party locations across the city"
+    ],
+    "category": "big-gathering",
+    "festivalLength": "long"
+  }
+]
