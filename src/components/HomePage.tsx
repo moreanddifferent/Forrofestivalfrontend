@@ -282,52 +282,52 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {intimateFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Intimate gatherings"
-            description="Lower capacity events. Community-focused."
+            description="Smaller-scale weekends with a close-knit community feel."
             festivals={intimateFestivals}
             onFestivalClick={onFestivalClick}
             isAnchor={true}
-            maxItems={6}
+            maxItems={4}
           />
         )}
 
         {immersiveFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Immersive weeks"
-            description="Extended formats designed for deeper immersion in Forró."
+            description="Longer stays for dancers who want to live the festival fully."
             festivals={immersiveFestivals}
             onFestivalClick={onFestivalClick}
             isAnchor={true}
-            maxItems={6}
+            maxItems={4}
           />
         )}
 
         {coastalFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Coastal festivals"
-            description="Festivals hosted near seaside towns."
+            description="Sea air, warm nights, and dance weekends by the water."
             festivals={coastalFestivals}
             onFestivalClick={onFestivalClick}
-            maxItems={6}
+            maxItems={4}
           />
         )}
 
         {cityFestivals.length > 0 && (
           <HorizontalScrollSection
             title="City festivals"
-            description="Urban festivals combined with exploring European capitals."
+            description="Urban weekends with strong local scenes and easy city-trip appeal."
             festivals={cityFestivals}
             onFestivalClick={onFestivalClick}
-            maxItems={6}
+            maxItems={4}
           />
         )}
 
         {mountainFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Mountain festivals"
-            description="Dance surrounded by alpine landscapes."
+            description="Nature-led weekends in hilly or mountain-adjacent settings."
             festivals={mountainFestivals}
             onFestivalClick={onFestivalClick}
-            maxItems={6}
+            maxItems={2}
           />
         )}
       </div>
