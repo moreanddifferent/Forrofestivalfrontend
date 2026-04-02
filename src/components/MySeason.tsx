@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { MapPin, Calendar, X, Share2, Bookmark, Map, List, Pencil, Check } from 'lucide-react';
+import { MapPin, Calendar, X, Share2, Bookmark, Map, List, Pencil, Check, CalendarPlus } from 'lucide-react';
 import { Button } from './ui/button';
 import { UnifiedTicketChip } from './UnifiedTicketChip';
+import { CalendarExportModal } from './CalendarExportModal';
 
 interface SavedFestival {
   id: string;
@@ -41,6 +42,7 @@ export function MySeason({
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(listName);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
   
   const currentDate = new Date(2026, 2, 15); // March 15, 2026
   const upcomingFestivals = savedFestivals.filter(f => f.endDate >= currentDate);
@@ -50,6 +52,14 @@ export function MySeason({
 
   // Calculate stats for header
   const totalSaved = upcomingFestivals.length;
+
+  // Count upcoming ticket openings (within next 30 days)
+  const upcomingTicketOpenings = upcomingFestivals.filter(f => {
+    if (!f.nextOpeningDate) return false;
+    const openingDate = new Date(f.nextOpeningDate);
+    const thirtyDaysFromNow = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+    return openingDate >= currentDate && openingDate <= thirtyDaysFromNow;
+  }).length;
 
   const handleSaveName = () => {
     if (onListNameChange && editedName.trim()) {
@@ -91,6 +101,13 @@ export function MySeason({
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-0">
+      {/* Calendar Export Modal */}
+      <CalendarExportModal 
+        isOpen={showCalendarModal}
+        onClose={() => setShowCalendarModal(false)}
+        savedFestivals={upcomingFestivals}
+      />
+
       {/* Page Header - Utility focused */}
       <section className="border-b border-border bg-background">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-5 md:py-8">
@@ -125,7 +142,7 @@ export function MySeason({
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-2">
                   <h1 className="text-lg md:text-2xl font-bold leading-tight">
                     {listName}
                   </h1>
@@ -138,14 +155,21 @@ export function MySeason({
                   </button>
                 </div>
               )}
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-1.5">
                 {totalSaved} {totalSaved === 1 ? 'festival' : 'festivals'} saved
               </p>
+              
+              {/* Contextual helper for ticket openings */}
+              {upcomingTicketOpenings > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  {upcomingTicketOpenings} saved {upcomingTicketOpenings === 1 ? 'festival has' : 'festivals have'} ticket openings coming up
+                </p>
+              )}
             </div>
 
             {/* Actions */}
             {upcomingFestivals.length > 0 && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 {/* View mode toggle */}
                 <div className="inline-flex rounded-lg border border-border bg-background p-0.5">
                   <button
@@ -174,16 +198,29 @@ export function MySeason({
                   </button>
                 </div>
 
-                {/* Share */}
-                <Button 
-                  onClick={onShareClick} 
-                  variant="outline" 
-                  size="sm" 
-                  className="gap-2"
-                >
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">Share</span>
-                </Button>
+                {/* Action buttons */}
+                <div className="flex items-center gap-2">
+                  {/* Add to calendar - Primary action */}
+                  <Button 
+                    onClick={() => setShowCalendarModal(true)} 
+                    size="sm" 
+                    className="gap-2 bg-[#3D63FF] hover:bg-[#2952E5] text-white font-bold"
+                  >
+                    <CalendarPlus className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Add to calendar</span>
+                  </Button>
+
+                  {/* Share - Secondary action */}
+                  <Button 
+                    onClick={onShareClick} 
+                    variant="ghost"
+                    size="sm" 
+                    className="gap-2 text-muted-foreground hover:text-foreground"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Share</span>
+                  </Button>
+                </div>
               </div>
             )}
           </div>

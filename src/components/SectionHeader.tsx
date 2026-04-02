@@ -10,7 +10,7 @@ export function SectionHeader({ title, description, isAnchor = false }: SectionH
       <div className="relative inline-block group cursor-default">
         {/* Yellow underline for all section titles */}
         <div
-          className="absolute -left-1 -right-1 bottom-0.5 h-[3px] md:h-2.5 bg-[#FFD600] opacity-35 rounded-sm"
+          className="absolute -left-1 -right-1 bottom-0.5 h-2 md:h-3 bg-[#FFD600] opacity-35 rounded-sm"
           style={{ transform: 'rotate(-0.3deg)' }}
         />
         <h2 className={`${isAnchor ? 'text-xl md:text-4xl' : 'text-lg md:text-3xl'} font-black text-foreground relative z-10 tracking-tight`}>

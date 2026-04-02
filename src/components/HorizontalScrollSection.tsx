@@ -57,12 +57,12 @@ export function HorizontalScrollSection({
         </div>
 
         {/* Mobile: Horizontal scroll */}
-        <div className="md:hidden overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4">
-          <div className="flex gap-3 pb-1">
+        <div className="md:hidden overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-3 pb-1 px-4">
             {displayFestivals.map((festival) => (
               <div
                 key={festival.id}
-                className="flex-shrink-0 w-[180px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow"
+                className="flex-shrink-0 w-[180px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow first:ml-0"
               >
                 {/* Image with overlays */}
                 <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted" onClick={() => onFestivalClick(festival.id)}>

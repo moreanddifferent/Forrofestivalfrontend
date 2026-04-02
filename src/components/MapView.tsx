@@ -110,21 +110,21 @@ export function MapView({ festivals, onFestivalClick }: MapViewProps) {
       </div>
 
       {/* Desktop: Legend panel */}
-      <div className="hidden md:block absolute top-4 left-4 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg z-10">
-        <h3 className="text-[10px] font-bold mb-2 uppercase tracking-widest text-muted-foreground">Location type</h3>
-        <div className="space-y-1.5">
+      <div className="hidden md:block absolute top-4 left-4 bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3.5 shadow-lg z-10">
+        <h3 className="text-[11px] font-bold mb-2.5 uppercase tracking-wide text-muted-foreground">Location type</h3>
+        <div className="space-y-2">
           {(Object.keys(locationTypeLabels) as LocationType[]).map(type => {
             const Icon = locationTypeIcons[type];
             const color = locationTypeColors[type];
             return (
-              <div key={type} className="flex items-center gap-2 text-xs text-foreground">
+              <div key={type} className="flex items-center gap-2.5 text-xs text-foreground">
                 <div 
-                  className="w-6 h-6 rounded-full flex items-center justify-center"
+                  className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                   style={{ backgroundColor: color }}
                 >
-                  <Icon className="w-3 h-3 text-white" />
+                  <Icon className="w-3.5 h-3.5 text-white" />
                 </div>
-                <span>{locationTypeLabels[type]}</span>
+                <span className="font-medium">{locationTypeLabels[type]}</span>
               </div>
             );
           })}

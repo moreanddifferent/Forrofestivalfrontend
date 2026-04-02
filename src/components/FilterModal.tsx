@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
 import { Button } from './ui/button';
 import { SearchFilters } from './IntegratedSearchBar';
+import { useEffect } from 'react';
 
 interface FilterModalProps {
   isOpen: boolean;
@@ -11,6 +12,18 @@ interface FilterModalProps {
 }
 
 export function FilterModal({ isOpen, onClose, filters, onFilterChange, resultCount }: FilterModalProps) {
+  // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
