@@ -13,6 +13,7 @@ interface FestivalCardProps {
     currentPrice?: string;
     nextOpeningDate?: string;
     nextOpeningTime?: string;
+    communityTag?: string;
   };
   onClick: () => void;
   isSaved?: boolean;
@@ -26,19 +27,19 @@ export function FestivalCard({ festival, onClick, isSaved = false, onSave, isInC
 
   return (
     <div
-      className={`group cursor-pointer bg-card border rounded-lg overflow-hidden shadow-sm hover:shadow-lg md:hover:-translate-y-1 active:shadow-md transition-all duration-200 ease-out ${
+      className={`group cursor-pointer bg-card border rounded-lg overflow-hidden shadow-sm card-lift hover:shadow-lg active:shadow-md ${
         isInCompare ? 'border-[#2F5BFF] ring-1 ring-[#2F5BFF]/20' : 'border-gray-200'
       }`}
     >
       {/* Image — reduced height for desktop */}
-      <div 
-        className="relative aspect-[3/2] max-h-[200px] md:max-h-[160px] overflow-hidden bg-muted"
+      <div
+        className="relative aspect-[3/2] max-h-[200px] md:max-h-[160px] overflow-hidden bg-muted grain-overlay warm-vignette"
         onClick={onClick}
       >
         <img
           src={festival.image}
           alt={festival.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
         />
         
         {/* Unified ticket status chip overlay */}
@@ -109,7 +110,7 @@ export function FestivalCard({ festival, onClick, isSaved = false, onSave, isInC
         <h3 className="font-bold text-xs md:text-sm leading-tight line-clamp-1 group-hover:text-[#2F5BFF] transition-colors duration-200">
           {festival.name}
         </h3>
-        
+
         <div className="space-y-0 text-[10px] md:text-xs text-muted-foreground leading-snug">
           <div className="flex items-center gap-1">
             <MapPin className="w-2.5 h-2.5 md:w-3 md:h-3 shrink-0" />
@@ -119,6 +120,13 @@ export function FestivalCard({ festival, onClick, isSaved = false, onSave, isInC
             <Calendar className="w-2.5 h-2.5 md:w-3 md:h-3 shrink-0" />
             <span className="line-clamp-1">{festival.dates}</span>
           </div>
+          {festival.communityTag && (
+            <div className="pt-0.5">
+              <span className="inline-block px-1.5 py-0.5 bg-[#F5F1E8] text-[#6B6B63] rounded text-[9px] md:text-[10px] font-medium">
+                {festival.communityTag}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ export function WishlistPage({
       <div className="min-h-screen bg-background">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-16">
           <div className="mb-8 md:mb-12">
-            <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3">Saved Festivals</h1>
+            <h1 className="text-[32px] md:text-[52px] leading-[1.05] tracking-tight mb-2 md:mb-3"><span className="forro-script"><span className="organic-underline">Saved festivals</span></span></h1>
             <p className="text-sm md:text-lg text-muted-foreground">
               Your personal planning space for festival trips
             </p>
@@ -74,7 +74,7 @@ export function WishlistPage({
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 md:gap-6 mb-8 md:mb-12">
           <div>
-            <h1 className="text-2xl md:text-4xl font-bold mb-2 md:mb-3">Saved Festivals</h1>
+            <h1 className="text-[32px] md:text-[52px] leading-[1.05] tracking-tight mb-2 md:mb-3"><span className="forro-script"><span className="organic-underline">Saved festivals</span></span></h1>
             <p className="text-sm md:text-lg text-muted-foreground">
               {savedFestivals.length} {savedFestivals.length === 1 ? 'festival' : 'festivals'} saved
             </p>

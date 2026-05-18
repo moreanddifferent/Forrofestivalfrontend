@@ -63,7 +63,7 @@ export function IntegratedSearchBar({ filters, onFilterChange, resultCount, onSe
     <div className="space-y-2">
       <div 
         ref={containerRef}
-        className="relative inline-flex items-stretch border border-border rounded-full bg-card hover:shadow-md transition-shadow"
+        className="relative flex w-full items-stretch border border-border rounded-full bg-card hover:shadow-md transition-shadow"
       >
         {/* Location Segment */}
         <div className="relative flex-1">

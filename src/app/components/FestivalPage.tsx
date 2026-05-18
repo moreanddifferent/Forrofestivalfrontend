@@ -30,6 +30,8 @@ interface FestivalPageProps {
     nextOpeningDate?: string;
     nextOpeningTime?: string;
     ticketUrl?: string;
+    instagram?: string;
+    websiteUrl?: string;
 
     coordinates?: { lat: number; lng: number };
     
@@ -163,8 +165,10 @@ export function FestivalPage({ festival, onBack, onFollow, isInCompare, onToggle
             {/* Title with yellow underline */}
             <div className="flex-1 min-w-0">
               <div className="mb-2 md:mb-3">
-                <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground">
-                  {festival.name}
+                <h1 className="text-[34px] md:text-[52px] leading-[1.05] tracking-tight text-foreground">
+                  <span className="forro-script">
+                    <span className="organic-underline">{festival.name}</span>
+                  </span>
                 </h1>
               </div>
               
@@ -204,15 +208,17 @@ export function FestivalPage({ festival, onBack, onFollow, isInCompare, onToggle
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Tickets</span>
               </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#2F5BFF] transition-colors"
-              >
-                <Instagram className="w-3.5 h-3.5" />
-                <span>Instagram</span>
-              </a>
+              {festival.instagram && (
+                <a
+                  href={`https://instagram.com/${festival.instagram.replace(/^@/, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#2F5BFF] transition-colors"
+                >
+                  <Instagram className="w-3.5 h-3.5" />
+                  <span>@{festival.instagram.replace(/^@/, '')}</span>
+                </a>
+              )}
             </div>
 
             {/* Mobile: collapsed links menu */}
@@ -245,15 +251,17 @@ export function FestivalPage({ festival, onBack, onFollow, isInCompare, onToggle
                     <ExternalLink className="w-3.5 h-3.5" />
                     <span>Tickets</span>
                   </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#2F5BFF] transition-colors"
-                  >
-                    <Instagram className="w-3.5 h-3.5" />
-                    <span>IG</span>
-                  </a>
+                  {festival.instagram && (
+                    <a
+                      href={`https://instagram.com/${festival.instagram.replace(/^@/, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-[#2F5BFF] transition-colors"
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                      <span>@{festival.instagram.replace(/^@/, '')}</span>
+                    </a>
+                  )}
                 </div>
               )}
             </div>
@@ -337,7 +345,7 @@ export function FestivalPage({ festival, onBack, onFollow, isInCompare, onToggle
 
               {/* Sold out microcopy */}
               {festival.ticketStatus === 'sold_out' && (
-                <p className="text-[11px] text-muted-foreground mt-2 italic">
+                <p className="text-[11px] text-muted-foreground mt-2">
                   Sometimes additional passes are released later.
                 </p>
               )}
@@ -438,6 +446,31 @@ export function FestivalPage({ festival, onBack, onFollow, isInCompare, onToggle
               </div>
             </section>
           )}
+
+          {/* Community */}
+          <section className="space-y-3 pt-2">
+            <h2 className="text-lg md:text-xl font-bold text-foreground">
+              Community
+            </h2>
+            <a
+              href={festival.instagram ? `https://instagram.com/${festival.instagram.replace(/^@/, '')}` : 'https://instagram.com/forroeurope'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-card hover:border-[#2F5BFF]/30 hover:shadow-soft transition-all group"
+            >
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] flex items-center justify-center shrink-0">
+                <Instagram className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-bold text-foreground leading-tight">
+                  Follow on Instagram
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  @{(festival.instagram || 'forroeurope').replace(/^@/, '')} · updates from the community
+                </p>
+              </div>
+            </a>
+          </section>
         </div>
       </div>
     </div>

@@ -62,10 +62,10 @@ export function HorizontalScrollSection({
             {displayFestivals.map((festival) => (
               <div
                 key={festival.id}
-                className="flex-shrink-0 w-[180px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow first:ml-0"
+                className="flex-shrink-0 w-[180px] snap-start cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md smooth-hover first:ml-0"
               >
                 {/* Image with overlays */}
-                <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted" onClick={() => onFestivalClick(festival.id)}>
+                <div className="relative w-full aspect-[4/3] overflow-hidden bg-muted grain-overlay warm-vignette" onClick={() => onFestivalClick(festival.id)}>
                   <img
                     src={festival.image}
                     alt={festival.name}
@@ -128,13 +128,13 @@ export function HorizontalScrollSection({
           {displayFestivals.map((festival) => (
             <div
               key={festival.id}
-              className="group cursor-pointer border border-border rounded-xl overflow-hidden bg-card hover:shadow-md transition-shadow"
+              className="group cursor-pointer border border-border rounded-xl overflow-hidden bg-card card-lift hover:shadow-soft-lg"
             >
-              <div className="relative w-full aspect-[16/9] overflow-hidden bg-muted" onClick={() => onFestivalClick(festival.id)}>
+              <div className="relative w-full aspect-[16/9] overflow-hidden bg-muted grain-overlay warm-vignette" onClick={() => onFestivalClick(festival.id)}>
                 <img
                   src={festival.image}
                   alt={festival.name}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
                 {/* Ticket chip overlay */}
                 {festival.ticketStatus && (

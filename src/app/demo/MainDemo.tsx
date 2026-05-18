@@ -37,30 +37,40 @@ export function MainDemo() {
   const festivals = [
     // INTIMATE GATHERINGS
     {
-      id: 'maria-bonita',
-      name: 'Maria Bonita Festival',
-      location: 'Lisbon',
+      id: 'forro-douro-experience',
+      name: 'Forró Douro Experience',
+      location: 'Peso da Régua',
       country: 'Portugal',
-      dates: '6–8 Mar 2026',
-      image: 'https://images.unsplash.com/photo-1618431379559-8dae023fb153?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3JyJUMzJUIzJTIwZGFuY2luZyUyMGNvdXBsZSUyMGludGltYXRlfGVufDF8fHx8MTc3NTE2MTAzNHww&ixlib=rb-4.1.0&q=80&w=1080',
-      attendees: '150-200 dancers',
-      venue: 'Lisbon Cultural Center',
-      description: 'Warm Lisbon street texture, tiled facades, social dancing atmosphere. An intimate weekend in Portugal\'s capital.',
-      highlights: ['Lisbon street atmosphere', 'Tiled facades', 'Social dancing', 'Portuguese culture'],
+      dates: '26–28 Jun 2026',
+      image: 'https://images.unsplash.com/photo-1661324797204-20384e193a47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxEb3VybyUyMFZhbGxleSUyMHN1bnNldCUyMGdvbGRlbiUyMGhvdXIlMjB2aW5leWFyZHN8ZW58MXx8fHwxNzc1MjI0NTI4fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      attendees: '80-150 dancers',
+      venue: 'Hotel Régua Douro',
+      description: 'An immersive forró retreat in the Douro Valley. Dance, nature, river views, and shared moments. More than a classic festival, a slower and more immersive weekend.',
+      highlights: ['Douro Valley retreat', 'Accommodation included', 'River views', 'Dance & nature'],
       verificationStatus: 'confirmed' as const,
       lastUpdate: '1 day ago',
-      followers: 421,
+      followers: 542,
       ticketStatus: 'open_now' as const,
-      currentPrice: 'From €90',
-      ticketUrl: 'https://example.com/tickets',
+      currentPrice: 'From €770',
+      ticketUrl: 'https://www.forrodouro.com/',
+      instagram: 'forrodouro',
       experienceType: 'intimate' as const,
-      locationType: 'urban' as const,
-      coordinates: { lat: 38.7, lng: -9.1 },
+      locationType: 'countryside' as const,
+      coordinates: { lat: 41.16, lng: -7.79 },
       duration: 'weekend' as const,
+      communityTag: 'Small capacity',
       passTypes: [{
-        id: 'full-pass',
-        name: 'Full Pass',
-        lots: [{ id: 'reg', lotName: 'Regular', price: '€90', state: 'current' as const, quota: '32 remaining' }]
+        id: 'double-city',
+        name: 'Double Pack — City View',
+        lots: [{ id: 'reg', lotName: 'Stay Package', price: '€770', state: 'current' as const, quota: '8 remaining' }]
+      }, {
+        id: 'double-river',
+        name: 'Double Pack — River View',
+        lots: [{ id: 'reg', lotName: 'Stay Package', price: '€810', state: 'current' as const, quota: '5 remaining' }]
+      }, {
+        id: 'triple-city',
+        name: 'Triple Pack — City View',
+        lots: [{ id: 'reg', lotName: 'Stay Package', price: '€1,110', state: 'current' as const, quota: '3 remaining' }]
       }],
     },
     {
@@ -69,7 +79,7 @@ export function MainDemo() {
       location: 'Paris',
       country: 'France',
       dates: '8–10 May 2026',
-      image: 'https://images.unsplash.com/photo-1768244016584-a2df5873b348?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb2NpYWwlMjBkYW5jZSUyMGZlc3RpdmFsJTIwcGVvcGxlJTIwZGFuY2luZ3xlbnwxfHx8fDE3NzUxNjEwMzR8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1770743798589-f41ac6e65078?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQYXJpcyUyMGV2ZW5pbmclMjBsaWdodHMlMjByb21hbnRpYyUyMG5pZ2h0bGlmZXxlbnwxfHx8fDE3NzUyMjQ1Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '120-150 dancers',
       venue: 'Paris Dance Hall',
       description: 'Intimate indoor dancefloor, vinyl / retro mood, Paris night warmth. A weekend celebrating vintage forró vibes.',
@@ -80,10 +90,12 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €75',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'intimate' as const,
       locationType: 'urban' as const,
       coordinates: { lat: 48.9, lng: 2.4 },
       duration: 'weekend' as const,
+      communityTag: 'Live music',
       passTypes: [{
         id: 'full-pass',
         name: 'Full Pass',
@@ -96,7 +108,7 @@ export function MainDemo() {
       location: 'Mèze',
       country: 'France',
       dates: '14–16 Aug 2026',
-      image: 'https://images.unsplash.com/photo-1611276974081-e86e87c17a99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCcmF6aWxpYW4lMjBkYW5jZSUyMGZvcnIlQzMlQjMlMjBhY2NvcmRpb258ZW58MXx8fHwxNzc1MTYxMDM1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1581499319287-574c1109089f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxNZXplJTIwRnJhbmNlJTIwTWVkaXRlcnJhbmVhbiUyMHN1bnNldCUyMGJlYWNofGVufDF8fHx8MTc3NTIyNDUyOXww&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '100-150 dancers',
       venue: 'Mèze Seaside',
       description: 'Small southern seaside town, relaxed summer mood, human-scale gathering. Perfect for authentic community connection.',
@@ -107,6 +119,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €80',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'intimate' as const,
       locationType: 'sea' as const,
       coordinates: { lat: 43.4, lng: 3.6 },
@@ -123,7 +136,7 @@ export function MainDemo() {
       location: 'Vaumarcus',
       country: 'Switzerland',
       dates: '29 Dec 2026 – 1 Jan 2027',
-      image: 'https://images.unsplash.com/photo-1597668905315-d6b45b0ee281?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYW5jZSUyMGZlc3RpdmFsJTIwcG9zdGVyJTIwZXZlbnR8ZW58MXx8fHwxNzc1MTYxMDM1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1643986149937-5d0b9306dba5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxTd2lzcyUyMEFscHMlMjB3aW50ZXIlMjBsaWdodHMlMjBjb3p5JTIwZXZlbmluZ3xlbnwxfHx8fDE3NzUyMjQ1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '80-120 dancers',
       venue: 'Vaumarcus Retreat',
       description: 'Cozy countryside retreat, winter gathering, chalet atmosphere with warm lights and community energy. Ring in the New Year dancing.',
@@ -150,7 +163,7 @@ export function MainDemo() {
       location: 'Frankenblick',
       country: 'Germany',
       dates: '31 Jul – 7 Aug 2026',
-      image: 'https://images.unsplash.com/photo-1769723705343-78fc656ebe96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHZXJtYW55JTIwZm9yZXN0JTIwY291bnRyeXNpZGUlMjByZXRyZWF0fGVufDF8fHx8MTc3NTE1OTc4Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1773234066076-be95776f4464?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxHZXJtYW55JTIwZm9yZXN0JTIwcmV0cmVhdCUyMHN1bW1lciUyMGdvbGRlbiUyMGhvdXJ8ZW58MXx8fHwxNzc1MjI0NTMwfDA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '300-400 dancers',
       venue: 'Frankenblick Retreat Center',
       description: 'Retreat setting, forest and countryside, summer camp atmosphere. A full week of deep immersion in forró.',
@@ -161,10 +174,12 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €380',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'immersive' as const,
       locationType: 'countryside' as const,
       coordinates: { lat: 50.4, lng: 10.8 },
       duration: 'week' as const,
+      communityTag: 'Beginner-friendly',
       passTypes: [{
         id: 'full-pass',
         name: 'Full Week Pass',
@@ -177,7 +192,7 @@ export function MainDemo() {
       location: 'Valencia',
       country: 'Spain',
       dates: '3–10 Aug 2026',
-      image: 'https://images.unsplash.com/photo-1666861585494-f34581cf0d42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxWYWxlbmNpYSUyMFNwYWluJTIwTWVkaXRlcnJhbmVhbnxlbnwxfHx8fDE3NzUxNTk3OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1702831997707-83b60e0d3ae4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxWYWxlbmNpYSUyMFNwYWluJTIwc3Vuc2V0JTIwTWVkaXRlcnJhbmVhbiUyMGV2ZW5pbmd8ZW58MXx8fHwxNzc1MjI0NTMwfDA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '400-500 dancers',
       venue: 'Valencia Cultural Center',
       description: 'Mediterranean venue, warm evening light, immersive summer energy. Live the festival fully for a full week.',
@@ -188,6 +203,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €420',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'immersive' as const,
       locationType: 'urban' as const,
       coordinates: { lat: 39.5, lng: -0.4 },
@@ -204,7 +220,7 @@ export function MainDemo() {
       location: 'Lacanau',
       country: 'France',
       dates: '28 May – 2 Jun 2026',
-      image: 'https://images.unsplash.com/photo-1760394986877-80a41b10f912?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGcmVuY2glMjBsYWtlJTIwcGluZXMlMjByZXRyZWF0fGVufDF8fHx8MTc3NTE1OTc4Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1668603490323-a6619b33ab0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBdGxhbnRpYyUyMGNvYXN0JTIwRnJhbmNlJTIwYmVhY2glMjBzdW5zZXQlMjB3YXZlcyUyMGdvbGRlbnxlbnwxfHx8fDE3NzUyMjQ1NDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '250-350 dancers',
       venue: 'Lacanau Beach Retreat',
       description: 'Pines, lake and ocean proximity, retreat with beach crossover feeling. Multi-day immersion near the Atlantic.',
@@ -215,6 +231,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €340',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'immersive' as const,
       locationType: 'sea' as const,
       coordinates: { lat: 45.0, lng: -1.2 },
@@ -231,7 +248,7 @@ export function MainDemo() {
       location: 'Almancil',
       country: 'Portugal',
       dates: '27–30 Aug 2026',
-      image: 'https://images.unsplash.com/photo-1605908082521-58a82edb515b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBbGdhcnZlJTIwUG9ydHVnYWwlMjByZXRyZWF0JTIwbmF0dXJhbHxlbnwxfHx8fDE3NzUxNTk3ODN8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1754221717702-96c1e6c8f5b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBbGdhcnZlJTIwUG9ydHVnYWwlMjBnb2xkZW4lMjBjbGlmZnMlMjBzdW5zZXQlMjBiZWFjaHxlbnwxfHx8fDE3NzUyMjQ1MzF8MA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '200-300 dancers',
       venue: 'Almancil Retreat',
       description: 'Algarve retreat setting, dry landscape, natural luxury, summer rhythm. Extended format in Portugal\'s south.',
@@ -298,10 +315,12 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From £95',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'sea' as const,
       locationType: 'sea' as const,
       coordinates: { lat: 50.8, lng: -0.1 },
       duration: 'weekend' as const,
+      communityTag: 'Beach venue',
       passTypes: [{
         id: 'full-pass',
         name: 'Full Pass',
@@ -350,6 +369,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €110',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'sea' as const,
       locationType: 'sea' as const,
       coordinates: { lat: 37.1, lng: -8.5 },
@@ -368,7 +388,7 @@ export function MainDemo() {
       location: 'Barcelona',
       country: 'Spain',
       dates: '6–8 Feb 2026',
-      image: 'https://images.unsplash.com/photo-1616053508777-9179064c92d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBzdW5zZXQlMjB0ZXJyYWNlJTIwY2l0eXxlbnwxfHx8fDE3NzUxNTk3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1736209554401-dfbddd0fa6df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCYXJjZWxvbmElMjBzdW5zZXQlMjByb29mdG9wJTIwY2l0eSUyMGxpZ2h0cyUyMGV2ZW5pbmd8ZW58MXx8fHwxNzc1MjI0NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '400-600 dancers',
       venue: 'Barcelona Venue',
       description: 'Barcelona sunset, terraces, warm city energy. Urban weekend with strong local scene and easy city-trip appeal.',
@@ -395,7 +415,7 @@ export function MainDemo() {
       location: 'Paris',
       country: 'France',
       dates: '13–15 Feb 2026',
-      image: 'https://images.unsplash.com/photo-1765049526506-3c2b058c0483?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQYXJpcyUyMGRhbmNlJTIwdmVudUxlbnwxfHx8fDE3NzUxNTk3g1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1766847733701-0a1209d326c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxQYXJpcyUyMG5pZ2h0JTIwbGlnaHRzJTIwU2VpbmUlMjByaXZlciUyMGV2ZW5pbmclMjBsaWdodHN8ZW58MXx8fHwxNzc1MjI0NTM0fDA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '400-500 dancers',
       venue: 'Paris Dance Hall',
       description: 'Paris dance venue, social energy, indoor urban warmth. A vibrant city weekend in the heart of Paris.',
@@ -406,6 +426,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €85',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'urban' as const,
       locationType: 'urban' as const,
       coordinates: { lat: 48.9, lng: 2.3 },
@@ -422,7 +443,7 @@ export function MainDemo() {
       location: 'Berlin',
       country: 'Germany',
       dates: '5–8 Jun 2026',
-      image: 'https://images.unsplash.com/photo-1759013700423-0643f406a910?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCZXJsaW4lMjB1cmJhbiUyMG5pZ2h0JTIwdmVudUxlbnwxfHx8fDE3NzUxNTk3g1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1758832505459-8a7a04405494?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxCZXJsaW4lMjBuaWdodGxpZmUlMjB1cmJhbiUyMGV2ZW5pbmclMjBsaWdodHN8ZW58MXx8fHwxNzc1MjI0NTM1fDA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '500-600 dancers',
       venue: 'Berlin Cultural Space',
       description: 'Berlin urban night, raw stylish venue, creative city feeling. Dance in Germany\'s creative capital.',
@@ -433,10 +454,12 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €95',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'urban' as const,
       locationType: 'urban' as const,
       coordinates: { lat: 52.5, lng: 13.4 },
       duration: 'weekend' as const,
+      communityTag: 'Late-night socials',
       passTypes: [{
         id: 'full-pass',
         name: 'Full Pass',
@@ -449,7 +472,7 @@ export function MainDemo() {
       location: 'Turin',
       country: 'Italy',
       dates: '13–15 Nov 2026',
-      image: 'https://images.unsplash.com/photo-1762698860689-993c1ddf0741?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUdXJpbiUyMEl0YWx5JTIwYXJjYWRlcyUyMGVsZWdhbnR8ZW58MXx8fHwxNzc1MTU5Nzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1707477876084-458d675af118?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxUdXJpbiUyMEl0YWx5JTIwZXZlbmluZyUyMGFyY2FkZXMlMjBjaXR5JTIwbGlnaHRzfGVufDF8fHx8MTc3NTIyNDUzNXww&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '300-400 dancers',
       venue: 'Turin Historic Center',
       description: 'Elegant northern Italian city, arcades, compact city-festival mood. Dance in Turin\'s elegant historic setting.',
@@ -460,6 +483,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €90',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'urban' as const,
       locationType: 'urban' as const,
       coordinates: { lat: 45.1, lng: 7.7 },
@@ -478,7 +502,7 @@ export function MainDemo() {
       location: 'Châtillon-en-Diois',
       country: 'France',
       dates: '17–20 Jul 2026',
-      image: 'https://images.unsplash.com/photo-1744275746121-f609ae0ad06a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGcmFuY2UlMjBtb3VudGFpbiUyMHZpbGxhZ2UlMjBzdW1tZXJ8ZW58MXx8fHwxNzc1MTU5NzkxfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1601544783933-46eb9295e4a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxGcmVuY2glMjBBbHBzJTIwdmlsbGFnZSUyMHN1bnNldCUyMG1vdW50YWluJTIwZXZlbmluZ3xlbnwxfHx8fDE3NzUyMjQ1MzZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
       attendees: '200-300 dancers',
       venue: 'Châtillon Village',
       description: 'Foothills, village, summer mountain-air retreat feeling. Dance in the French mountain foothills.',
@@ -489,6 +513,7 @@ export function MainDemo() {
       ticketStatus: 'open_now' as const,
       currentPrice: 'From €130',
       ticketUrl: 'https://example.com/tickets',
+      instagram: 'forroeurope',
       experienceType: 'mountain' as const,
       locationType: 'mountain' as const,
       coordinates: { lat: 44.7, lng: 5.5 },
@@ -638,13 +663,13 @@ export function MainDemo() {
     {
       type: 'festival',
       data: {
-        festivalId: 'maria-bonita',
-        festivalName: 'Maria Bonita Festival',
-        location: 'Lisbon',
+        festivalId: 'forro-douro-experience',
+        festivalName: 'Forró Douro Experience',
+        location: 'Peso da Régua',
         country: 'Portugal',
-        startDate: '2026-03-06',
-        endDate: '2026-03-08',
-        image: 'https://images.unsplash.com/photo-1583512604043-c2249f012710?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        startDate: '2026-06-26',
+        endDate: '2026-06-28',
+        image: 'https://images.unsplash.com/photo-1660670076317-d5a0f68b24b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       },
     },
     {
@@ -1020,13 +1045,11 @@ export function MainDemo() {
       {currentView === 'map' && (
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12">
           <div className="mb-6 md:mb-8">
-            <div className="relative inline-block">
-              <div
-                className="absolute -left-1 -right-1 bottom-0.5 h-2 md:h-3 bg-[#FFD600] opacity-35 rounded-sm"
-                style={{ transform: 'rotate(-0.3deg)' }}
-              />
-              <h1 className="text-2xl md:text-4xl font-bold text-foreground relative z-10">Festival Map</h1>
-            </div>
+            <h1 className="text-[32px] md:text-[52px] leading-[1.05] tracking-tight text-foreground">
+              <span className="forro-script">
+                <span className="organic-underline">Festival map</span>
+              </span>
+            </h1>
             <p className="text-sm md:text-base text-muted-foreground mt-2">
               Explore festivals by location type. Tap pins to learn more.
             </p>

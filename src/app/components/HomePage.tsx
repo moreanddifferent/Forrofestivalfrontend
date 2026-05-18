@@ -4,6 +4,7 @@ import { HorizontalScrollSection } from './HorizontalScrollSection';
 import { FilterModal } from './FilterModal';
 import { IntegratedSearchBar, SearchFilters } from './IntegratedSearchBar';
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { TypewriterText } from './TypewriterText';
 
 interface FestivalCardData {
   id: string;
@@ -116,20 +117,26 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
       />
 
       {/* Hero Section */}
-      <section className="bg-background">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 pt-4 md:pt-6 pb-4 md:pb-8">
+      <section className="hero-bg relative overflow-hidden">
+        {/* Decorative brush marks */}
+<div className="relative max-w-6xl mx-auto px-4 md:px-6 pt-10 md:pt-20 pb-6 md:pb-10 text-center">
           {/* Hero header */}
-          <div className="space-y-2 md:space-y-2 mb-6 md:mb-8">
-            <h1 className="text-[22px] md:text-[48px] font-bold leading-[1.15] tracking-tight text-foreground">
-              Forró festivals in Europe
+          <div className="mb-6 md:mb-10">
+            <h1 className="text-[48px] md:text-[84px] leading-[0.95] tracking-tight text-foreground">
+              <span className="forro-script block">
+                <span className="organic-underline">Forró festivals</span>
+              </span>
+              <span className="forro-script block mt-1 md:mt-2">
+                across Europe
+              </span>
             </h1>
-            <p className="text-[13px] md:text-lg text-muted-foreground mt-1 md:mt-1.5 leading-relaxed">
-              Track the seasons. Plan where to dance.
+            <p className="text-[20px] md:text-[28px] font-semibold tracking-tight text-slate-700 leading-[1.3] mt-6 md:mt-8 min-h-[1.4em]">
+              <TypewriterText text={'Plan where to dance next'} />
             </p>
           </div>
 
           {/* Travel Search Bar — desktop */}
-          <div className="hidden md:block max-w-[860px]">
+          <div className="hidden md:block max-w-[860px] mx-auto">
             <IntegratedSearchBar
               filters={filters}
               onFilterChange={setFilters}
@@ -142,14 +149,14 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
           <div className="md:hidden">
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className="w-full flex items-center gap-2 px-3 py-2.5 border border-border rounded-full bg-card hover:shadow-md transition-shadow h-11"
+              className="w-full flex items-center gap-2 px-4 py-3 border border-border rounded-full bg-card hover:shadow-md transition-shadow"
             >
               <Search className="w-4 h-4 text-muted-foreground shrink-0" />
-              <span className="text-[13px] text-muted-foreground flex-1 text-left">
+              <span className="text-[14px] text-muted-foreground flex-1 text-left">
                 Where • When • Setting
               </span>
-              <div className="w-6 h-6 bg-[#3D63FF] rounded-full flex items-center justify-center shrink-0">
-                <SlidersHorizontal className="w-3 h-3 text-white" />
+              <div className="w-7 h-7 bg-[#3D63FF] rounded-full flex items-center justify-center shrink-0">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-white" />
               </div>
             </button>
           </div>
@@ -158,15 +165,15 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
 
       {/* Tickets opening soon — Electric blue full-width band */}
       {ticketsOpeningSoon.length > 0 && (
-        <section className="mt-4 md:mt-4 bg-[#2F5BFF]">
-          <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-3.5">
+        <section className="mt-2 md:mt-2 bg-[#2F5BFF]">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 py-4 md:py-3.5">
             {/* Header — white on blue */}
-            <div className="flex items-center justify-between mb-3 md:mb-1">
+            <div className="flex items-center justify-between mb-4 md:mb-1">
               <div>
-                <h2 className="text-[15px] md:text-lg font-black tracking-tight text-white leading-tight">
+                <h2 className="text-[16px] md:text-lg font-black tracking-tight text-white leading-tight">
                   Tickets opening soon
                 </h2>
-                <p className="text-[11px] md:text-[11px] text-white/70 mt-0.5 md:mt-0.5 leading-tight">
+                <p className="text-[12px] md:text-[11px] text-white/70 mt-1 md:mt-0.5 leading-tight micro-note">
                   Don't miss early bird prices
                 </p>
               </div>
@@ -228,7 +235,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
                       className="flex-shrink-0 snap-start
                         w-[calc(100vw-56px)]
                         md:w-[calc((100%-8px)/3.5)]
-                        bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                        bg-white rounded-lg shadow-soft hover:shadow-soft-lg smooth-hover cursor-pointer"
                       onClick={() => onFestivalClick(festival.id)}
                     >
                       <div className="flex items-center gap-2.5 px-3 py-2.5">
@@ -282,7 +289,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {intimateFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Intimate gatherings"
-            description="Smaller-scale weekends with a close-knit community feel."
+            description="Small weekends where everyone ends up knowing each other."
             festivals={intimateFestivals}
             onFestivalClick={onFestivalClick}
             isAnchor={true}
@@ -293,7 +300,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {immersiveFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Immersive weeks"
-            description="Longer stays for dancers who want to live the festival fully."
+            description="Longer stays built around music, dance, and community."
             festivals={immersiveFestivals}
             onFestivalClick={onFestivalClick}
             isAnchor={true}
@@ -304,7 +311,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {coastalFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Coastal festivals"
-            description="Sea air, warm nights, and dance weekends by the water."
+            description="Dance all night. Swim in the morning."
             festivals={coastalFestivals}
             onFestivalClick={onFestivalClick}
             maxItems={4}
@@ -314,7 +321,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {cityFestivals.length > 0 && (
           <HorizontalScrollSection
             title="City festivals"
-            description="Urban weekends with strong local scenes and easy city-trip appeal."
+            description="Urban weekends with strong local scenes."
             festivals={cityFestivals}
             onFestivalClick={onFestivalClick}
             maxItems={4}
@@ -324,7 +331,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
         {mountainFestivals.length > 0 && (
           <HorizontalScrollSection
             title="Mountain festivals"
-            description="Nature-led weekends in hilly or mountain-adjacent settings."
+            description="Fresh air, close dances, and nature-led weekends."
             festivals={mountainFestivals}
             onFestivalClick={onFestivalClick}
             maxItems={2}
@@ -335,17 +342,17 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
       {/* PLAN WITH FRIENDS */}
       <section className="py-8 md:py-12">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
-          <div className="bg-[#2F5BFF]/[0.04] border border-[#2F5BFF]/10 rounded-xl p-6 md:p-8 max-w-2xl">
-            <h3 className="text-lg md:text-xl font-black tracking-tight text-foreground mb-2">
+          <div className="separator-organic mb-8 md:mb-12"></div>
+          <div className="border-l-4 border-[#2F5BFF] pl-5 md:pl-6 max-w-2xl">
+            <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground mb-2">
               Plan with friends
             </h3>
-            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-              Save the festivals you're interested in, compare dates, and share a read-only list with your dance friends to plan the season together.
+            <p className="text-sm md:text-base text-muted-foreground mb-5 leading-relaxed">
+              Save festivals you're considering. Compare dates. Share your season with dance friends.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button
-                variant="outline"
-                className="gap-2 font-bold border-[#2F5BFF]/20 text-[#2F5BFF] hover:bg-[#2F5BFF] hover:text-white transition-colors"
+                className="gap-2 font-bold bg-[#2F5BFF] text-white hover:bg-[#1A44E0] shadow-soft"
                 onClick={() => {
                   const el = document.getElementById('editorial-sections');
                   el?.scrollIntoView({ behavior: 'smooth' });
@@ -356,7 +363,7 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
               </Button>
               <Button
                 variant="outline"
-                className="gap-2 font-bold border-[#2F5BFF]/20 text-[#2F5BFF] hover:bg-[#2F5BFF] hover:text-white transition-colors"
+                className="gap-2 font-bold border-[#2F5BFF] text-[#2F5BFF] hover:bg-[#2F5BFF] hover:text-white"
               >
                 <Share2 className="w-4 h-4" />
                 Share a list
@@ -367,54 +374,35 @@ export function HomePage({ festivals, onFestivalClick, onNavigateToCalendar, onN
       </section>
 
       {/* Footer */}
-      <section className="border-t border-border bg-background pb-4 md:pb-0">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
-          <div className="grid md:grid-cols-3 gap-8 md:gap-10 text-sm mb-8 md:mb-10">
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex items-center gap-2 mb-2 md:mb-3">
-                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                </div>
-                <span className="font-bold text-sm">Verified information</span>
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Festival details confirmed with organizers.
-              </p>
+      <section className="border-t border-border bg-background">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 pt-8 md:pt-10 pb-4 md:pb-6">
+          {/* Built by dancers — signature + details */}
+          <div className="text-center mb-8 md:mb-10 max-w-2xl mx-auto">
+            <div className="text-[22px] md:text-[28px] leading-[1] text-foreground">
+              <span className="forro-script">
+                <span className="organic-underline">Built by dancers</span>
+              </span>
             </div>
-
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex items-center gap-2 mb-2 md:mb-3">
-                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                </div>
-                <span className="font-bold text-sm">No commercial interest</span>
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                No ticket sales, no commissions.
-              </p>
-            </div>
-
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex items-center gap-2 mb-2 md:mb-3">
-                <div className="w-5 h-5 bg-[#0E7C66] rounded-sm flex items-center justify-center">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-white" />
-                </div>
-                <span className="font-bold text-sm">Built by dancers</span>
-              </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                For the European Forró community.
-              </p>
+            <p className="text-xs md:text-sm text-muted-foreground mt-2 leading-relaxed">
+              An independent guide made by the Forró community, for the Forró community.
+            </p>
+            <div className="mt-4 md:mt-5 flex flex-col sm:flex-row justify-center gap-x-6 gap-y-2 text-xs md:text-sm text-muted-foreground">
+              <p><span className="font-bold text-foreground">Verified information</span> — confirmed directly with festival organizers.</p>
+              <p><span className="font-bold text-foreground">No commercial interest</span> — no ticket sales, no commissions, no affiliations.</p>
             </div>
           </div>
 
-          <div className="pt-6 md:pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-sm">
-            <p className="font-medium">© 2026 Forró Europe · Independent guide</p>
-            <a 
-              href="#about" 
-              className="hover:text-[#2F5BFF] hover:underline transition-colors font-medium"
-            >
-              About this guide
-            </a>
+          <div className="pt-4 md:pt-5">
+            <div className="separator-organic mb-4 md:mb-5"></div>
+            <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4 text-muted-foreground text-sm">
+              <p className="font-medium">© 2026 Forró Europe · Independent guide</p>
+              <a
+                href="#about"
+                className="hover:text-[#2F5BFF] hover:underline smooth-hover-fast font-medium"
+              >
+                About this guide
+              </a>
+            </div>
           </div>
         </div>
       </section>
